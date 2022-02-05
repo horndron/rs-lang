@@ -1,4 +1,5 @@
 import { NavLink, Routes, HashRouter, Route } from 'react-router-dom'
+import './App.styles.scss'
 
 export const App = () => {
   return (
