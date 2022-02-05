@@ -6,21 +6,21 @@ export const App = () => {
     <>
       <HashRouter>
         <header className="header-container">
-          <nav className="nav-bar">
+          <nav className="nav-bar container">
             <ul className="nav-list">
-              <li className="nav-btn">
+              <li className="nav-item">
                 <NavLink to="/">Главная</NavLink>
               </li>
-              <li className="nav-btn">
+              <li className="nav-item">
                 <NavLink to="/textbook">Учебник</NavLink>
               </li>
-              <li className="nav-btn">
+              <li className="nav-item">
                 <NavLink to="/games">Игры</NavLink>
               </li>
-              <li className="nav-btn">
+              <li className="nav-item">
                 <NavLink to="/stats">Статистика</NavLink>
               </li>
-              <li className="nav-btn">
+              <li className="nav-item">
                 <NavLink to="/about">О нас</NavLink>
               </li>
             </ul>
