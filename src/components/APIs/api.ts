@@ -1,4 +1,4 @@
-import * as constApi from '../constants/api'
+import * as constApi from '../../constants/api'
 import {
   Word,
   User,
@@ -6,7 +6,7 @@ import {
   UserWordParams,
   RejectStatusText,
   AuthUser,
-} from '../interfaces/api'
+} from '../../interfaces/api'
 
 export const getChunkWords = async (
   group: number,
