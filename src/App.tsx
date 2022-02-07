@@ -1,5 +1,6 @@
 import { NavLink, Routes, HashRouter, Route } from 'react-router-dom'
 import './App.styles.scss'
+import { TextbookPage } from './components/textbook/textbook'
 
 export const App = () => {
   return (
@@ -29,7 +30,7 @@ export const App = () => {
         <main className="main-container">
           <Routes>
             <Route path={'/'}></Route>
-            <Route path={'/textbook'}></Route>
+            <Route path={'/textbook'} element={<TextbookPage />}></Route>
             <Route path={'/games'}></Route>
             <Route path={'/stats'}></Route>
             <Route path={'/about'}></Route>

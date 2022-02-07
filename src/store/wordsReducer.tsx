@@ -1,23 +1,28 @@
+import { Word } from '../interfaces/api'
+
 interface IWordsAction {
   type: string
+  payload: Word[] | void
 }
 
 const defaultState = {
   words: [],
 }
 
-const GET_WORDS = 'GET_WORDS'
-const REMOVE_WORD = 'REMOVE_WORD'
+const SET_WORDS = 'SET_WORDS'
+// const REMOVE_WORD = 'REMOVE_WORD'
 
 export const wordsReducer = (state = defaultState, action: IWordsAction) => {
   switch (action.type) {
-    case GET_WORDS:
-      return state
-    case REMOVE_WORD:
-      return state
+    case SET_WORDS:
+      return { ...state, words: action.payload }
     default:
       return state
   }
 }
 
-export const removeWordAction = (payload) => ({ type: REMOVE_WORD, payload })
+export const setWordsAction = (payload: Word[]) => ({
+  type: SET_WORDS,
+  payload,
+})
+// export const removeWordAction = (payload) => ({ type: REMOVE_WORD, payload })
