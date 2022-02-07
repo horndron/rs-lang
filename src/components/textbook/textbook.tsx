@@ -1,4 +1,3 @@
-// import axios from 'axios'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { IMAGE_URL } from '../../constants/cardDataApi'
@@ -11,14 +10,15 @@ export const TextbookPage: React.FC = () => {
   const words = useSelector((state) => state.words.words)
   const page = useSelector((state) => state.page.page)
   const group = useSelector((state) => state.page.group)
-
   const dispatch = useDispatch()
-  async function getWords() {
-    const newWords = await getChunkWords(group, page)
+
+  async function getWords(curPage) {
+    if (curPage < 0 || curPage > 29) return
+    const newWords = await getChunkWords(group, curPage)
     dispatch(setWordsAction(newWords))
   }
   useEffect(() => {
-    getWords()
+    getWords(page)
   }, [])
 
   return (
@@ -74,16 +74,22 @@ export const WordCard: React.FC = ({ data }) => {
 export const WordSettings: React.FC = ({ getWords }) => {
   const page = useSelector((state) => state.page.page)
   const dispatch = useDispatch()
-  // const group = useSelector((state) => state.page.group)
   return (
     <>
       <div className="settingsBar">
-        <button>prev</button>
+        <button
+          onClick={() => {
+            dispatch(setPageAction(page - 1))
+            getWords(page - 1)
+          }}
+        >
+          prev
+        </button>
         <div className="pageSwitcher">{`${page + 1} / 30`}</div>
         <button
           onClick={() => {
             dispatch(setPageAction(page + 1))
-            getWords()
+            getWords(page + 1)
           }}
         >
           next
