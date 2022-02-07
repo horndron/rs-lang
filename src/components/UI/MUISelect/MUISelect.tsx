@@ -6,7 +6,7 @@ import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { MUISelectProps } from '../../../interfaces/sprint'
 
-export default function MUISelect({ title, items }: MUISelectProps) {
+export default function MUISelect({ title, id, items }: MUISelectProps) {
   const [selectValue, setSelectValue] = React.useState('')
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -16,10 +16,10 @@ export default function MUISelect({ title, items }: MUISelectProps) {
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">{title}</InputLabel>
+        <InputLabel id={id + '-label'}>{title}</InputLabel>
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
+          labelId={id + '-label'}
+          id={id}
           value={selectValue}
           label={title}
           onChange={handleChange}
