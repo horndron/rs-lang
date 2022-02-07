@@ -2,7 +2,7 @@ import { Word } from '../interfaces/api'
 
 interface IWordsAction {
   type: string
-  payload: Word[] | void
+  payload: Word[] | string
 }
 
 const defaultState = {

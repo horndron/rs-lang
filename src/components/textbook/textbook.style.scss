@@ -1,7 +1,71 @@
 .words-container {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin: 20px 0 0;
+  gap: 20px;
   .wordCard {
+    width: calc(25% - 20px);
+    border-radius: 15px;
+    border: 2px solid black;
+    height: 450px;
+    overflow: hidden;
+    .cardTop {
+      position: relative;
+      height: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      .content {
+        position: absolute;
+        z-index: 1;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 75%;
+      }
+      .cardTitle,
+      .wordSpell {
+        position: relative;
+        z-index: 2;
+        margin-bottom: 10px;
+        text-align: right;
+        padding: 0 20px;
+        font-size: 40px;
+      }
+      .wordSpell {
+        margin-bottom: 20px;
+        text-align: right;
+        font-size: 25px;
+      }
+    }
+    .cardBottom {
+      height: 50%;
+      .cardText {
+        text-align: right;
+        padding: 0 20px;
+      }
+      .separateLine {
+        width: 80%;
+        border: 1px solid black;
+        margin: 20px auto 10px;
+      }
+    }
   }
+}
+.settingsBar {
+  position: sticky;
+  z-index: 3;
+  bottom: 0;
+  left: 0;
+  width: 110%;
+  height: 80px;
+  border: 2px solid gray;
+  backdrop-filter: blur(10px);
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
