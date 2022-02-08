@@ -1,0 +1,13 @@
+@import '../../utils/variables';
+@import '../../utils/_mixins.scss';
+
+.nav-item {
+  &:hover {
+    color: $darkColor;
+    @include trans-medium;
+  }
+}
+
+header .active .nav-item {
+  color: $darkColor;
+}
