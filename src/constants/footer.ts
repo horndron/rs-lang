@@ -1,6 +1,6 @@
 export const AUTHORS = [
   {
-    name: 'mairs',
+    name: 'horndron',
     link: 'https://github.com/horndron',
   },
   {
