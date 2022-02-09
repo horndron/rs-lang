@@ -2,8 +2,12 @@ import React, { useEffect } from 'react'
 import { IMAGE_URL } from '../../constants/cardDataApi'
 import { useActions } from '../../hooks/useActions'
 import { useTypeSelector } from '../../hooks/useTypeSelector'
+import Word from '../../interfaces/api'
 import './textbook.style.scss'
 
+interface ICard {
+  card: Word
+}
 export const TextbookPage: React.FC = () => {
   const { words, loading, error, page, group } = useTypeSelector(
     (state) => state.words
@@ -22,8 +26,8 @@ export const TextbookPage: React.FC = () => {
   return (
     <>
       <div className="container words-container">
-        {words.map((card) => (
-          <WordCard key={card.id} data={card} />
+        {words.map((card: Word) => (
+          <WordCard key={card.id} card={card} />
         ))}
         <WordSettings />
       </div>
@@ -31,8 +35,8 @@ export const TextbookPage: React.FC = () => {
   )
 }
 
-export const WordCard: React.FC = ({ data }) => {
-  const image = `${IMAGE_URL}/${data.image.split('/')[1]}`
+export const WordCard: React.FC<ICard> = ({ card }) => {
+  const image = `${IMAGE_URL}/${card.image.split('/')[1]}`
   const color = randomColor()
   return (
     <>
@@ -44,23 +48,23 @@ export const WordCard: React.FC = ({ data }) => {
               background: `linear-gradient(rgba(255, 255, 255, 0), ${color})`,
             }}
           ></div>
-          <h3 className="cardTitle">{data.word}</h3>
-          <p className="wordSpell">{`${data.wordTranslate} ${data.transcription}`}</p>
+          <h3 className="cardTitle">{card.word}</h3>
+          <p className="wordSpell">{`${card.wordTranslate} ${card.transcription}`}</p>
         </div>
         <div className="cardBottom" style={{ background: color }}>
           <p className="cardText">
-            <span dangerouslySetInnerHTML={{ __html: data.textMeaning }}></span>
+            <span dangerouslySetInnerHTML={{ __html: card.textMeaning }}></span>
             <br />
-            <span dangerouslySetInnerHTML={{ __html: data.textExample }}></span>
+            <span dangerouslySetInnerHTML={{ __html: card.textExample }}></span>
           </p>
           <hr className="separateLine" />
           <p className="cardText">
             <span
-              dangerouslySetInnerHTML={{ __html: data.textMeaningTranslate }}
+              dangerouslySetInnerHTML={{ __html: card.textMeaningTranslate }}
             ></span>
             <br />
             <span
-              dangerouslySetInnerHTML={{ __html: data.textExampleTranslate }}
+              dangerouslySetInnerHTML={{ __html: card.textExampleTranslate }}
             ></span>
           </p>
         </div>
