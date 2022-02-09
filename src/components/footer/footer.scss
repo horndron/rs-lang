@@ -3,9 +3,9 @@
 
 footer {
   width: 100%;
-  height: $footerHeight;
+  height: 50px;
   position: absolute;
-  bottom: 0;
+  bottom: -50px;
   background-color: $secondaryColor;
 }
 

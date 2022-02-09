@@ -1,11 +1,5 @@
-import { createStore, combineReducers } from 'redux'
-import { wordsReducer } from './wordsReducer'
-import { pageGroupReducer } from './pageGroupReducer'
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
+import { rootReducer } from './reducers'
 
-const rootReducer = combineReducers({
-  words: wordsReducer,
-  page: pageGroupReducer,
-})
-export const store = createStore(rootReducer)
-
-export type RootState = ReturnType<typeof rootReducer>
+export const store = createStore(rootReducer, applyMiddleware(thunk))

@@ -1,40 +1,42 @@
-// import axios from 'axios'
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { IMAGE_URL } from '../../constants/cardDataApi'
-import { setPageAction } from '../../store/pageGroupReducer'
-import { setWordsAction } from '../../store/wordsReducer'
-import { getChunkWords } from '../APIs/api'
+import { useActions } from '../../hooks/useActions'
+import { useTypeSelector } from '../../hooks/useTypeSelector'
+import Word from '../../interfaces/api'
 import './textbook.style.scss'
 
+interface ICard {
+  card: Word
+}
 export const TextbookPage: React.FC = () => {
-  const words = useSelector((state) => state.words.words)
-  const page = useSelector((state) => state.page.page)
-  const group = useSelector((state) => state.page.group)
-
-  const dispatch = useDispatch()
-  async function getWords() {
-    const newWords = await getChunkWords(group, page)
-    dispatch(setWordsAction(newWords))
-  }
+  const { words, loading, error, page, group } = useTypeSelector(
+    (state) => state.words
+  )
+  const { fetchWords } = useActions()
   useEffect(() => {
-    getWords()
-  }, [])
+    fetchWords(group, page)
+  }, [page])
 
+  if (loading) {
+    return <h2>Идет загрузка...</h2>
+  }
+  if (error) {
+    return <h2>{error}</h2>
+  }
   return (
     <>
       <div className="container words-container">
-        {words.map((card) => (
-          <WordCard key={card.id} data={card} />
+        {words.map((card: Word) => (
+          <WordCard key={card.id} card={card} />
         ))}
-        <WordSettings getWords={getWords} />
+        <WordSettings />
       </div>
     </>
   )
 }
 
-export const WordCard: React.FC = ({ data }) => {
-  const image = `${IMAGE_URL}/${data.image.split('/')[1]}`
+export const WordCard: React.FC<ICard> = ({ card }) => {
+  const image = `${IMAGE_URL}/${card.image.split('/')[1]}`
   const color = randomColor()
   return (
     <>
@@ -46,23 +48,23 @@ export const WordCard: React.FC = ({ data }) => {
               background: `linear-gradient(rgba(255, 255, 255, 0), ${color})`,
             }}
           ></div>
-          <h3 className="cardTitle">{data.word}</h3>
-          <p className="wordSpell">{`${data.wordTranslate} ${data.transcription}`}</p>
+          <h3 className="cardTitle">{card.word}</h3>
+          <p className="wordSpell">{`${card.wordTranslate} ${card.transcription}`}</p>
         </div>
         <div className="cardBottom" style={{ background: color }}>
           <p className="cardText">
-            <span dangerouslySetInnerHTML={{ __html: data.textMeaning }}></span>
+            <span dangerouslySetInnerHTML={{ __html: card.textMeaning }}></span>
             <br />
-            <span dangerouslySetInnerHTML={{ __html: data.textExample }}></span>
+            <span dangerouslySetInnerHTML={{ __html: card.textExample }}></span>
           </p>
           <hr className="separateLine" />
           <p className="cardText">
             <span
-              dangerouslySetInnerHTML={{ __html: data.textMeaningTranslate }}
+              dangerouslySetInnerHTML={{ __html: card.textMeaningTranslate }}
             ></span>
             <br />
             <span
-              dangerouslySetInnerHTML={{ __html: data.textExampleTranslate }}
+              dangerouslySetInnerHTML={{ __html: card.textExampleTranslate }}
             ></span>
           </p>
         </div>
@@ -71,19 +73,33 @@ export const WordCard: React.FC = ({ data }) => {
   )
 }
 
-export const WordSettings: React.FC = ({ getWords }) => {
-  const page = useSelector((state) => state.page.page)
-  const dispatch = useDispatch()
-  // const group = useSelector((state) => state.page.group)
+export const WordSettings: React.FC = () => {
+  const { page } = useTypeSelector((state) => state.words)
+  const { setWordsPage } = useActions()
+  function changePage(type: string) {
+    switch (type) {
+      case 'prev':
+        if (page > 0) setWordsPage(page - 1)
+        break
+      case 'next':
+        if (page < 29) setWordsPage(page + 1)
+        break
+    }
+  }
   return (
     <>
       <div className="settingsBar">
-        <button>prev</button>
+        <button
+          onClick={() => {
+            changePage('prev')
+          }}
+        >
+          prev
+        </button>
         <div className="pageSwitcher">{`${page + 1} / 30`}</div>
         <button
           onClick={() => {
-            dispatch(setPageAction(page + 1))
-            getWords()
+            changePage('next')
           }}
         >
           next
