@@ -1,33 +1,31 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { IMAGE_URL } from '../../constants/cardDataApi'
-import { setPageAction } from '../../store/pageGroupReducer'
-import { setWordsAction } from '../../store/wordsReducer'
-import { getChunkWords } from '../APIs/api'
+import { useActions } from '../../hooks/useActions'
+import { useTypeSelector } from '../../hooks/useTypeSelector'
 import './textbook.style.scss'
 
 export const TextbookPage: React.FC = () => {
-  const words = useSelector((state) => state.words.words)
-  const page = useSelector((state) => state.page.page)
-  const group = useSelector((state) => state.page.group)
-  const dispatch = useDispatch()
-
-  async function getWords(curPage) {
-    if (curPage < 0 || curPage > 29) return
-    const newWords = await getChunkWords(group, curPage)
-    dispatch(setWordsAction(newWords))
-  }
+  const { words, loading, error, page, group } = useTypeSelector(
+    (state) => state.words
+  )
+  const { fetchWords } = useActions()
   useEffect(() => {
-    getWords(page)
-  }, [])
+    fetchWords(group, page)
+  }, [page])
 
+  if (loading) {
+    return <h2>Идет загрузка...</h2>
+  }
+  if (error) {
+    return <h2>{error}</h2>
+  }
   return (
     <>
       <div className="container words-container">
         {words.map((card) => (
           <WordCard key={card.id} data={card} />
         ))}
-        <WordSettings getWords={getWords} />
+        <WordSettings />
       </div>
     </>
   )
@@ -71,16 +69,25 @@ export const WordCard: React.FC = ({ data }) => {
   )
 }
 
-export const WordSettings: React.FC = ({ getWords }) => {
-  const page = useSelector((state) => state.page.page)
-  const dispatch = useDispatch()
+export const WordSettings: React.FC = () => {
+  const { page } = useTypeSelector((state) => state.words)
+  const { setWordsPage } = useActions()
+  function changePage(type: string) {
+    switch (type) {
+      case 'prev':
+        if (page > 0) setWordsPage(page - 1)
+        break
+      case 'next':
+        if (page < 29) setWordsPage(page + 1)
+        break
+    }
+  }
   return (
     <>
       <div className="settingsBar">
         <button
           onClick={() => {
-            dispatch(setPageAction(page - 1))
-            getWords(page - 1)
+            changePage('prev')
           }}
         >
           prev
@@ -88,8 +95,7 @@ export const WordSettings: React.FC = ({ getWords }) => {
         <div className="pageSwitcher">{`${page + 1} / 30`}</div>
         <button
           onClick={() => {
-            dispatch(setPageAction(page + 1))
-            getWords(page + 1)
+            changePage('next')
           }}
         >
           next
