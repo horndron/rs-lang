@@ -13,4 +13,5 @@ export interface MUIButtonProps {
   name: string
   className?: string
   handler: () => void
+  sx?: { [name: string]: string | number | { [name: string]: string | number } }
 }
