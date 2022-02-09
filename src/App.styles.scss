@@ -1,52 +1,36 @@
+@import './utils/_variables.scss';
+@import './utils/_mixins.scss';
+
 * {
   margin: 0;
   padding: 0;
 }
-$background-header: #fff1f0;
-$text-color: #fe5244;
-$text-hover: #850e03;
-$background-main: #e5e5e5;
 
-.header-container {
-  display: flex;
-  justify-content: center;
-  height: 80px;
-  background-color: $background-header;
-  .nav-bar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .nav-list {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-      .nav-item {
-        list-style: none;
-        a {
-          color: $text-color;
-          text-decoration: none;
-          font-size: 26px;
-          line-height: 16px;
-          transition: 0.3s all;
-          &:hover {
-            color: $text-hover;
-            text-decoration: underline;
-          }
-        }
-      }
-    }
-  }
+a {
+  text-decoration: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
 }
 
 .container {
   width: 1440px;
   position: relative;
 }
+
 .main-container {
-  background-color: $background-main;
+  // background-color: $backgroundColor;
   display: flex;
   justify-content: center;
+  margin-bottom: 100px;
 }
+
 .container {
   width: 1440px;
 }
