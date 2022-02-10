@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import NextBtn from '../../assets/svg/angle-right-solid.svg'
 import LatestBtn from '../../assets/svg/angles-right-solid.svg'
 import { GROUP_COLOR } from '../../constants/cardDataApi'
@@ -73,20 +74,38 @@ const PageSwitch = () => {
 
 const GroupSwitcher = () => {
   const { group } = useTypeSelector((state) => state.words)
+  const { setWordsGroup } = useActions()
+  const [active, setActive] = useState(false)
   const color = GROUP_COLOR[group].color
+  const groupArr = [1, 2, 3, 4, 5, 6]
   return (
     <>
       <div className="groupSwitchWrapper">
-        <button className="groupSwitchBtn" style={color}>
+        <button
+          className="groupSwitchBtn"
+          style={color}
+          onClick={() => setActive(!active)}
+        >
           {group + 1}
         </button>
-        <ul>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
+        <ul className={`listGroups ${active}`}>
+          {groupArr.map((el, ind) => (
+            <li
+              key={`list-${el}-key`}
+              className={`listGroupsItem ${
+                group === ind ? 'listItemPicked' : ''
+              }`}
+            >
+              <button
+                style={GROUP_COLOR[ind].color}
+                onClick={() => {
+                  setWordsGroup(ind)
+                }}
+              >
+                {el}
+              </button>
+            </li>
+          ))}
         </ul>
       </div>
     </>
