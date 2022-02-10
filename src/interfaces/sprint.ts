@@ -48,4 +48,5 @@ export interface RenderTime {
 
 export interface PreperaGameProps {
   handler: () => void
+  sx?: { [name: string]: string | number | { [name: string]: string | number } }
 }

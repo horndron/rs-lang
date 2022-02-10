@@ -1,10 +1,10 @@
-import * as React from 'react'
 import Button from '@mui/material/Button'
 import { MUIButtonProps } from '../../../interfaces/sprint'
 
 export default function MUIButton({
   name,
   className,
+  sx,
   handler,
   link,
 }: MUIButtonProps) {
@@ -14,6 +14,10 @@ export default function MUIButton({
       className={className}
       onClick={handler}
       href={link}
+      sx={{
+        textTransform: 'none',
+        ...sx,
+      }}
     >
       {name}
     </Button>
