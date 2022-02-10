@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { IMAGE_URL } from '../../constants/cardDataApi'
+import { GROUP_COLOR, IMAGE_URL } from '../../constants/cardDataApi'
 import { useActions } from '../../hooks/useActions'
 import { useTypeSelector } from '../../hooks/useTypeSelector'
 import Word from '../../interfaces/api'
@@ -7,6 +7,7 @@ import './textbook.style.scss'
 
 interface ICard {
   card: Word
+  group: number
 }
 export const TextbookPage: React.FC = () => {
   const { words, loading, error, page, group } = useTypeSelector(
@@ -27,7 +28,7 @@ export const TextbookPage: React.FC = () => {
     <>
       <div className="container words-container">
         {words.map((card: Word) => (
-          <WordCard key={card.id} card={card} />
+          <WordCard key={card.id} card={card} group={group} />
         ))}
         <WordSettings />
       </div>
@@ -35,39 +36,21 @@ export const TextbookPage: React.FC = () => {
   )
 }
 
-export const WordCard: React.FC<ICard> = ({ card }) => {
+export const WordCard: React.FC<ICard> = ({ card, group }) => {
   const image = `${IMAGE_URL}/${card.image.split('/')[1]}`
-  const color = randomColor()
+  const color = GROUP_COLOR[group]
   return (
     <>
       <div className="wordCard">
-        <div className="cardTop" style={{ backgroundImage: `url(${image})` }}>
-          <div
-            className="content"
-            style={{
-              background: `linear-gradient(rgba(255, 255, 255, 0), ${color})`,
-            }}
-          ></div>
-          <h3 className="cardTitle">{card.word}</h3>
-          <p className="wordSpell">{`${card.wordTranslate} ${card.transcription}`}</p>
+        <div className="cardTop">
+          <img src={image} alt="cardImg" />
+          <h2 className="cardTitle">{card.word}</h2>
+          <div className="cardOverlay" style={color.gradient}></div>
         </div>
-        <div className="cardBottom" style={{ background: color }}>
-          <p className="cardText">
-            <span dangerouslySetInnerHTML={{ __html: card.textMeaning }}></span>
-            <br />
-            <span dangerouslySetInnerHTML={{ __html: card.textExample }}></span>
-          </p>
-          <hr className="separateLine" />
-          <p className="cardText">
-            <span
-              dangerouslySetInnerHTML={{ __html: card.textMeaningTranslate }}
-            ></span>
-            <br />
-            <span
-              dangerouslySetInnerHTML={{ __html: card.textExampleTranslate }}
-            ></span>
-          </p>
+        <div className="cardMid" style={color.color}>
+          <div className="cardCircle" style={color.color}></div>
         </div>
+        <div className="cardBottom"></div>
       </div>
     </>
   )
@@ -107,7 +90,4 @@ export const WordSettings: React.FC = () => {
       </div>
     </>
   )
-}
-function randomColor() {
-  return `#${Math.random().toString(16).slice(2, 8).padEnd(6, '0')}`
 }
