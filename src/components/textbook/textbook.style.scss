@@ -10,21 +10,18 @@
   .wordCard {
     width: calc(25% - 20px);
     border-radius: 40px;
-    // height: 700px;
     overflow: hidden;
     transition: 0.3s linear;
-    cursor: pointer;
-
     &:hover {
       box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.8);
-      transform: rotateZ(1deg);
+      transform: scale(1.04);
     }
     .cardTop {
       position: relative;
       width: 100%;
-      max-height: 220px;
+      height: 200px;
       .cardTitle {
-        font-size: 40px;
+        font-size: 3rem;
         position: absolute;
         width: 100%;
         z-index: 3;
@@ -49,22 +46,87 @@
     }
     .cardMid {
       position: relative;
-      height: 100px;
+      box-sizing: border-box;
+      padding: 20px 20px 60px;
       margin-top: -5px;
       box-shadow: inset 0px -15px 8px -8px rgba(49, 46, 46, 0.51);
-      .cardCircle {
+      display: flex;
+      justify-content: space-between;
+      .cardMean {
+        color: white;
+        font-size: 1.1rem;
+      }
+      .cardCircleTranslate {
+        border: none;
         width: 30%;
-        height: 90%;
+        height: 100%;
         border-radius: 50%;
         position: absolute;
         bottom: -40%;
         left: 35%;
         box-shadow: inset 0px -15px 8px -8px rgba(49, 46, 46, 0.51);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: 0.3s linear;
+        &:hover {
+          box-shadow: inset -12px -25px 12px -12px rgba(49, 46, 46, 0.51);
+        }
+      }
+      .audioMean {
+        font-size: 20px;
+        color: white;
+        border: none;
+        width: 20%;
+        height: 60%;
+        border-radius: 50%;
+        position: absolute;
+        bottom: -30%;
+        left: 10%;
+        box-shadow: inset 8px 8px 8px rgba(49, 46, 46, 0.51);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: 0.3s linear;
+        &:hover {
+          box-shadow: inset -12px -25px 12px -12px rgba(49, 46, 46, 0.51);
+        }
+      }
+      .audioExamp {
+        font-size: 20px;
+        color: white;
+        border: none;
+        width: 20%;
+        height: 60%;
+        border-radius: 50%;
+        position: absolute;
+        bottom: -30%;
+        right: 10%;
+        box-shadow: inset 8px 8px 8px rgba(49, 46, 46, 0.51);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: 0.3s linear;
+        &:hover {
+          box-shadow: inset -12px -25px 12px -12px rgba(49, 46, 46, 0.51);
+        }
       }
     }
     .cardBottom {
-      height: 400px;
+      height: auto;
       background-color: white;
+      box-sizing: border-box;
+      padding: 50px 15px 20px;
+      .cardText {
+        height: 150px;
+        text-align: right;
+        p {
+          margin-top: 5px;
+        }
+      }
     }
   }
 }

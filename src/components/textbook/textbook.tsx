@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react'
-import { GROUP_COLOR, IMAGE_URL } from '../../constants/cardDataApi'
+import { AUDIO_URL, GROUP_COLOR, IMAGE_URL } from '../../constants/cardDataApi'
 import { useActions } from '../../hooks/useActions'
 import { useTypeSelector } from '../../hooks/useTypeSelector'
 import Word from '../../interfaces/api'
+import AudioImg from '../../assets/svg/auido.svg'
+import InfoImg from '../../assets/svg/info-solid.svg'
+import ExampleImg from '../../assets/svg/book-open-solid.svg'
 import './textbook.style.scss'
 
 interface ICard {
@@ -38,6 +41,10 @@ export const TextbookPage: React.FC = () => {
 
 export const WordCard: React.FC<ICard> = ({ card, group }) => {
   const image = `${IMAGE_URL}/${card.image.split('/')[1]}`
+  const audioPath = `${card.audio.split('/')[1]}`
+  const meanPath = `${card.audioMeaning.split('/')[1]}`
+  const examplePath = `${card.audioExample.split('/')[1]}`
+
   const color = GROUP_COLOR[group]
   return (
     <>
@@ -48,9 +55,51 @@ export const WordCard: React.FC<ICard> = ({ card, group }) => {
           <div className="cardOverlay" style={color.gradient}></div>
         </div>
         <div className="cardMid" style={color.color}>
-          <div className="cardCircle" style={color.color}></div>
+          <span className="cardMean">{card.wordTranslate}</span>
+          <span className="cardMean">{card.transcription}</span>
+          <button
+            className="cardCircleTranslate"
+            style={color.color}
+            onClick={() => {
+              playAudio(audioPath)
+            }}
+          >
+            <img src={AudioImg} alt="" />
+          </button>
+          <button
+            className="audioMean"
+            style={color.color}
+            onClick={() => {
+              playAudio(meanPath)
+            }}
+          >
+            <img src={InfoImg} alt="" />
+          </button>
+          <button
+            className="audioExamp"
+            style={color.color}
+            onClick={() => {
+              playAudio(examplePath)
+            }}
+          >
+            <img src={ExampleImg} alt="" />
+          </button>
         </div>
-        <div className="cardBottom"></div>
+        <div className="cardBottom">
+          <article className="cardText">
+            <p dangerouslySetInnerHTML={{ __html: card.textMeaning }}></p>
+            <p dangerouslySetInnerHTML={{ __html: card.textExample }}></p>
+          </article>
+          <hr className="separateLine" />
+          <article className="cardText">
+            <p
+              dangerouslySetInnerHTML={{ __html: card.textMeaningTranslate }}
+            ></p>
+            <p
+              dangerouslySetInnerHTML={{ __html: card.textExampleTranslate }}
+            ></p>
+          </article>
+        </div>
       </div>
     </>
   )
@@ -90,4 +139,13 @@ export const WordSettings: React.FC = () => {
       </div>
     </>
   )
+}
+
+export async function playAudio(path: string) {
+  try {
+    const audio = new Audio(`${AUDIO_URL}/${path}`)
+    audio.play()
+  } catch (e) {
+    console.log('Аудио файл не найден')
+  }
 }
