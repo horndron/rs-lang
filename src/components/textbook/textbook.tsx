@@ -1,12 +1,16 @@
 import React, { useEffect } from 'react'
-import { IMAGE_URL } from '../../constants/cardDataApi'
+import { AUDIO_URL, GROUP_COLOR, IMAGE_URL } from '../../constants/cardDataApi'
 import { useActions } from '../../hooks/useActions'
 import { useTypeSelector } from '../../hooks/useTypeSelector'
 import Word from '../../interfaces/api'
+import AudioImg from '../../assets/svg/auido.svg'
+import InfoImg from '../../assets/svg/info-solid.svg'
+import ExampleImg from '../../assets/svg/book-open-solid.svg'
 import './textbook.style.scss'
 
 interface ICard {
   card: Word
+  group: number
 }
 export const TextbookPage: React.FC = () => {
   const { words, loading, error, page, group } = useTypeSelector(
@@ -27,7 +31,7 @@ export const TextbookPage: React.FC = () => {
     <>
       <div className="container words-container">
         {words.map((card: Word) => (
-          <WordCard key={card.id} card={card} />
+          <WordCard key={card.id} card={card} group={group} />
         ))}
         <WordSettings />
       </div>
@@ -35,38 +39,66 @@ export const TextbookPage: React.FC = () => {
   )
 }
 
-export const WordCard: React.FC<ICard> = ({ card }) => {
+export const WordCard: React.FC<ICard> = ({ card, group }) => {
   const image = `${IMAGE_URL}/${card.image.split('/')[1]}`
-  const color = randomColor()
+  const audioPath = `${card.audio.split('/')[1]}`
+  const meanPath = `${card.audioMeaning.split('/')[1]}`
+  const examplePath = `${card.audioExample.split('/')[1]}`
+
+  const color = GROUP_COLOR[group]
   return (
     <>
       <div className="wordCard">
-        <div className="cardTop" style={{ backgroundImage: `url(${image})` }}>
-          <div
-            className="content"
-            style={{
-              background: `linear-gradient(rgba(255, 255, 255, 0), ${color})`,
-            }}
-          ></div>
-          <h3 className="cardTitle">{card.word}</h3>
-          <p className="wordSpell">{`${card.wordTranslate} ${card.transcription}`}</p>
+        <div className="cardTop">
+          <img src={image} alt="cardImg" />
+          <h2 className="cardTitle">{card.word}</h2>
+          <div className="cardOverlay" style={color.gradient}></div>
         </div>
-        <div className="cardBottom" style={{ background: color }}>
-          <p className="cardText">
-            <span dangerouslySetInnerHTML={{ __html: card.textMeaning }}></span>
-            <br />
-            <span dangerouslySetInnerHTML={{ __html: card.textExample }}></span>
-          </p>
+        <div className="cardMid" style={color.color}>
+          <span className="cardMean">{card.wordTranslate}</span>
+          <span className="cardMean">{card.transcription}</span>
+          <button
+            className="cardCircleTranslate"
+            style={color.color}
+            onClick={() => {
+              playAudio(audioPath)
+            }}
+          >
+            <img src={AudioImg} alt="" />
+          </button>
+          <button
+            className="audioMean"
+            style={color.color}
+            onClick={() => {
+              playAudio(meanPath)
+            }}
+          >
+            <img src={InfoImg} alt="" />
+          </button>
+          <button
+            className="audioExamp"
+            style={color.color}
+            onClick={() => {
+              playAudio(examplePath)
+            }}
+          >
+            <img src={ExampleImg} alt="" />
+          </button>
+        </div>
+        <div className="cardBottom">
+          <article className="cardText">
+            <p dangerouslySetInnerHTML={{ __html: card.textMeaning }}></p>
+            <p dangerouslySetInnerHTML={{ __html: card.textExample }}></p>
+          </article>
           <hr className="separateLine" />
-          <p className="cardText">
-            <span
+          <article className="cardText">
+            <p
               dangerouslySetInnerHTML={{ __html: card.textMeaningTranslate }}
-            ></span>
-            <br />
-            <span
+            ></p>
+            <p
               dangerouslySetInnerHTML={{ __html: card.textExampleTranslate }}
-            ></span>
-          </p>
+            ></p>
+          </article>
         </div>
       </div>
     </>
@@ -108,6 +140,12 @@ export const WordSettings: React.FC = () => {
     </>
   )
 }
-function randomColor() {
-  return `#${Math.random().toString(16).slice(2, 8).padEnd(6, '0')}`
+
+export async function playAudio(path: string) {
+  try {
+    const audio = new Audio(`${AUDIO_URL}/${path}`)
+    audio.play()
+  } catch (e) {
+    console.log('Аудио файл не найден')
+  }
 }
