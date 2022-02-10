@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { AUDIO_URL, GROUP_COLOR, IMAGE_URL } from '../../constants/cardDataApi'
 import { useActions } from '../../hooks/useActions'
 import { useTypeSelector } from '../../hooks/useTypeSelector'
+import { WordSettings } from './settings'
 import Word from '../../interfaces/api'
 import AudioImg from '../../assets/svg/auido.svg'
 import InfoImg from '../../assets/svg/info-solid.svg'
@@ -12,6 +13,7 @@ interface ICard {
   card: Word
   group: number
 }
+
 export const TextbookPage: React.FC = () => {
   const { words, loading, error, page, group } = useTypeSelector(
     (state) => state.words
@@ -58,7 +60,7 @@ export const WordCard: React.FC<ICard> = ({ card, group }) => {
           <span className="cardMean">{card.wordTranslate}</span>
           <span className="cardMean">{card.transcription}</span>
           <button
-            className="cardCircleTranslate"
+            className="cardCircle"
             style={color.color}
             onClick={() => {
               playAudio(audioPath)
@@ -72,6 +74,7 @@ export const WordCard: React.FC<ICard> = ({ card, group }) => {
             onClick={() => {
               playAudio(meanPath)
             }}
+            title="Word meaning"
           >
             <img src={InfoImg} alt="" />
           </button>
@@ -81,6 +84,7 @@ export const WordCard: React.FC<ICard> = ({ card, group }) => {
             onClick={() => {
               playAudio(examplePath)
             }}
+            title="Word example"
           >
             <img src={ExampleImg} alt="" />
           </button>
@@ -100,42 +104,6 @@ export const WordCard: React.FC<ICard> = ({ card, group }) => {
             ></p>
           </article>
         </div>
-      </div>
-    </>
-  )
-}
-
-export const WordSettings: React.FC = () => {
-  const { page } = useTypeSelector((state) => state.words)
-  const { setWordsPage } = useActions()
-  function changePage(type: string) {
-    switch (type) {
-      case 'prev':
-        if (page > 0) setWordsPage(page - 1)
-        break
-      case 'next':
-        if (page < 29) setWordsPage(page + 1)
-        break
-    }
-  }
-  return (
-    <>
-      <div className="settingsBar">
-        <button
-          onClick={() => {
-            changePage('prev')
-          }}
-        >
-          prev
-        </button>
-        <div className="pageSwitcher">{`${page + 1} / 30`}</div>
-        <button
-          onClick={() => {
-            changePage('next')
-          }}
-        >
-          next
-        </button>
       </div>
     </>
   )

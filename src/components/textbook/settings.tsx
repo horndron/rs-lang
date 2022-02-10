@@ -1,0 +1,103 @@
+import NextBtn from '../../assets/svg/angle-right-solid.svg'
+import LatestBtn from '../../assets/svg/angles-right-solid.svg'
+import { GROUP_COLOR } from '../../constants/cardDataApi'
+import { useActions } from '../../hooks/useActions'
+import { useTypeSelector } from '../../hooks/useTypeSelector'
+import './settings.style.scss'
+
+export const WordSettings: React.FC = () => {
+  return (
+    <>
+      <div className="settingsBar">
+        <GameSwitcher />
+        <PageSwitch />
+        <GroupSwitcher />
+      </div>
+    </>
+  )
+}
+
+const PageSwitch = () => {
+  const { page } = useTypeSelector((state) => state.words)
+  const { setWordsPage } = useActions()
+  function changePage(type: string) {
+    switch (type) {
+      case 'prev':
+        if (page > 0) setWordsPage(page - 1)
+        break
+      case 'next':
+        if (page < 29) setWordsPage(page + 1)
+        break
+    }
+  }
+  return (
+    <>
+      <div className="switchBtns">
+        <button
+          className="changePageBtn  latestPage"
+          onClick={() => {
+            changePage('prev')
+          }}
+        >
+          <img src={LatestBtn} alt="" className="reverseBtn changePageImg" />
+        </button>
+        <button
+          className="changePageBtn"
+          onClick={() => {
+            changePage('prev')
+          }}
+        >
+          <img src={NextBtn} alt="" className="reverseBtn changePageImg" />
+        </button>
+        <div className="pageSwitcher">{`${page + 1} / 30`}</div>
+        <button
+          className="changePageBtn"
+          onClick={() => {
+            changePage('next')
+          }}
+        >
+          <img src={NextBtn} alt="" className="changePageImg" />
+        </button>
+        <button
+          className="changePageBtn latestPage"
+          onClick={() => {
+            changePage('prev')
+          }}
+        >
+          <img src={LatestBtn} alt="" className="changePageImg" />
+        </button>
+      </div>
+    </>
+  )
+}
+
+const GroupSwitcher = () => {
+  const { group } = useTypeSelector((state) => state.words)
+  const color = GROUP_COLOR[group].color
+  return (
+    <>
+      <div className="groupSwitchWrapper">
+        <button className="groupSwitchBtn" style={color}>
+          {group + 1}
+        </button>
+        <ul>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+      </div>
+    </>
+  )
+}
+
+const GameSwitcher = () => {
+  const { group } = useTypeSelector((state) => state.words)
+  return (
+    <>
+      <button>{group + 1}</button>
+    </>
+  )
+}
