@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Button from '@mui/material/Button'
-import { MUIButtonProps } from '../../../interfaces/games'
+import { MUIButtonProps } from '../../../interfaces/sprint'
 
 export default function MUIButton({
   name,

@@ -15,6 +15,7 @@ export interface MUIButtonProps {
   className?: string
   link?: string
   handler?: () => void
+  sx?: { [name: string]: string | number | { [name: string]: string | number } }
 }
 
 export interface startGameInTextbook {
@@ -30,6 +31,21 @@ export interface GameCardProps {
   children: React.ReactNode
 }
 
+export interface Timer {
+  duration: number
+  colors?: string[]
+}
+
 export interface SprintWordProps {
   word: string
+  answer: string
+}
+
+export interface RenderTime {
+  remainingTime: number
+  children: React.ReactNode
+}
+
+export interface PreperaGameProps {
+  handler: () => void
 }
