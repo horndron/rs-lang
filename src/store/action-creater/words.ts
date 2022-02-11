@@ -25,5 +25,5 @@ export const setWordsPage = (page: number) => {
 }
 
 export const setWordsGroup = (group: number) => {
-  return { type: WordsActionTypes.SET_WORDS_PAGE, payload: group }
+  return { type: WordsActionTypes.SET_WORDS_GROUP, payload: group }
 }
