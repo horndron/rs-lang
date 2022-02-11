@@ -21,7 +21,7 @@ export const TextbookPage: React.FC = () => {
   const { fetchWords } = useActions()
   useEffect(() => {
     fetchWords(group, page)
-  }, [page])
+  }, [page, group])
 
   if (loading) {
     return <h2>Идет загрузка...</h2>

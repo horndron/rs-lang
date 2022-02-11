@@ -29,6 +29,12 @@ const PageSwitch = () => {
       case 'next':
         if (page < 29) setWordsPage(page + 1)
         break
+      case 'first':
+        setWordsPage(0)
+        break
+      case 'last':
+        setWordsPage(29)
+        break
     }
   }
   return (
@@ -37,7 +43,7 @@ const PageSwitch = () => {
         <button
           className="changePageBtn  latestPage"
           onClick={() => {
-            changePage('prev')
+            changePage('first')
           }}
         >
           <img src={LatestBtn} alt="" className="reverseBtn changePageImg" />
@@ -62,7 +68,7 @@ const PageSwitch = () => {
         <button
           className="changePageBtn latestPage"
           onClick={() => {
-            changePage('prev')
+            changePage('last')
           }}
         >
           <img src={LatestBtn} alt="" className="changePageImg" />
