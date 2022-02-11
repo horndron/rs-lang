@@ -6,12 +6,14 @@ export default function MUIButton({
   className,
   sx,
   handler,
+  link,
 }: MUIButtonProps) {
   return (
     <Button
       variant="outlined"
       className={className}
       onClick={handler}
+      href={link}
       sx={{
         textTransform: 'none',
         ...sx,
