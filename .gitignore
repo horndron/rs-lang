@@ -1,3 +1,4 @@
 build/
 node_modules
 src/testFeatures
+.DS_Store
