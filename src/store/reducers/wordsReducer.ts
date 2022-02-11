@@ -21,6 +21,8 @@ export const wordsReducer = (
       return { ...state, loading: false, error: action.payload }
     case WordsActionTypes.SET_WORDS_PAGE:
       return { ...state, page: action.payload }
+    case WordsActionTypes.SET_WORDS_GROUP:
+      return { ...state, group: action.payload }
     default:
       return state
   }

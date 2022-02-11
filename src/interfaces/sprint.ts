@@ -8,6 +8,7 @@ export interface MUISelectProps {
   id: string
   items: SelectItemProps[]
   getSelectValue: (value: number) => void
+  sx?: { [name: string]: string | number | { [name: string]: string | number } }
 }
 
 export interface MUIButtonProps {
@@ -49,4 +50,23 @@ export interface RenderTime {
 export interface PreperaGameProps {
   handler: () => void
   sx?: { [name: string]: string | number | { [name: string]: string | number } }
+}
+
+export interface ResultsGame {
+  true: ResultsQuestionGame[]
+  false: ResultsQuestionGame[]
+}
+
+export interface ResultsQuestionGame {
+  wordId: string
+  userId: string
+  audio: string
+  word: string
+  wordTranslate: string
+  answer: boolean
+}
+
+export interface SprintResultProps {
+  trueAnswer: ResultsQuestionGame[]
+  falseAnswer: ResultsQuestionGame[]
 }

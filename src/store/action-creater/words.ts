@@ -23,3 +23,7 @@ export const fetchWords = (group = 0, page = 0) => {
 export const setWordsPage = (page: number) => {
   return { type: WordsActionTypes.SET_WORDS_PAGE, payload: page }
 }
+
+export const setWordsGroup = (group: number) => {
+  return { type: WordsActionTypes.SET_WORDS_PAGE, payload: group }
+}

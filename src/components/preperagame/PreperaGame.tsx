@@ -10,6 +10,8 @@ export const PreperaGame: FC<PreperaGameProps> = ({ handler }) => {
         colors={['#004777', '#F7B801']}
         colorsTime={[3, 0]}
         onComplete={handler}
+        size={70}
+        strokeWidth={7}
       />
     </div>
   )
