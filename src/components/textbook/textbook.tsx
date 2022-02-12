@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { IMAGE_URL } from '../../constants/cardDataApi'
 import { useActions } from '../../hooks/useActions'
 import { useTypeSelector } from '../../hooks/useTypeSelector'
-import Word from '../../interfaces/api'
+import { Word } from '../../interfaces/api'
 import './textbook.style.scss'
 
 interface ICard {

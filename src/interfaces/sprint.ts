@@ -69,4 +69,6 @@ export interface ResultsQuestionGame {
 export interface SprintResultProps {
   trueAnswer: ResultsQuestionGame[]
   falseAnswer: ResultsQuestionGame[]
+  score: number
+  restartGame: () => void
 }
