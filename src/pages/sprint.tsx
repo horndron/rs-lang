@@ -108,6 +108,16 @@ export const Sprint: FC = () => {
     setLength(60)
   }
 
+  document.onkeydown = checkKey
+
+  function checkKey(e: KeyboardEvent): void {
+    if (e.key == 'ArrowLeft' && length < words.length) {
+      falseBtn()
+    } else if (e.key == 'ArrowRight' && length < words.length) {
+      trueBtn()
+    }
+  }
+
   useEffect(() => {
     getWords(group)
   }, [group])
