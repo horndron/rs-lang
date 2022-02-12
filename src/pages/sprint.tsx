@@ -100,6 +100,7 @@ export const Sprint: FC = () => {
   const getGamesAgain = (): void => {
     setPreperaGame(true)
     setScore({ total: 0, seriesTrueAnswers: 0 })
+    setResult({ true: [], false: [] })
     setLength(0)
   }
 
