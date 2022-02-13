@@ -59,7 +59,6 @@ export interface ResultsGame {
 
 export interface ResultsQuestionGame {
   wordId: string
-  userId: string
   audio: string
   word: string
   wordTranslate: string

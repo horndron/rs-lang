@@ -13,7 +13,7 @@ const Footer = () => {
     return PATH_GAMES.includes(path[path.length - 1])
   }
   useEffect(() => {
-    console.log('render dsds')
+    renderFooter()
   }, [navigate])
   return (
     <>
