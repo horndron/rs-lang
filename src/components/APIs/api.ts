@@ -203,11 +203,18 @@ export const getUserWord = async (
         'Content-Type': 'application/json',
       },
     }
-  ).then((data) => {
-    return data.status == 200
-      ? data.json()
-      : { status: data.status, message: data.text() }
-  })
+  )
+    .then(async (data) => {
+      const word = await data.json()
+      word.status = data.status
+      return data.status == 200
+        ? word
+        : { status: data.status, message: data.text() }
+    })
+    .catch((data) => {
+      console.warn(data)
+      return { status: 404, message: data }
+    })
   return response
 }
 

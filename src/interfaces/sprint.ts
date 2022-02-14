@@ -59,7 +59,6 @@ export interface ResultsGame {
 
 export interface ResultsQuestionGame {
   wordId: string
-  userId: string
   audio: string
   word: string
   wordTranslate: string
@@ -69,4 +68,6 @@ export interface ResultsQuestionGame {
 export interface SprintResultProps {
   trueAnswer: ResultsQuestionGame[]
   falseAnswer: ResultsQuestionGame[]
+  score: number
+  restartGame: () => void
 }

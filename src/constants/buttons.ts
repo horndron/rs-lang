@@ -58,6 +58,28 @@ const BUTTON_STYLES = {
       borderColor: 'secondary.main',
     },
   },
+
+  trueAnswer: {
+    color: 'text.primary',
+    borderColor: 'green',
+    backgroundColor: 'green',
+    ':hover': {
+      color: 'text.primary',
+      backgroundColor: 'green',
+      borderColor: 'green',
+    },
+  },
+
+  falseAnswer: {
+    color: 'text.primary',
+    borderColor: '#c00202',
+    backgroundColor: '#c00202',
+    ':hover': {
+      color: 'text.primary',
+      backgroundColor: '#c00202',
+      borderColor: '#c00202',
+    },
+  },
 }
 
 export default BUTTON_STYLES

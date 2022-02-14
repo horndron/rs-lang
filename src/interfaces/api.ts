@@ -36,7 +36,9 @@ export interface RejectStatusText {
 }
 
 export interface Options {
-  [key: string]: string | number | boolean
+  trueAnswers: number
+  seriallyAnswer: number
+  studied: boolean
 }
 
 export interface UserWordParams {
@@ -49,6 +51,7 @@ export interface UserWord {
   optional: Options
   id: string
   wordId: string
+  status?: number
 }
 
 export default Word
