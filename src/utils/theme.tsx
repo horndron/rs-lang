@@ -23,13 +23,17 @@ export const theme = createTheme({
       default: '#284968',
     },
     text: {
-      primary: '#ecf7ff',
+      primary: '#284968',
+      secondary: '#ecf7ff',
     },
   },
   typography: {
     fontFamily: 'Titillium Web, Arial',
     h1: {
       fontFamily: 'Ribeye Marrow, cursive',
+      fontSize: '1.2rem',
+    },
+    h5: {
       fontSize: '1.2rem',
     },
     button: {
