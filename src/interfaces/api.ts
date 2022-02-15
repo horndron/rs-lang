@@ -20,6 +20,13 @@ export interface User {
   password?: string
   name?: string
   id?: string
+  status?: number
+}
+
+export interface CreateUser {
+  id: string
+  email: string
+  status?: number
 }
 
 export interface AuthUser {
@@ -28,6 +35,7 @@ export interface AuthUser {
   refreshToken: string
   userId: string
   name: string
+  status?: number
 }
 
 export interface RejectStatusText {

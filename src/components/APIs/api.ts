@@ -6,6 +6,7 @@ import {
   UserWord,
   UserWordParams,
   RejectStatusText,
+  CreateUser,
   AuthUser,
 } from '../../interfaces/api'
 
@@ -36,7 +37,9 @@ export const getWord = async (wordId: string): Promise<Word | void> => {
   }
 }
 
-export const createUser = async (user: User): Promise<User | string> => {
+export const createUser = async (
+  user: User
+): Promise<CreateUser | RejectStatusText> => {
   const response = await fetch(
     `${constApi.BACKEND_HOSTNAME}/${constApi.URL_USERS}`,
     {
