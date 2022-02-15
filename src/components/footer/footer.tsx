@@ -35,7 +35,7 @@ const Footer = () => {
                 color: 'primary.light',
                 alignItems: 'center',
                 ':hover': {
-                  color: 'text.primary',
+                  color: 'text.secondary',
                 },
               }}
               className="nav-item"
