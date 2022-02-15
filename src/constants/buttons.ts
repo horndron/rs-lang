@@ -1,26 +1,26 @@
 const BUTTON_STYLES = {
   light: {
     color: 'primary.main',
-    backgroundColor: 'text.primary',
-    borderColor: 'text.primary',
+    backgroundColor: 'text.secondary',
+    borderColor: 'text.secondary',
     ':hover': {
-      color: 'text.primary',
-      borderColor: 'text.primary',
+      color: 'text.secondary',
+      borderColor: 'text.secondary',
     },
   },
 
   lightBorder: {
-    color: 'text.primary',
-    borderColor: 'text.primary',
+    color: 'text.secondary',
+    borderColor: 'text.secondary',
     ':hover': {
       color: 'primary.main',
-      backgroundColor: 'text.primary',
-      borderColor: 'text.primary',
+      backgroundColor: 'text.secondary',
+      borderColor: 'text.secondary',
     },
   },
 
   color: {
-    color: 'text.primary',
+    color: 'text.secondary',
     backgroundColor: 'primary.main',
     borderColor: 'primary.main',
     ':hover': {
@@ -33,14 +33,14 @@ const BUTTON_STYLES = {
     color: 'primary.main',
     borderColor: 'primary.main',
     ':hover': {
-      color: 'text.primary',
+      color: 'text.secondary',
       backgroundColor: 'primary.main',
       borderColor: 'primary.main',
     },
   },
 
   dark: {
-    color: 'text.primary',
+    color: 'text.secondary',
     backgroundColor: 'secondary.main',
     borderColor: 'secondary.main',
     ':hover': {
@@ -53,8 +53,16 @@ const BUTTON_STYLES = {
     color: 'secondary.main',
     borderColor: 'secondary.main',
     ':hover': {
-      color: 'text.primary',
+      color: 'text.secondary',
       backgroundColor: 'secondary.main',
+      borderColor: 'secondary.main',
+    },
+  },
+
+  text: {
+    color: 'secondary.main',
+    borderColor: 'white',
+    ':hover': {
       borderColor: 'secondary.main',
     },
   },
