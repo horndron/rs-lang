@@ -1,97 +1,119 @@
-// import axios from 'axios'
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { IMAGE_URL } from '../../constants/cardDataApi'
-import { setPageAction } from '../../store/pageGroupReducer'
-import { setWordsAction } from '../../store/wordsReducer'
-import { getChunkWords } from '../APIs/api'
+import { AUDIO_URL, GROUP_COLOR, IMAGE_URL } from '../../constants/cardDataApi'
+import { useActions } from '../../hooks/useActions'
+import { useTypeSelector } from '../../hooks/useTypeSelector'
+import { Word } from '../../interfaces/api'
+import { WordSettings } from './settings'
+import AudioImg from '../../assets/svg/auido.svg'
+import InfoImg from '../../assets/svg/info-solid.svg'
+import ExampleImg from '../../assets/svg/book-open-solid.svg'
 import './textbook.style.scss'
 
+interface ICard {
+  card: Word
+  group: number
+}
+
 export const TextbookPage: React.FC = () => {
-  const words = useSelector((state) => state.words.words)
-  const page = useSelector((state) => state.page.page)
-  const group = useSelector((state) => state.page.group)
-
-  const dispatch = useDispatch()
-  async function getWords() {
-    const newWords = await getChunkWords(group, page)
-    dispatch(setWordsAction(newWords))
-  }
+  const { words, loading, error, page, group } = useTypeSelector(
+    (state) => state.words
+  )
+  const { fetchWords } = useActions()
   useEffect(() => {
-    getWords()
-  }, [])
+    fetchWords(group, page)
+  }, [page, group])
 
+  if (loading) {
+    return <h2>Идет загрузка...</h2>
+  }
+  if (error) {
+    return <h2>{error}</h2>
+  }
   return (
     <>
       <div className="container words-container">
-        {words.map((card) => (
-          <WordCard key={card.id} data={card} />
+        {words.map((card: Word) => (
+          <WordCard key={card.id} card={card} group={group} />
         ))}
-        <WordSettings getWords={getWords} />
+        <WordSettings />
       </div>
     </>
   )
 }
 
-export const WordCard: React.FC = ({ data }) => {
-  const image = `${IMAGE_URL}/${data.image.split('/')[1]}`
-  const color = randomColor()
+export const WordCard: React.FC<ICard> = ({ card, group }) => {
+  const image = `${IMAGE_URL}/${card.image.split('/')[1]}`
+  const audioPath = `${card.audio.split('/')[1]}`
+  const meanPath = `${card.audioMeaning.split('/')[1]}`
+  const examplePath = `${card.audioExample.split('/')[1]}`
+
+  const color = GROUP_COLOR[group]
   return (
     <>
       <div className="wordCard">
-        <div className="cardTop" style={{ backgroundImage: `url(${image})` }}>
-          <div
-            className="content"
-            style={{
-              background: `linear-gradient(rgba(255, 255, 255, 0), ${color})`,
-            }}
-          ></div>
-          <h3 className="cardTitle">{data.word}</h3>
-          <p className="wordSpell">{`${data.wordTranslate} ${data.transcription}`}</p>
+        <div className="cardTop">
+          <img src={image} alt="cardImg" />
+          <h2 className="cardTitle">{card.word}</h2>
+          <div className="cardOverlay" style={color.gradient}></div>
         </div>
-        <div className="cardBottom" style={{ background: color }}>
-          <p className="cardText">
-            <span dangerouslySetInnerHTML={{ __html: data.textMeaning }}></span>
-            <br />
-            <span dangerouslySetInnerHTML={{ __html: data.textExample }}></span>
-          </p>
+        <div className="cardMid" style={color.color}>
+          <span className="cardMean">{card.wordTranslate}</span>
+          <span className="cardMean">{card.transcription}</span>
+          <button
+            className="cardCircle"
+            style={color.color}
+            onClick={() => {
+              playAudio(audioPath)
+            }}
+          >
+            <img src={AudioImg} alt="" />
+          </button>
+          <button
+            className="audioMean"
+            style={color.color}
+            onClick={() => {
+              playAudio(meanPath)
+            }}
+            title="Word meaning"
+          >
+            <img src={InfoImg} alt="" />
+          </button>
+          <button
+            className="audioExamp"
+            style={color.color}
+            onClick={() => {
+              playAudio(examplePath)
+            }}
+            title="Word example"
+          >
+            <img src={ExampleImg} alt="" />
+          </button>
+        </div>
+        <div className="cardBottom">
+          <article className="cardText">
+            <p dangerouslySetInnerHTML={{ __html: card.textMeaning }}></p>
+            <p dangerouslySetInnerHTML={{ __html: card.textExample }}></p>
+          </article>
           <hr className="separateLine" />
-          <p className="cardText">
-            <span
-              dangerouslySetInnerHTML={{ __html: data.textMeaningTranslate }}
-            ></span>
-            <br />
-            <span
-              dangerouslySetInnerHTML={{ __html: data.textExampleTranslate }}
-            ></span>
-          </p>
+          <article className="cardText">
+            <p
+              dangerouslySetInnerHTML={{ __html: card.textMeaningTranslate }}
+            ></p>
+            <p
+              dangerouslySetInnerHTML={{ __html: card.textExampleTranslate }}
+            ></p>
+          </article>
         </div>
       </div>
     </>
   )
 }
 
-export const WordSettings: React.FC = ({ getWords }) => {
-  const page = useSelector((state) => state.page.page)
-  const dispatch = useDispatch()
-  // const group = useSelector((state) => state.page.group)
-  return (
-    <>
-      <div className="settingsBar">
-        <button>prev</button>
-        <div className="pageSwitcher">{`${page + 1} / 30`}</div>
-        <button
-          onClick={() => {
-            dispatch(setPageAction(page + 1))
-            getWords()
-          }}
-        >
-          next
-        </button>
-      </div>
-    </>
-  )
-}
-function randomColor() {
-  return `#${Math.random().toString(16).slice(2, 8).padEnd(6, '0')}`
+export async function playAudio(path: string) {
+  try {
+    const audio = new Audio(`${AUDIO_URL}/${path}`)
+    audio.play()
+  } catch (e) {
+    console.log('Аудио файл не найден')
+  }
 }

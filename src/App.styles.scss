@@ -2,6 +2,7 @@
 @import './utils/_mixins.scss';
 
 * {
+  font-family: 'Titillium Web, Arial';
   margin: 0;
   padding: 0;
 }
@@ -25,10 +26,10 @@ body {
 }
 
 .main-container {
-  // background-color: $backgroundColor;
+  min-height: calc(100vh - 64px);
   display: flex;
   justify-content: center;
-  margin-bottom: 100px;
+  background-color: #cfcfcf;
 }
 
 .container {
