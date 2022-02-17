@@ -10,6 +10,7 @@ import Footer from './components/footer/footer'
 import { TextbookPage } from './components/textbook/textbook'
 import { Sprint } from './pages/sprint'
 import { Games } from './pages/games'
+import MainPage from './pages/mainPage'
 
 export const App = () => {
   return (
@@ -19,7 +20,7 @@ export const App = () => {
           <Header />
           <main className="main-container">
             <Routes>
-              <Route path={'/'}></Route>
+              <Route path={'/'} element={<MainPage />}></Route>
               <Route path={'/textbook'} element={<TextbookPage />}></Route>
               <Route path={'/games'} element={<Games />}></Route>
               <Route path={'/games/sprint'} element={<Sprint />}></Route>
@@ -27,7 +28,6 @@ export const App = () => {
               <Route path={'/about'}></Route>
             </Routes>
           </main>
-          {/* // todo: remove footer for games pages */}
           <Footer />
         </ThemeProvider>
       </HashRouter>
