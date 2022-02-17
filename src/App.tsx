@@ -10,7 +10,7 @@ import Footer from './components/footer/footer'
 import { TextbookPage } from './components/textbook/textbook'
 import { Sprint } from './pages/sprint'
 import { Games } from './pages/games'
-import MainPage from './pages/mainPage'
+// import MainPage from './pages/mainPage'
 
 export const App = () => {
   return (
@@ -20,7 +20,7 @@ export const App = () => {
           <Header />
           <main className="main-container">
             <Routes>
-              <Route path={'/'} element={<MainPage />}></Route>
+              <Route path={'/'}></Route>
               <Route path={'/textbook'} element={<TextbookPage />}></Route>
               <Route path={'/games'} element={<Games />}></Route>
               <Route path={'/games/sprint'} element={<Sprint />}></Route>

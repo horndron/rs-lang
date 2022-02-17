@@ -6,6 +6,7 @@ const inititalState: WordsState = {
   error: null,
   page: 0,
   group: 0,
+  level: 0,
 }
 
 export const wordsReducer = (
@@ -23,6 +24,8 @@ export const wordsReducer = (
       return { ...state, page: action.payload }
     case WordsActionTypes.SET_WORDS_GROUP:
       return { ...state, group: action.payload }
+    case WordsActionTypes.SET_LEVEL:
+      return { ...state, level: action.payload }
     default:
       return state
   }
