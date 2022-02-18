@@ -1,8 +1,9 @@
-import * as ConstFooter from '../../constants/footer'
+import { AUTHORS } from '../../constants/about'
+import { COURSE_LINK, FOOTER_HEIGHT } from '../../constants/footer'
 import './footer.scss'
 import { Box, Container, Link, Typography } from '@mui/material'
 import GitHubIcon from '@mui/icons-material/GitHub'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const Footer = () => {
@@ -12,15 +13,26 @@ const Footer = () => {
   const renderFooter = (): boolean => {
     return PATH_GAMES.includes(path[path.length - 1])
   }
+
+  const PATH_EXCEPTION = ['textbook']
+  const [footerBottom, setFooterBottom] = useState('')
+
+  const handleFooterBottom = () => {
+    setFooterBottom(
+      PATH_EXCEPTION.includes(path[path.length - 1]) ? `-${FOOTER_HEIGHT}` : '0'
+    )
+  }
+
   useEffect(() => {
     renderFooter()
+    handleFooterBottom()
   }, [navigate])
   return (
     <>
       {renderFooter() === true ? (
         <div></div>
       ) : (
-        <footer>
+        <footer style={{ bottom: footerBottom, height: FOOTER_HEIGHT }}>
           <Container
             maxWidth="xl"
             className="footer-container"
@@ -33,9 +45,9 @@ const Footer = () => {
                 alignItems: 'center',
               }}
             >
-              {ConstFooter.AUTHORS.map((author) => (
+              {AUTHORS.map((author, index) => (
                 <Link
-                  key={author.name}
+                  key={author.github + index}
                   href={author.link}
                   target="_blank"
                   rel="noopener"
@@ -56,7 +68,7 @@ const Footer = () => {
                   className="nav-item"
                 >
                   <GitHubIcon sx={{ width: '12px', mr: 1 }} />
-                  {author.name}
+                  {author.github}
                 </Link>
               ))}
             </Box>
@@ -70,7 +82,7 @@ const Footer = () => {
                 2022
               </Typography>
               <Link
-                href={ConstFooter.COURSE_LINK}
+                href={COURSE_LINK}
                 target="_blank"
                 rel="noopener"
                 className="rs-button"
