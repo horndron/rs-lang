@@ -29,7 +29,6 @@ export const App = () => {
               <Route path={'/about'} element={<About />}></Route>
             </Routes>
           </main>
-          {/* // todo: remove footer for games pages */}
           <Footer />
         </ThemeProvider>
       </HashRouter>

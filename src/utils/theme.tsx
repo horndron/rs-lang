@@ -13,7 +13,8 @@ export const theme = createTheme({
       default: '#284968',
     },
     text: {
-      primary: '#ecf7ff',
+      primary: '#284968',
+      secondary: '#ecf7ff',
     },
   },
   typography: {
@@ -25,6 +26,7 @@ export const theme = createTheme({
     h5: {
       fontFamily: 'Ribeye, cursive',
       fontSize: '4.2rem',
+      // fontSize: '1.2rem', // TODO: check h5 in login modal
     },
     button: {
       fontSize: '0.9rem',

@@ -43,6 +43,9 @@ const Footer = () => {
                 mx: 2,
                 display: 'flex',
                 alignItems: 'center',
+                ':hover': {
+                  color: 'text.secondary',
+                },
               }}
             >
               {AUTHORS.map((author, index) => (

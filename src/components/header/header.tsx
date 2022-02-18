@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
 import * as ConstHeader from '../../constants/header'
-import BUTTON_STYLES from '../../constants/buttons'
 import './header.scss'
 
 import {
@@ -17,14 +16,9 @@ import {
 } from '@mui/material'
 
 import MenuIcon from '@mui/icons-material/Menu'
-import MUIButton from '../UI/MUIButton/MUIButton'
+import LoginModal from '../login/login'
 
 const Header = () => {
-  // ! temp empty function
-  function auth(): void {
-    //
-  }
-
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -110,7 +104,7 @@ const Header = () => {
                   sx={{
                     p: 1,
                     m: 1,
-                    color: 'text.primary',
+                    color: 'text.secondary',
                     display: 'block',
                     textTransform: 'none',
                   }}
@@ -121,16 +115,7 @@ const Header = () => {
               </NavLink>
             ))}
           </Box>
-          <MUIButton
-            name="login"
-            sx={{ ...BUTTON_STYLES.light }}
-            handler={auth}
-          />
-          {/* <MUIButton
-            name="logout"
-            sx={{ ...BUTTON_STYLES.lightBorder }}
-            handler={auth}
-          /> */}
+          <LoginModal />
         </Toolbar>
       </Container>
     </AppBar>
