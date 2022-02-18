@@ -10,7 +10,8 @@ import Footer from './components/footer/footer'
 import { TextbookPage } from './components/textbook/textbook'
 import { Sprint } from './pages/sprint'
 import { Games } from './pages/games'
-import MainPage from './pages/mainPage'
+import MainPage from './pages/mainPage/mainPage'
+import About from './pages/about/about'
 
 export const App = () => {
   return (
@@ -25,7 +26,7 @@ export const App = () => {
               <Route path={'/games'} element={<Games />}></Route>
               <Route path={'/games/sprint'} element={<Sprint />}></Route>
               <Route path={'/stats'}></Route>
-              <Route path={'/about'}></Route>
+              <Route path={'/about'} element={<About />}></Route>
             </Routes>
           </main>
           {/* // todo: remove footer for games pages */}
