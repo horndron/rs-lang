@@ -60,22 +60,22 @@ const BUTTON_STYLES = {
   },
 
   trueAnswer: {
-    color: 'text.primary',
+    color: 'green',
     borderColor: 'green',
-    backgroundColor: 'green',
+    backgroundColor: 'text.secondary',
     ':hover': {
-      color: 'text.primary',
+      color: 'text.secondary',
       backgroundColor: 'green',
       borderColor: 'green',
     },
   },
 
   falseAnswer: {
-    color: 'text.primary',
+    color: '#c00202',
     borderColor: '#c00202',
-    backgroundColor: '#c00202',
+    backgroundColor: 'text.secondary',
     ':hover': {
-      color: 'text.primary',
+      color: 'text.secondary',
       backgroundColor: '#c00202',
       borderColor: '#c00202',
     },

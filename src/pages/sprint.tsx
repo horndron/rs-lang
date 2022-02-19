@@ -23,10 +23,11 @@ export const Sprint: FC = () => {
     const words: Word[] = []
     const pages = threeRandomPageWords()
     const wordsPage1 = await getChunkWords(group, pages[0])
-    const wordsPage2 = await getChunkWords(group, pages[1])
-    const wordsPage3 = await getChunkWords(group, pages[2])
     words.push(...(wordsPage1 as Word[]))
+    setWords(words)
+    const wordsPage2 = await getChunkWords(group, pages[1])
     words.push(...(wordsPage2 as Word[]))
+    const wordsPage3 = await getChunkWords(group, pages[2])
     words.push(...(wordsPage3 as Word[]))
     setWords(words)
   }
