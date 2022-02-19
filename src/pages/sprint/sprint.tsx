@@ -1,10 +1,12 @@
+import { Typography } from '@mui/material'
 import React, { FC, useEffect, useState } from 'react'
-import { getChunkWords, getUser } from '../../components/APIs/api'
+import { getChunkWords } from '../../components/APIs/api'
 import { CircleTimer } from '../../components/circletimer/CircleTimer'
 import { PreperaGame } from '../../components/preperagame/PreperaGame'
 import { SprintResult } from '../../components/sprintresult/SprintResult'
 import { SprintWord } from '../../components/sprintword/SprintWord'
 import MUIButton from '../../components/UI/MUIButton/MUIButton'
+import BUTTON_STYLES from '../../constants/buttons'
 import { useTypeSelector } from '../../hooks/useTypeSelector'
 import { Word } from '../../interfaces/api'
 import { ResultsGame, ResultsQuestionGame } from '../../interfaces/sprint'
@@ -14,24 +16,18 @@ import {
   threeRandomPageWords,
 } from '../../utils/utils'
 import '../sprint/sprint.styles.sass'
-import BUTTON_STYLES from '../../constants/buttons'
-import { Typography } from '@mui/material'
 
 export const Sprint: FC = () => {
   const { level } = useTypeSelector((state) => state.words)
   const getWords = async (level: number) => {
     const words: Word[] = []
     const pages = threeRandomPageWords()
-    const wordsPage1 = await getChunkWords(level, pages[0])
-    words.push(...(wordsPage1 as Word[]))
-    setWords(words)
-    const wordsPage2 = await getChunkWords(level, pages[1])
-    words.push(...(wordsPage2 as Word[]))
-    const wordsPage3 = await getChunkWords(level, pages[2])
-    words.push(...(wordsPage3 as Word[]))
-    setWords(words)
+    pages.forEach(async (page) => {
+      const wordsPage1 = await getChunkWords(level, page)
+      words.push(...(wordsPage1 as Word[]))
+      setWords(words)
+    })
   }
-
   const [result, setResult] = useState<ResultsGame>({ true: [], false: [] })
   const [preperaGame, setPreperaGame] = useState(true)
   const [words, setWords] = useState<Word[]>([])
@@ -62,20 +58,21 @@ export const Sprint: FC = () => {
     if (localStorage.getItem('token') && localStorage.getItem('userId')) {
       const userId = localStorage.getItem('userId') as string
       const token = localStorage.getItem('token') as string
-      console.log(getUser(userId, token))
-      answer
-        ? setOrUpdateUserWord(userId, word.id, token, {
-            trueAnswers: 1,
-            seriallyAnswer: 1,
-          })
-        : setOrUpdateUserWord(userId, word.id, token, {
-            trueAnswers: 0,
-            seriallyAnswer: 0,
-          })
+
+      if (answer) {
+        setOrUpdateUserWord(userId, word.id, token, {
+          trueAnswers: 1,
+          seriallyAnswer: 1,
+        })
+        setResult({ ...result, true: [...result.true, resultAnswer] })
+      } else {
+        setOrUpdateUserWord(userId, word.id, token, {
+          trueAnswers: 0,
+          seriallyAnswer: 0,
+        })
+        setResult({ ...result, false: [...result.false, resultAnswer] })
+      }
     }
-    answer
-      ? setResult({ ...result, true: [...result.true, resultAnswer] })
-      : setResult({ ...result, false: [...result.false, resultAnswer] })
   }
 
   const getScoreMultiply = (): number => {
