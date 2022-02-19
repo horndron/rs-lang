@@ -1,20 +1,20 @@
 import React, { FC, useEffect, useState } from 'react'
-import { getChunkWords, getUser } from '../components/APIs/api'
-import { CircleTimer } from '../components/circletimer/CircleTimer'
-import { PreperaGame } from '../components/preperagame/PreperaGame'
-import { SprintResult } from '../components/sprintresult/SprintResult'
-import { SprintWord } from '../components/sprintword/SprintWord'
-import MUIButton from '../components/UI/MUIButton/MUIButton'
-import { useTypeSelector } from '../hooks/useTypeSelector'
-import { Word } from '../interfaces/api'
-import { ResultsGame, ResultsQuestionGame } from '../interfaces/sprint'
+import { getChunkWords, getUser } from '../../components/APIs/api'
+import { CircleTimer } from '../../components/circletimer/CircleTimer'
+import { PreperaGame } from '../../components/preperagame/PreperaGame'
+import { SprintResult } from '../../components/sprintresult/SprintResult'
+import { SprintWord } from '../../components/sprintword/SprintWord'
+import MUIButton from '../../components/UI/MUIButton/MUIButton'
+import { useTypeSelector } from '../../hooks/useTypeSelector'
+import { Word } from '../../interfaces/api'
+import { ResultsGame, ResultsQuestionGame } from '../../interfaces/sprint'
 import {
   setOrUpdateUserWord,
   setRandomNumber,
   threeRandomPageWords,
-} from '../utils/utils'
-import '../sprint.styles.sass'
-import BUTTON_STYLES from '../constants/buttons'
+} from '../../utils/utils'
+import '../sprint/sprint.styles.sass'
+import BUTTON_STYLES from '../../constants/buttons'
 import { Typography } from '@mui/material'
 
 export const Sprint: FC = () => {

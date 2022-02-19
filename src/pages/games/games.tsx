@@ -1,9 +1,10 @@
 import React, { FC, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { GameCard } from '../components/gamecard/GameCard'
-import MUISelect from '../components/UI/MUISelect/MUISelect'
-import { useActions } from '../hooks/useActions'
-import { SelectItemProps } from '../interfaces/sprint'
+import { GameCard } from '../../components/gamecard/GameCard'
+import MUISelect from '../../components/UI/MUISelect/MUISelect'
+import { useActions } from '../../hooks/useActions'
+import { SelectItemProps } from '../../interfaces/sprint'
+import './games.styles.sass'
 
 const CATEGORIES_FOR_SELECT: SelectItemProps[] = [
   { value: 0, name: 1 },
