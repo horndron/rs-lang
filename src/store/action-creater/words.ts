@@ -27,3 +27,7 @@ export const setWordsPage = (page: number) => {
 export const setWordsGroup = (group: number) => {
   return { type: WordsActionTypes.SET_WORDS_GROUP, payload: group }
 }
+
+export const setLevel = (level: number) => {
+  return { type: WordsActionTypes.SET_LEVEL, payload: level }
+}

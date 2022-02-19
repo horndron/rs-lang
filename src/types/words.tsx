@@ -6,6 +6,7 @@ export interface WordsState {
   error: null | string
   page: number
   group: number
+  level: number
 }
 
 export enum WordsActionTypes {
@@ -14,6 +15,7 @@ export enum WordsActionTypes {
   FETCH_WORDS_ERROR = 'FETCH_WORDS_ERROR',
   SET_WORDS_PAGE = 'SET_WORDS_PAGE',
   SET_WORDS_GROUP = 'SET_WORDS_GROUP',
+  SET_LEVEL = 'SET_LEVEL',
 }
 
 interface FetchWordsAction {
@@ -38,9 +40,15 @@ interface SetWordsGroupAction {
   type: WordsActionTypes.SET_WORDS_GROUP
   payload: number
 }
+
+interface SetLevelAction {
+  type: WordsActionTypes.SET_LEVEL
+  payload: number
+}
 export type WordsAction =
   | FetchWordsAction
   | FetchWordsSuccessAction
   | FetchWordsErrorAction
   | SetWordsPageAction
   | SetWordsGroupAction
+  | SetLevelAction
