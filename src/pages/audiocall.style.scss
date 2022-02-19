@@ -1,0 +1,52 @@
+@import '../utils/mixins';
+@import '../utils/_variables.scss';
+
+.audiocall-game {
+  @include flex-center;
+  width: 100%;
+  padding: 15px;
+  background-color: $lightColor;
+  .audiocall-container {
+    max-width: 100%;
+    .word-card {
+      width: 700px;
+      max-width: 100%;
+      @include flex-column-center;
+      flex-direction: column;
+      text-align: center;
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3);
+      .word-card__top {
+        @include flex-between;
+        width: 100%;
+        .live-list {
+          width: 20%;
+          list-style: none;
+          @include flex-between;
+        }
+        .audio-example {
+          width: 60px;
+          height: 60px;
+          @include flex-center;
+          border-radius: 50%;
+          background: rgba(0, 0, 0, 0);
+          cursor: pointer;
+        }
+      }
+      .word-card__bottom {
+        width: 100%;
+        .answers {
+          margin: 60px 0 25px;
+          width: 100%;
+          @include flex-evenly;
+
+          button {
+            width: 23%;
+          }
+        }
+      }
+    }
+  }
+}

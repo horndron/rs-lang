@@ -51,6 +51,13 @@
   align-items: center;
 }
 
+@mixin flex-evenly {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
 @mixin for-laptop {
   @media (max-width: 1600px) {
     @content;

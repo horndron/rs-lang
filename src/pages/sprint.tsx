@@ -77,7 +77,7 @@ export const Sprint: FC = () => {
       : setResult({ ...result, false: [...result.false, resultAnswer] })
   }
 
-  const getScoreЬultiply = (): number => {
+  const getScoreMultiply = (): number => {
     let multiply = 1
     if (score.seriesTrueAnswers > 9) {
       multiply = 8
@@ -93,7 +93,7 @@ export const Sprint: FC = () => {
   const setTotalScore = (answer: boolean): void => {
     answer
       ? setScore({
-          total: score.total + 10 * getScoreЬultiply(),
+          total: score.total + 10 * getScoreMultiply(),
           seriesTrueAnswers: score.seriesTrueAnswers + 1,
         })
       : setScore({ ...score, seriesTrueAnswers: 0 })

@@ -12,6 +12,7 @@ import { Sprint } from './pages/sprint'
 import { Games } from './pages/games'
 import MainPage from './pages/mainPage/mainPage'
 import About from './pages/about/about'
+import { Audiocall } from './pages/audiocall'
 
 export const App = () => {
   return (
@@ -25,6 +26,7 @@ export const App = () => {
               <Route path={'/textbook'} element={<TextbookPage />}></Route>
               <Route path={'/games'} element={<Games />}></Route>
               <Route path={'/games/sprint'} element={<Sprint />}></Route>
+              <Route path={'/games/audiocall'} element={<Audiocall />}></Route>
               <Route path={'/stats'}></Route>
               <Route path={'/about'} element={<About />}></Route>
             </Routes>
