@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { NavLink } from 'react-router-dom'
 import NextBtn from '../../assets/svg/angle-right-solid.svg'
 import LatestBtn from '../../assets/svg/angles-right-solid.svg'
 import { GROUP_COLOR } from '../../constants/cardDataApi'
@@ -80,7 +81,7 @@ const PageSwitch = () => {
 
 const GroupSwitcher = () => {
   const { group } = useTypeSelector((state) => state.words)
-  const { setWordsGroup } = useActions()
+  const { setWordsGroup, setLevel } = useActions()
   const [active, setActive] = useState(false)
   const color = GROUP_COLOR[group].color
   const groupArr = [1, 2, 3, 4, 5, 6]
@@ -106,6 +107,7 @@ const GroupSwitcher = () => {
                 style={GROUP_COLOR[ind].color}
                 onClick={() => {
                   setWordsGroup(ind)
+                  setLevel(ind)
                 }}
               >
                 {el}
@@ -119,10 +121,29 @@ const GroupSwitcher = () => {
 }
 
 const GameSwitcher = () => {
-  const { group } = useTypeSelector((state) => state.words)
+  const [active, setActive] = useState(false)
+  const gamesArr: string[] = ['audiocall', 'sprint']
   return (
     <>
-      <button>{group + 1}</button>
+      <div className="gameSwitchWrapper">
+        <button
+          className={`miniGamesBtn ${active ? 'active' : ''}`}
+          onClick={() => setActive(!active)}
+        >
+          Games
+        </button>
+        <ul className={`listGames ${active ? 'active' : ''}`}>
+          {gamesArr.map((el: string, ind: number) => {
+            return (
+              <li key={`id-${ind}-game`} className="gameName">
+                <NavLink to={`/games/${el}`} className="gameLink">
+                  {el.charAt(0).toUpperCase() + el.slice(1)}
+                </NavLink>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
     </>
   )
 }
