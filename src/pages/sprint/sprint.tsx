@@ -18,16 +18,16 @@ import BUTTON_STYLES from '../../constants/buttons'
 import { Typography } from '@mui/material'
 
 export const Sprint: FC = () => {
-  const group = useTypeSelector((state) => state.words.group)
-  const getWords = async (group: number) => {
+  const { level } = useTypeSelector((state) => state.words)
+  const getWords = async (level: number) => {
     const words: Word[] = []
     const pages = threeRandomPageWords()
-    const wordsPage1 = await getChunkWords(group, pages[0])
+    const wordsPage1 = await getChunkWords(level, pages[0])
     words.push(...(wordsPage1 as Word[]))
     setWords(words)
-    const wordsPage2 = await getChunkWords(group, pages[1])
+    const wordsPage2 = await getChunkWords(level, pages[1])
     words.push(...(wordsPage2 as Word[]))
-    const wordsPage3 = await getChunkWords(group, pages[2])
+    const wordsPage3 = await getChunkWords(level, pages[2])
     words.push(...(wordsPage3 as Word[]))
     setWords(words)
   }
@@ -138,8 +138,8 @@ export const Sprint: FC = () => {
   }
 
   useEffect(() => {
-    getWords(group)
-  }, [group])
+    getWords(level)
+  }, [level])
 
   return (
     <div className="sprint-game">
