@@ -7,6 +7,7 @@ import Header from './components/header/header'
 import Footer from './components/footer/footer'
 
 import { TextbookPage } from './components/textbook/textbook'
+import { HardWords } from './components/textbook/hardwords/hardwords'
 import { Games } from './pages/games/games'
 import MainPage from './pages/mainPage/mainPage'
 import About from './pages/about/about'
@@ -28,6 +29,10 @@ export const App = () => {
               <Route path={'/games/audiocall'} element={<Audiocall />}></Route>
               <Route path={'/stats'}></Route>
               <Route path={'/about'} element={<About />}></Route>
+              <Route
+                path={'/textbook/hardwords'}
+                element={<HardWords />}
+              ></Route>
             </Routes>
           </main>
           <Footer />

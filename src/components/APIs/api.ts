@@ -161,7 +161,7 @@ export const getAllUserWords = async (
       },
     }
   ).then((data) => {
-    return data.status == 204
+    return data.status == 200
       ? data.json()
       : { status: data.status, message: data.text() }
   })
