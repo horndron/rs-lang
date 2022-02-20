@@ -8,6 +8,8 @@ export interface MUISelectProps {
   id: string
   items: SelectItemProps[]
   getSelectValue: (value: number) => void
+  startValue: number
+  value: number | string
   sx?: { [name: string]: string | number | { [name: string]: string | number } }
 }
 

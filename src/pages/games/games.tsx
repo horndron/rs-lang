@@ -1,9 +1,11 @@
-import React, { FC, useEffect } from 'react'
+import React, { FC } from 'react'
 import { useDispatch } from 'react-redux'
-import { GameCard } from '../components/gamecard/GameCard'
-import MUISelect from '../components/UI/MUISelect/MUISelect'
-import { useActions } from '../hooks/useActions'
-import { SelectItemProps } from '../interfaces/sprint'
+import { GameCard } from '../../components/gamecard/GameCard'
+import MUISelect from '../../components/UI/MUISelect/MUISelect'
+import { useActions } from '../../hooks/useActions'
+import { useTypeSelector } from '../../hooks/useTypeSelector'
+import { SelectItemProps } from '../../interfaces/sprint'
+import './games.styles.sass'
 
 const CATEGORIES_FOR_SELECT: SelectItemProps[] = [
   { value: 0, name: 1 },
@@ -15,13 +17,11 @@ const CATEGORIES_FOR_SELECT: SelectItemProps[] = [
 ]
 
 export const Games: FC = () => {
-  const { setWordsGroup } = useActions()
+  const { level } = useTypeSelector((state) => state.words)
+  const { setLevel } = useActions()
   const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(setWordsGroup(0))
-  })
   const getSelectValue = (value: number): void => {
-    dispatch(setWordsGroup(value))
+    dispatch(setLevel(value))
   }
 
   return (
@@ -60,6 +60,8 @@ export const Games: FC = () => {
             getSelectValue={getSelectValue}
             title="Сложность"
             id="games-category"
+            startValue={level}
+            value={level}
             items={CATEGORIES_FOR_SELECT}
           />
         </div>

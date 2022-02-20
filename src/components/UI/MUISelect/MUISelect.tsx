@@ -10,9 +10,11 @@ export default function MUISelect({
   title,
   id,
   items,
+  startValue,
+  value,
   getSelectValue,
 }: MUISelectProps) {
-  const [selectValue, setSelectValue] = React.useState(items[0].value as string)
+  const [selectValue, setSelectValue] = React.useState(value)
 
   const handleChange = (event: SelectChangeEvent) => {
     setSelectValue(event.target.value as string)
@@ -29,8 +31,9 @@ export default function MUISelect({
         <Select
           labelId={id + '-label'}
           id={id}
-          value={selectValue}
+          value={`${selectValue}`}
           label={title}
+          defaultValue={`${startValue}`}
           onChange={handleChange}
         >
           {items.map((item, index) => {
