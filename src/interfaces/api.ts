@@ -62,4 +62,15 @@ export interface UserWord {
   status?: number
 }
 
+interface WordInDay {
+  date: string
+  newWords: number
+}
+export interface UserStatistics {
+  learnedWords: number
+  optional: {
+    wordInDay: WordInDay[]
+  }
+}
+
 export default Word
