@@ -42,6 +42,9 @@ const updateWordParams = (
   }
 }
 
+export const setAudiocallStats = async () => {
+  console.log(1)
+}
 export const setOrUpdateUserWord = async (
   userId: string,
   wordId: string,

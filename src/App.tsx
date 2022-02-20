@@ -7,11 +7,11 @@ import Header from './components/header/header'
 import Footer from './components/footer/footer'
 
 import { TextbookPage } from './components/textbook/textbook'
-import { Sprint } from './pages/sprint/sprint'
 import { Games } from './pages/games/games'
 import MainPage from './pages/mainPage/mainPage'
 import About from './pages/about/about'
 import { Audiocall } from './components/audiocall/audiocall'
+import { Sprint } from './pages/sprint/sprint'
 
 export const App = () => {
   return (

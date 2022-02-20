@@ -13,7 +13,7 @@ import {
 export const getChunkWords = async (
   group: number,
   page: number
-): Promise<Word[] | void> => {
+): Promise<Word[]> => {
   try {
     const response = await fetch(
       `${constApi.BACKEND_HOSTNAME}/${constApi.URL_WORDS}?group=${group}&page=${page}`
@@ -22,6 +22,7 @@ export const getChunkWords = async (
     return response.json()
   } catch (error) {
     console.warn(error as Error)
+    return []
   }
 }
 

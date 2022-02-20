@@ -4,7 +4,7 @@ import { AUDIO_URL } from '../../constants/cardDataApi'
 import Word from '../../interfaces/api'
 import { ResultsGame, ResultsQuestionGame } from '../../interfaces/sprint'
 import { setOrUpdateUserWord } from '../../utils/utils'
-import getChunkWords, { getUser } from '../APIs/api'
+import getChunkWords from '../APIs/api'
 import FillHeart from '../../assets/svg/heart-solid.svg'
 import BreakHeart from '../../assets/svg/heart-crack-solid.svg'
 import AudioGame from '../../assets/svg/audio-game.svg'
@@ -12,19 +12,34 @@ import MUIButton from '../UI/MUIButton/MUIButton'
 import { shuffleArr } from './audiocall'
 import { SprintResult } from '../sprintresult/SprintResult'
 
-export const AudiocallCard: React.FC = ({
+interface IAudioCard {
+  lives: number
+  questions: Word[]
+  setLives: React.Dispatch<React.SetStateAction<number>>
+  setPrepareGame: React.Dispatch<React.SetStateAction<boolean>>
+  generateQuestions: () => Promise<void>
+}
+interface IAudioExample {
+  playGameAuido: (arg: Word) => void
+  questions: Word[]
+  count: number
+}
+interface ILives {
+  lives: number
+}
+export const AudiocallCard: React.FC<IAudioCard> = ({
   lives,
   questions,
   setLives,
-  setPreperaGame,
+  setPrepareGame,
+  generateQuestions,
 }) => {
-  console.log(lives)
   const [answers, setAnswers] = useState<Word[]>([])
   const [count, setCount] = useState<number>(0)
-  const [end, setEnd] = useState(false)
+  const [end, setEnd] = useState<boolean>(false)
   const [result, setResult] = useState<ResultsGame>({ true: [], false: [] })
 
-  const addAnswerInResult = (word: Word, answer: boolean): void => {
+  const addAnswerInResult = async (word: Word, answer: boolean) => {
     const resultAnswer: ResultsQuestionGame = {
       wordId: word.id,
       audio: word.audio,
@@ -36,7 +51,8 @@ export const AudiocallCard: React.FC = ({
     if (localStorage.getItem('token') && localStorage.getItem('userId')) {
       const userId = localStorage.getItem('userId') as string
       const token = localStorage.getItem('token') as string
-      console.log(getUser(userId, token))
+      //   const user = await getUser(userId, token)
+      //   console.log(user)
       answer
         ? setOrUpdateUserWord(userId, word.id, token, {
             trueAnswers: 1,
@@ -60,7 +76,7 @@ export const AudiocallCard: React.FC = ({
       const randomPage = Math.floor(Math.random() * 30)
       const randomWord = Math.floor(Math.random() * 20)
       const chunckWords = await getChunkWords(randomGroup, randomPage)
-      if (isAnswerExist(chunckWords[randomWord].id, ansArr)) {
+      if (isAnswerExist(chunckWords[randomWord]?.id, ansArr)) {
         ansArr.push(chunckWords[randomWord])
       }
     }
@@ -80,13 +96,11 @@ export const AudiocallCard: React.FC = ({
     }
     if (count + 1 > 19) {
       setEnd(true)
-      console.log('gameover')
     } else {
       setCount(count + 1)
       playGameAuido(questions[count + 1])
     }
   }
-
   function playGameAuido(el: Word) {
     const path = `${el.audio.split('/')[1]}`
     try {
@@ -97,10 +111,11 @@ export const AudiocallCard: React.FC = ({
     }
   }
   const getGamesAgain = (): void => {
-    setPreperaGame(true)
+    setPrepareGame(true)
     setResult({ true: [], false: [] })
     setCount(0)
     setLives(5)
+    generateQuestions()
   }
   useEffect(() => {
     generateAnswers()
@@ -154,7 +169,11 @@ export const AudiocallCard: React.FC = ({
   )
 }
 
-const AudioExample: React.FC = ({ playGameAuido, questions, count }) => {
+const AudioExample: React.FC<IAudioExample> = ({
+  playGameAuido,
+  questions,
+  count,
+}) => {
   return (
     <>
       <button
@@ -169,7 +188,7 @@ const AudioExample: React.FC = ({ playGameAuido, questions, count }) => {
   )
 }
 
-const Lives = ({ lives }) => {
+const Lives: React.FC<ILives> = ({ lives }) => {
   const count = new Array(5).fill(0)
   return (
     <>

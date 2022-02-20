@@ -1,24 +1,25 @@
-import { Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
+import { Typography } from '@mui/material'
 import { PreperaGame } from '../preperagame/PreperaGame'
 import { Word } from '../../interfaces/api'
-import './audiocall.style.scss'
 import { useTypeSelector } from '../../hooks/useTypeSelector'
 import { getChunkWords } from '../APIs/api'
 import { AudiocallCard } from './audiocard'
+import './audiocall.style.scss'
 
 export const Audiocall: React.FC = () => {
   const { level, page } = useTypeSelector((state) => state.words)
   const [questions, setQuestions] = useState<Word[]>([])
-  const [preperaGame, setPreperaGame] = useState<boolean>(true)
-  const [lives, setLives] = useState(5)
+  const [preperaGame, setPrepareGame] = useState<boolean>(true)
+  const [lives, setLives] = useState<number>(5)
 
   const startGame = () => {
-    setPreperaGame(false)
+    setPrepareGame(false)
   }
+
   async function generateQuestions() {
-    await getChunkWords(level, page).then((res) => {
-      const arr = res
+    await getChunkWords(level, page).then((res: Word[]) => {
+      const arr: Word[] | void = res
       setQuestions(shuffleArr(arr))
     })
   }
@@ -38,7 +39,8 @@ export const Audiocall: React.FC = () => {
                 lives={lives}
                 questions={questions}
                 setLives={setLives}
-                setPreperaGame={setPreperaGame}
+                setPrepareGame={setPrepareGame}
+                generateQuestions={generateQuestions}
               />
             )}
           </div>
@@ -48,6 +50,9 @@ export const Audiocall: React.FC = () => {
   )
 }
 
-export function shuffleArr(array: Word[]): Word[] {
-  return array.sort(() => Math.random() - 0.5)
+export function shuffleArr(array: Word[] = []): Word[] {
+  if (array instanceof Object) {
+    return array.sort(() => Math.random() - 0.5)
+  }
+  return []
 }
