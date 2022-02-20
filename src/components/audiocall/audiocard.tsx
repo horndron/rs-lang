@@ -18,6 +18,7 @@ export const AudiocallCard: React.FC = ({
   setLives,
   setPreperaGame,
 }) => {
+  console.log(lives)
   const [answers, setAnswers] = useState<Word[]>([])
   const [count, setCount] = useState<number>(0)
   const [end, setEnd] = useState(false)
@@ -72,12 +73,16 @@ export const AudiocallCard: React.FC = ({
     } else {
       addAnswerInResult(currentWord, false)
       setLives(lives - 1)
+      if (lives - 1 < 1) {
+        setEnd(true)
+        return
+      }
     }
-    setCount(count + 1)
-    if (lives <= 1 || count > 19) {
+    if (count + 1 > 19) {
       setEnd(true)
       console.log('gameover')
     } else {
+      setCount(count + 1)
       playGameAuido(questions[count + 1])
     }
   }
@@ -186,7 +191,6 @@ const Lives = ({ lives }) => {
 }
 
 function isAnswerExist(id: string, arr: Word[]): boolean {
-  console.log(123132123123131313)
   arr.forEach((el: Word) => {
     if (el.id === id) return false
   })
