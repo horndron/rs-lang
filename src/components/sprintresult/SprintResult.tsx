@@ -10,6 +10,7 @@ export const SprintResult: FC<SprintResultProps> = ({
   falseAnswer,
   score,
   restartGame,
+  isAudioGame = false,
 }) => {
   const getAudioWord = (audioName: string): void => {
     const audio = new Audio()
@@ -20,7 +21,13 @@ export const SprintResult: FC<SprintResultProps> = ({
     <div className="result-score">
       <div className="result-container">
         <h2 className="result-score__total">
-          Вы заработали <span>{score}</span> очков
+          {isAudioGame ? (
+            <>Игра окончена</>
+          ) : (
+            <>
+              Вы заработали <span>{score}</span> очков
+            </>
+          )}
         </h2>
         <div className="true-answer">
           <h3>

@@ -12,7 +12,7 @@ import { Sprint } from './pages/sprint'
 import { Games } from './pages/games'
 import MainPage from './pages/mainPage/mainPage'
 import About from './pages/about/about'
-import { Audiocall } from './pages/audiocall'
+import { Audiocall } from './components/audiocall/audiocall'
 
 export const App = () => {
   return (

@@ -11,7 +11,7 @@ import { ResultsGame, ResultsQuestionGame } from '../interfaces/sprint'
 import {
   setOrUpdateUserWord,
   setRandomNumber,
-  threeRandomPageWords,
+  RandomPageWords,
 } from '../utils/utils'
 import '../sprint.styles.sass'
 import BUTTON_STYLES from '../constants/buttons'
@@ -21,7 +21,7 @@ export const Sprint: FC = () => {
   const group = useTypeSelector((state) => state.words.group)
   const getWords = async (group: number) => {
     const words: Word[] = []
-    const pages = threeRandomPageWords()
+    const pages = RandomPageWords(3)
     const wordsPage1 = await getChunkWords(group, pages[0])
     const wordsPage2 = await getChunkWords(group, pages[1])
     const wordsPage3 = await getChunkWords(group, pages[2])
@@ -191,6 +191,7 @@ export const Sprint: FC = () => {
               falseAnswer={result.false}
               score={score.total}
               restartGame={getGamesAgain}
+              isAudioGame={false}
             />
           )}
         </div>
