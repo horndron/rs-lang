@@ -3,7 +3,6 @@ import BUTTON_STYLES from '../../constants/buttons'
 import { AUDIO_URL } from '../../constants/cardDataApi'
 import Word from '../../interfaces/api'
 import { ResultsGame, ResultsQuestionGame } from '../../interfaces/sprint'
-import { setOrUpdateUserWord } from '../../utils/utils'
 import getChunkWords from '../APIs/api'
 import FillHeart from '../../assets/svg/heart-solid.svg'
 import BreakHeart from '../../assets/svg/heart-crack-solid.svg'
@@ -49,19 +48,13 @@ export const AudiocallCard: React.FC<IAudioCard> = ({
     }
 
     if (localStorage.getItem('token') && localStorage.getItem('userId')) {
-      const userId = localStorage.getItem('userId') as string
-      const token = localStorage.getItem('token') as string
+      //   const userId = localStorage.getItem('userId') as string
+      //   const token = localStorage.getItem('token') as string
       //   const user = await getUser(userId, token)
       //   console.log(user)
       answer
-        ? setOrUpdateUserWord(userId, word.id, token, {
-            trueAnswers: 1,
-            seriallyAnswer: 1,
-          })
-        : setOrUpdateUserWord(userId, word.id, token, {
-            trueAnswers: 0,
-            seriallyAnswer: 0,
-          })
+        ? console.log('auth user correct')
+        : console.log('auth user mistake')
     }
     answer
       ? setResult({ ...result, true: [...result.true, resultAnswer] })
