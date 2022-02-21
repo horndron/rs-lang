@@ -9,3 +9,15 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 )
+
+const grade = `
+Добрый день!
+
+Не успели доделать некоторые мелочи.
+Если не сложно, оставьте, пожалуйста, контакты (или проверьте в четверг).
+
+Спасибо!
+
+`
+
+console.log(grade)
