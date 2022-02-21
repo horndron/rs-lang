@@ -9,6 +9,7 @@ const inititalState: WordsState = {
   level: 0,
   newWordsInGame: 0,
   bestSeriesAnswer: 0,
+  gameName: '',
 }
 
 export const wordsReducer = (
@@ -32,6 +33,8 @@ export const wordsReducer = (
       return { ...state, newWordsInGame: action.payload }
     case WordsActionTypes.SET_BESTSERIESANSWER:
       return { ...state, bestSeriesAnswer: action.payload }
+    case WordsActionTypes.SET_GAMENAME:
+      return { ...state, gameName: action.payload }
     default:
       return state
   }

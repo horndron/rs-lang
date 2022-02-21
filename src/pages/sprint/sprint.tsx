@@ -1,5 +1,6 @@
 import { Typography } from '@mui/material'
 import React, { FC, useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { getChunkWords } from '../../components/APIs/api'
 import { CircleTimer } from '../../components/circletimer/CircleTimer'
 import { PreperaGame } from '../../components/preperagame/PreperaGame'
@@ -7,6 +8,7 @@ import { SprintResult } from '../../components/sprintresult/SprintResult'
 import { SprintWord } from '../../components/sprintword/SprintWord'
 import MUIButton from '../../components/UI/MUIButton/MUIButton'
 import BUTTON_STYLES from '../../constants/buttons'
+import { useActions } from '../../hooks/useActions'
 import { useTypeSelector } from '../../hooks/useTypeSelector'
 import { Word } from '../../interfaces/api'
 import { ResultsGame, ResultsQuestionGame } from '../../interfaces/sprint'
@@ -18,7 +20,12 @@ import {
 import '../sprint/sprint.styles.sass'
 
 export const Sprint: FC = () => {
-  const { level } = useTypeSelector((state) => state.words)
+  const { level, bestSeriesAnswer, newWordsInGame } = useTypeSelector(
+    (state) => state.words
+  )
+  const { SetBestSeriesAnswer, SetNewWordsInGame, SetGameName } = useActions()
+  const dispatch = useDispatch()
+
   const getWords = async (level: number) => {
     const words: Word[] = []
     const pages = RandomPageWords(3)
@@ -34,8 +41,6 @@ export const Sprint: FC = () => {
   const [length, setLength] = useState(0)
   const [score, setScore] = useState({ total: 0, seriesTrueAnswers: 0 })
   let answer = ''
-  let bestSeriesAnswer = 0
-  // let newWordsInGame = 0
   const startGame = () => {
     setPreperaGame(false)
   }
@@ -60,19 +65,35 @@ export const Sprint: FC = () => {
     if (localStorage.getItem('token') && localStorage.getItem('userId')) {
       const userId = localStorage.getItem('userId') as string
       const token = localStorage.getItem('token') as string
-      bestSeriesAnswer = Math.max(bestSeriesAnswer, score.seriesTrueAnswers)
+      dispatch(
+        SetBestSeriesAnswer(Math.max(bestSeriesAnswer, score.seriesTrueAnswers))
+      )
 
       if (answer) {
-        setOrUpdateUserWord(userId, word.id, token, {
-          trueAnswers: 1,
-          seriallyAnswer: 1,
-        })
+        setOrUpdateUserWord(
+          userId,
+          word.id,
+          token,
+          {
+            trueAnswers: 1,
+            seriallyAnswer: 1,
+          },
+          newWordsInGame,
+          dispatch
+        )
         setResult({ ...result, true: [...result.true, resultAnswer] })
       } else {
-        setOrUpdateUserWord(userId, word.id, token, {
-          trueAnswers: 0,
-          seriallyAnswer: 0,
-        })
+        setOrUpdateUserWord(
+          userId,
+          word.id,
+          token,
+          {
+            trueAnswers: 0,
+            seriallyAnswer: 0,
+          },
+          newWordsInGame,
+          dispatch
+        )
         setResult({ ...result, false: [...result.false, resultAnswer] })
       }
     }
@@ -136,6 +157,12 @@ export const Sprint: FC = () => {
       trueBtn()
     }
   }
+
+  useEffect(() => {
+    dispatch(SetBestSeriesAnswer(0))
+    dispatch(SetNewWordsInGame(0))
+    dispatch(SetGameName('sprint'))
+  }, [])
 
   useEffect(() => {
     getWords(level)

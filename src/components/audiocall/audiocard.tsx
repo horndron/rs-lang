@@ -10,6 +10,10 @@ import AudioGame from '../../assets/svg/audio-game.svg'
 import MUIButton from '../UI/MUIButton/MUIButton'
 import { shuffleArr } from './audiocall'
 import { SprintResult } from '../sprintresult/SprintResult'
+import { useTypeSelector } from '../../hooks/useTypeSelector'
+import { useActions } from '../../hooks/useActions'
+import { useDispatch } from 'react-redux'
+import { setOrUpdateUserWord } from '../../utils/utils'
 
 interface IAudioCard {
   lives: number
@@ -33,9 +37,15 @@ export const AudiocallCard: React.FC<IAudioCard> = ({
   setPrepareGame,
   generateQuestions,
 }) => {
+  const { bestSeriesAnswer, newWordsInGame } = useTypeSelector(
+    (state) => state.words
+  )
+  const { SetBestSeriesAnswer } = useActions()
+  const dispatch = useDispatch()
   const [answers, setAnswers] = useState<Word[]>([])
   const [count, setCount] = useState<number>(0)
   const [end, setEnd] = useState<boolean>(false)
+  const [seriesAnswer, setSeriesAnswer] = useState(0)
   const [result, setResult] = useState<ResultsGame>({ true: [], false: [] })
 
   const addAnswerInResult = async (word: Word, answer: boolean) => {
@@ -48,17 +58,38 @@ export const AudiocallCard: React.FC<IAudioCard> = ({
     }
 
     if (localStorage.getItem('token') && localStorage.getItem('userId')) {
-      //   const userId = localStorage.getItem('userId') as string
-      //   const token = localStorage.getItem('token') as string
-      //   const user = await getUser(userId, token)
-      //   console.log(user)
-      answer
-        ? console.log('auth user correct')
-        : console.log('auth user mistake')
+      const userId = localStorage.getItem('userId') as string
+      const token = localStorage.getItem('token') as string
+      dispatch(SetBestSeriesAnswer(Math.max(bestSeriesAnswer, seriesAnswer)))
+
+      if (answer) {
+        setOrUpdateUserWord(
+          userId,
+          word.id,
+          token,
+          {
+            trueAnswers: 1,
+            seriallyAnswer: 1,
+          },
+          newWordsInGame,
+          dispatch
+        )
+        setResult({ ...result, true: [...result.true, resultAnswer] })
+      } else {
+        setOrUpdateUserWord(
+          userId,
+          word.id,
+          token,
+          {
+            trueAnswers: 0,
+            seriallyAnswer: 0,
+          },
+          newWordsInGame,
+          dispatch
+        )
+        setResult({ ...result, false: [...result.false, resultAnswer] })
+      }
     }
-    answer
-      ? setResult({ ...result, true: [...result.true, resultAnswer] })
-      : setResult({ ...result, false: [...result.false, resultAnswer] })
   }
 
   const generateAnswers = async () => {
@@ -78,8 +109,10 @@ export const AudiocallCard: React.FC<IAudioCard> = ({
   const checkAnswer = (id: string) => {
     const currentWord = questions[count]
     if (id === questions[count].id) {
+      setSeriesAnswer(seriesAnswer + 1)
       addAnswerInResult(currentWord, true)
     } else {
+      setSeriesAnswer(0)
       addAnswerInResult(currentWord, false)
       setLives(lives - 1)
       if (lives - 1 < 1) {

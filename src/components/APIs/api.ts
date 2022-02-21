@@ -278,7 +278,7 @@ export const getUserStatistics = async (
   token: string
 ): Promise<UserStatisticsResponse | RejectStatusText> => {
   const response = await fetch(
-    `${constApi.BACKEND_HOSTNAME}/${constApi.URL_USERS}/${userId}/${constApi.URL_STATISTICS}}`,
+    `${constApi.BACKEND_HOSTNAME}/${constApi.URL_USERS}/${userId}/${constApi.URL_STATISTICS}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -307,7 +307,7 @@ export const setUserStatistics = async (
   statistics: UserStatistics
 ): Promise<UserStatisticsResponse | RejectStatusText> => {
   const response = await fetch(
-    `${constApi.BACKEND_HOSTNAME}/${constApi.URL_USERS}/${userId}/${constApi.URL_STATISTICS}}`,
+    `${constApi.BACKEND_HOSTNAME}/${constApi.URL_USERS}/${userId}/${constApi.URL_STATISTICS}`,
     {
       method: 'PUT',
       headers: {

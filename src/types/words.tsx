@@ -9,6 +9,7 @@ export interface WordsState {
   level: number
   newWordsInGame: number
   bestSeriesAnswer: number
+  gameName: string
 }
 
 export enum WordsActionTypes {
@@ -20,6 +21,7 @@ export enum WordsActionTypes {
   SET_LEVEL = 'SET_LEVEL',
   SET_NEWWORDSINGAME = 'SET_NEWWORDSINGAME',
   SET_BESTSERIESANSWER = 'SET_BESTSERIESANSWER',
+  SET_GAMENAME = 'SET_GAMENAME',
 }
 
 interface FetchWordsAction {
@@ -55,10 +57,16 @@ interface SetNewWordsInGame {
   payload: number
 }
 
-interface SetBestSeriesAnswer {
+export interface SetBestSeriesAnswer {
   type: WordsActionTypes.SET_BESTSERIESANSWER
   payload: number
 }
+
+export interface SetGamename {
+  type: WordsActionTypes.SET_GAMENAME
+  payload: string
+}
+
 export type WordsAction =
   | FetchWordsAction
   | FetchWordsSuccessAction
@@ -68,3 +76,4 @@ export type WordsAction =
   | SetLevelAction
   | SetNewWordsInGame
   | SetBestSeriesAnswer
+  | SetGamename
