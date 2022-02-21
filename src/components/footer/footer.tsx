@@ -40,7 +40,6 @@ const Footer = () => {
           >
             <Box
               sx={{
-                mx: 2,
                 display: 'flex',
                 alignItems: 'center',
                 ':hover': {
@@ -60,12 +59,11 @@ const Footer = () => {
                   sx={{
                     mr: 2,
                     px: 2,
-                    py: 1,
                     display: 'flex',
                     color: 'primary.light',
                     alignItems: 'center',
                     ':hover': {
-                      color: 'text.primary',
+                      color: 'white',
                     },
                   }}
                   className="nav-item"
@@ -75,12 +73,12 @@ const Footer = () => {
                 </Link>
               ))}
             </Box>
-            <Box sx={{ mx: 2, display: { xs: 'none', sm: 'flex' } }}>
+            <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
               <Typography
                 variant="body2"
                 noWrap
                 component="div"
-                sx={{ mr: 2, color: 'primary.main' }}
+                sx={{ mr: 2, color: 'primary.main', fontSize: '12px' }}
               >
                 2022
               </Typography>
