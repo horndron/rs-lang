@@ -9,12 +9,16 @@ import InfoImg from '../../assets/svg/info-solid.svg'
 import ExampleImg from '../../assets/svg/book-open-solid.svg'
 import BoltIcon from '../../assets/svg/bolt-solid.svg'
 import LearnIcon from '../../assets/svg/graduation-cap-solid.svg'
+import TrashIcon from '../../assets/svg/trash-can-solid.svg'
 import './textbook.style.scss'
 import { createUserWord, getUserWord, updateUserWord } from '../APIs/api'
+import { isAuth } from '../../auth/auth'
 
 interface ICard {
   card: Word
   group: number
+  isHardGroup: boolean
+  getHardWords: () => void
 }
 
 export const TextbookPage: React.FC = () => {
@@ -36,7 +40,15 @@ export const TextbookPage: React.FC = () => {
     <>
       <div className="container words-container">
         {words.map((card: Word) => (
-          <WordCard key={card.id} card={card} group={group} />
+          <WordCard
+            key={card.id}
+            card={card}
+            group={group}
+            isHardGroup={false}
+            getHardWords={() => {
+              console.log('Заглушка')
+            }}
+          />
         ))}
         <WordSettings />
       </div>
@@ -44,32 +56,45 @@ export const TextbookPage: React.FC = () => {
   )
 }
 
-export const WordCard: React.FC<ICard> = ({ card, group }) => {
+export const WordCard: React.FC<ICard> = ({
+  card,
+  group,
+  isHardGroup,
+  getHardWords,
+}) => {
   const image = `${IMAGE_URL}/${card.image.split('/')[1]}`
   const audioPath = `${card.audio.split('/')[1]}`
   const meanPath = `${card.audioMeaning.split('/')[1]}`
   const examplePath = `${card.audioExample.split('/')[1]}`
   const color = GROUP_COLOR[group]
-
   let userID: string
   let token: string
-  let isAuth = false
   if (localStorage.getItem('token') && localStorage.getItem('userId')) {
-    isAuth = true
     userID = localStorage.getItem('userId') as string
     token = localStorage.getItem('token') as string
   }
+  const removeHardWord = async () => {
+    try {
+      const word = await getUserWord(userID, card._id, token)
+      await updateUserWord(userID, card._id, token, {
+        difficulty: 'easy',
+        optional: { ...word.optional },
+      })
+      getHardWords()
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   const addHardWord = async () => {
     try {
       const word = await getUserWord(userID, card.id, token)
       if (word.status === 200) {
-        console.log(word)
         await updateUserWord(userID, card.id, token, {
           difficulty: 'hard',
           optional: { ...word.optional },
         })
       } else if (word.status === 404) {
-        console.log('create new word')
         await createUserWord(userID, card.id, token, {
           difficulty: 'hard',
           optional: {
@@ -83,6 +108,7 @@ export const WordCard: React.FC<ICard> = ({ card, group }) => {
       console.log(e)
     }
   }
+
   return (
     <>
       <div className="wordCard">
@@ -90,16 +116,28 @@ export const WordCard: React.FC<ICard> = ({ card, group }) => {
           <img src={image} alt="cardImg" />
           <h2 className="cardTitle">{card.word}</h2>
           <div className="cardOverlay" style={color.gradient}></div>
-          {isAuth ? (
+          {isAuth() ? (
             <>
-              <button
-                className="hard-icon"
-                onClick={() => {
-                  addHardWord()
-                }}
-              >
-                <img src={BoltIcon} alt="alt" />
-              </button>
+              {isHardGroup ? (
+                <button
+                  className="hard-icon"
+                  onClick={() => {
+                    removeHardWord()
+                  }}
+                >
+                  <img src={TrashIcon} alt="alt" />
+                </button>
+              ) : (
+                <button
+                  className="hard-icon"
+                  onClick={() => {
+                    addHardWord()
+                  }}
+                >
+                  <img src={BoltIcon} alt="alt" />
+                </button>
+              )}
+
               <button className="learn-icon">
                 <img src={LearnIcon} alt="alt" />
               </button>
