@@ -1,27 +1,109 @@
 @import '../../utils/variables';
 @import '../../utils/_mixins.scss';
 
+main .main-page {
+  width: 100%;
+  min-height: calc(100vh);
+  padding-left: 0;
+  padding-right: 0;
+}
+
 .accordion {
+  width: 100%;
   height: 100%;
+  display: flex;
 }
 
 .accordion .main-card {
-  float: right;
-  width: 115px;
+  width: calc((100% - $mainCardWidth) / 4);
   height: 100%;
-  display: block;
-  background-repeat: no-repeat;
-  background-position: center center;
   position: relative;
   overflow: hidden;
   cursor: pointer;
   @include cards-shadow;
+  @include trans-slow;
+
+  &_active {
+    width: $mainCardWidth;
+    cursor: inherit;
+  }
 }
 
-.accordion .main-card .heading {
-  background-color: #fff;
+#accordion > .main-card_active .main-card__description,
+#accordion > .main-card_active .main-card__inner {
+  opacity: 0.9;
+  @include trans-medium;
+}
+
+#accordion > .main-card_active .main-card__inner {
+  @include flex-column-start;
+  color: $textColor;
+}
+
+#accordion > .main-card_active .main-card__link {
+  display: flex;
+}
+
+#accordion > .main-card_active .main-card__heading {
+  @include trans-fast;
+  opacity: 0;
+}
+
+#accordion > .main-card_active .advantages__wrapper {
+  display: none;
+}
+
+.accordion .main-card_0 {
+  background-color: $brandedColor6;
+}
+.accordion .main-card_1 {
+  background-color: $brandedColor3;
+}
+.accordion .main-card_2 {
+  background-color: $brandedColor2;
+}
+.accordion .main-card_3 {
+  background-color: $brandedColor1;
+}
+.accordion .main-card_4 {
+  background-color: $brandedColor5;
+}
+.accordion .main-card_5 {
+  background-color: $brandedColor7;
+}
+
+header.header_card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+header.header_card .header__inner {
+  margin-top: 10px;
+  @include flex-start;
+}
+
+header.header_card .menu_small {
+  flex-grow: 0;
+  width: 48px;
+  height: 48px;
+  margin-right: 20px;
+}
+
+header.header_card .menu_small button svg {
+  width: 24px;
+  height: 24px;
+}
+
+header.header_card .login-container button {
+  padding: 0;
+}
+
+.accordion .main-card .main-card__heading {
+  margin-top: 80px;
   padding: 10px;
-  margin-top: 60px;
   opacity: 0.9;
   text-transform: uppercase;
   font-style: normal;
@@ -30,14 +112,46 @@
   font-size: 14px;
   color: #444;
   text-align: center;
+  background-color: $white;
   text-shadow: -1px -1px 1px #ccc;
   @include trans-fast;
 }
 
-.accordion .main-card .description {
+.main-card_advantages .main-card__inner {
+  padding: 0 6%;
+  display: none;
+}
+
+.main-card__img {
+  width: 100%;
+  height: 400px;
+  @include icon-background;
+}
+
+.main-card_advantages .main-card__img {
+  background-image: url(../../assets/svg/advantages.svg);
+}
+.main-card_textbook .main-card__img {
+  background-image: url(../../assets/svg/textbook.svg);
+}
+.main-card_games .main-card__img {
+  background-image: url(../../assets/svg/games.svg);
+}
+.main-card_stats .main-card__img {
+  background-image: url(../../assets/svg/stats.svg);
+}
+.main-card_about .main-card__img {
+  background-image: url(../../assets/svg/about.svg);
+}
+
+.accordion .main-card .main-card__link {
+  display: none;
+}
+
+.accordion .main-card .main-card__description {
   position: absolute;
-  width: 480px;
-  height: 180px;
+  width: 100%;
+  min-height: 250px;
   bottom: 0px;
   left: 0px;
   opacity: 0;
@@ -45,7 +159,7 @@
   @include trans-medium;
 }
 
-.accordion .main-card .description h2 {
+.accordion .main-card .main-card__description h2 {
   text-transform: uppercase;
   font-style: normal;
   font-weight: bold;
@@ -57,7 +171,7 @@
   text-shadow: -1px -1px 1px #ccc;
 }
 
-.accordion .main-card .description p {
+.accordion .main-card .main-card__description p {
   line-height: 14px;
   margin: 10px 22px;
   font-family: 'Trebuchet MS', sans-serif;
@@ -69,148 +183,85 @@
   line-height: 1.6em;
 }
 
-.accordion .main-card .description a {
+.main-card__title span {
+  font-family: Ribeye, Arial;
+  font-size: 4rem;
+  color: $white;
+}
+.accordion .main-card .main-card__title {
+  margin-top: -35px;
+  margin-bottom: 20px;
+}
+
+.main-card__inner .main-card__title {
+  & .letter0 {
+    color: $brandedColor5;
+  }
+  & .letter1 {
+    color: $brandedColor7;
+  }
+  & .letter2 {
+    color: $brandedColor2;
+  }
+  & .letter3 {
+    color: $brandedColor4;
+  }
+  & .letter4 {
+    color: $brandedColor1;
+  }
+  & .letter5 {
+    color: $brandedColor3;
+  }
+}
+
+.accordion .main-card .advantages__title {
+  font-size: 1.2rem;
+}
+
+.advantages {
+  margin-top: 34px;
+}
+.accordion .main-card .advantages__title {
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  color: $brandedColor3;
+}
+
+.accordion .main-card .advantage__title {
+  padding-left: 40px;
+  font-size: 1.2rem;
+  position: relative;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+.accordion .main-card .advantage__text,
+.accordion .main-card .about-project {
+  font-size: 1rem;
+}
+
+.accordion .main-card .about-project {
+  max-width: 80%;
+}
+
+.advantage .advantage__title::before {
   position: absolute;
-  bottom: 5px;
-  left: 20px;
-  text-transform: uppercase;
-  font-style: normal;
-  font-size: 11px;
-  text-decoration: none;
-  color: #888;
+  top: 0;
+  left: 0;
+  content: '';
+  width: 30px;
+  height: 30px;
+  @include icon-background;
 }
 
-.accordion .main-card .description a:hover {
-  color: #333;
-  text-decoration: underline;
+.advantage__words .advantage__title::before {
+  background-image: url(../../assets/svg/adv-words.svg);
 }
 
-.accordion .main-card .bgDescription {
-  height: 340px;
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
-  width: 100%;
-  display: none;
+.advantage__games .advantage__title::before {
+  background-image: url(../../assets/svg/adv-games.svg);
 }
 
-// * additional styles
-
-a {
-  color: #444;
-  text-decoration: none;
-}
-
-a:hover {
-  color: #999;
-}
-
-.title {
-  width: 500px;
-  height: 152px;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-}
-
-a.back {
-  position: fixed;
-  width: 150px;
-  height: 27px;
-  outline: none;
-  bottom: 0px;
-  left: 0px;
-}
-
-.reference {
-  clear: both;
-  top: 300px;
-  left: 0px;
-  position: absolute;
-  text-align: right;
-  width: 400px;
-  padding: 20px;
-  background-color: #fff;
-  -moz-box-shadow: 1px 3px 15px #ddd;
-  -webkit-box-shadow: 1px 3px 15px #ddd;
-  box-shadow: 1px 3px 15px #ddd;
-}
-
-.reference p a {
-  text-transform: uppercase;
-  text-shadow: 1px 1px 1px #fff;
-  color: #666;
-  text-decoration: none;
-  font-size: 10px;
-}
-
-.reference p a:hover {
-  color: #333;
-}
-
-#accordion > .main-card {
-  transition: all 1s;
-}
-
-#accordion > .main-card:hover {
-  transition: all 0.5s;
-  width: 480px;
-}
-
-#accordion > .main-card:hover .description {
-  opacity: 0.9;
-  @include trans-medium;
-}
-
-#accordion > .main-card:hover .heading {
-  @include trans-fast;
-  opacity: 0;
-}
-
-.accordion .main-card0 {
-  background-color: $brandedColor5;
-}
-
-.accordion .main-card1 {
-  background-color: $brandedColor1;
-}
-
-.accordion .main-card2 {
-  background-color: $brandedColor2;
-}
-
-.accordion .main-card3 {
-  background-color: $brandedColor3;
-}
-
-.accordion .main-card4 {
-  background-color: $brandedColor6;
-}
-
-.advantage {
-  background-color: red;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  @include trans-slow;
-}
-
-.advantage:hover {
-  background-color: red;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  @include trans-slow;
-}
-
-.advantage-text {
-  font-size: 5px;
-
-  opacity: 0;
-  @include trans-slow;
-}
-
-.advantage-text:hover {
-  opacity: 0.9;
-  @include trans-slow;
+.advantage__stats .advantage__title::before {
+  background-image: url(../../assets/svg/adv-stats.svg);
 }

@@ -2,8 +2,37 @@
 @import '../../utils/_mixins.scss';
 
 .about {
-  justify-content: space-between;
-  align-items: center;
+  width: 100%;
+  @include flex-column-center;
+}
+
+.about .about__title {
+  font-size: 2rem;
+  text-transform: uppercase;
+  color: $darkColor;
+  margin-top: 32px;
+  margin-bottom: 20px;
+}
+
+.about .about__text {
+  font-size: 0.9rem;
+  max-width: 60%;
+  text-align: center;
+  color: $darkColor;
+  margin-bottom: 20px;
+}
+
+.about .about__wrapper {
+  @include flex-column-center;
+}
+
+.about .about__authors {
+  @include flex-between;
+  max-width: 1500px;
+  width: 100%;
+  padding-left: 9%;
+  padding-right: 11%;
+  margin-top: 80px;
 }
 
 .author-card {

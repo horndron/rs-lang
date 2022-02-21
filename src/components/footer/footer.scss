@@ -5,10 +5,10 @@ footer {
   width: 100%;
   position: absolute;
   background-color: $secondaryColor;
+  @include flex-between;
 }
 
 .footer-container {
-  height: $footerHeight;
   @include flex-between;
 
   @include for-mobile {

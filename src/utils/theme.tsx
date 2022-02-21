@@ -24,9 +24,7 @@ export const theme = createTheme({
       fontSize: '1.2rem',
     },
     h5: {
-      fontFamily: 'Ribeye, cursive',
-      fontSize: '4.2rem',
-      // fontSize: '1.2rem', // TODO: check h5 in login modal
+      fontSize: '1.2rem',
     },
     button: {
       fontSize: '0.9rem',
