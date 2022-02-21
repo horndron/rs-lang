@@ -1,2 +1,104 @@
+@import '../../utils/_mixins.scss'
+@import '../../utils/_variables.scss'
+  
 .statistics-page
-  padding-bottom: 70px
+  width: 100%
+  padding: 30px 15px 70px
+  background: linear-gradient(to bottom, $lightColor, $brandedColor6)
+
+  .statistics-container
+    width: 900px
+    max-width:100%
+    margin: 0 auto
+
+  .recharts-tooltip-cursor
+    fill: #95bdd4
+
+  .recharts-text
+    fill: $textDark
+
+  h1
+    text-align: center
+    margin-bottom: 50px
+    text-transform: uppercase
+
+  .statistics_games,
+  .statistics_day
+    @include flex-center
+    justify-content: space-around
+
+    .statistics_day_item
+      @include flex-center
+      flex-direction: column
+      width: 48%
+      font-size: 70px
+
+      span
+        display: block
+        font-size: 16px
+        text-align: center
+
+  .statistics_games
+    .game
+      width: 40%
+      padding: 20px
+      margin: 30px 0
+      background-color: #fff
+      border-radius: 10px
+      box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3)
+
+      &> *
+        margin-bottom: 5px
+
+      h3
+        padding-bottom: 5px
+        margin-bottom: 10px
+        border-bottom: 1px solid $lightColor
+
+      span
+        margin-left: 5px
+        font-size: 1.3em
+
+  .statistics
+    h2
+      text-align: center
+      margin: 30px 0 30px
+      text-transform: uppercase
+
+    .description
+      display: block
+      font-size: 14px
+      text-align: center
+      margin-top: 15px
+      margin-bottom: 2px
+
+    .overflow
+      max-width:100%
+      overflow-x: auto
+      font-size: inherit
+
+      &> div
+        margin: 0 auto
+
+@media (max-width: 768px)
+  .statistics-page
+    .statistics_games
+      .game
+        width: 48%
+
+@media (max-width: 549px)
+  .statistics-page
+    .statistics_games
+      .game
+        width: 100%
+
+      .game_sprint
+        margin-top: 0
+
+    .statistics_day
+      .statistics_day_item
+        font-size: 50px
+
+        span
+          font-size: 14px
+
