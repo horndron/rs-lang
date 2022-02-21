@@ -43,6 +43,34 @@
         width: 100%;
         height: 50%;
       }
+      .hard-icon {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        top: 6%;
+        right: 15%;
+        z-index: 3;
+        background-color: rgba(0, 0, 0);
+        border-radius: 50%;
+        cursor: pointer;
+        &:hover {
+          background-color: rgb(87, 87, 87);
+        }
+      }
+      .learn-icon {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        top: 6%;
+        right: 6%;
+        z-index: 3;
+        background-color: rgba(0, 0, 0);
+        border-radius: 50%;
+        cursor: pointer;
+        &:hover {
+          background-color: rgb(87, 87, 87);
+        }
+      }
     }
     .cardMid {
       position: relative;

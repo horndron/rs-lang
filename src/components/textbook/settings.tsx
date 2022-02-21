@@ -85,6 +85,11 @@ const GroupSwitcher = () => {
   const [active, setActive] = useState(false)
   const color = GROUP_COLOR[group].color
   const groupArr = [1, 2, 3, 4, 5, 6]
+
+  let isAuth = false
+  if (localStorage.getItem('token') && localStorage.getItem('userId')) {
+    isAuth = true
+  }
   return (
     <>
       <div className="groupSwitchWrapper">
@@ -104,6 +109,7 @@ const GroupSwitcher = () => {
               }`}
             >
               <button
+                className="to-button"
                 style={GROUP_COLOR[ind].color}
                 onClick={() => {
                   setWordsGroup(ind)
@@ -114,6 +120,26 @@ const GroupSwitcher = () => {
               </button>
             </li>
           ))}
+          {isAuth ? (
+            <>
+              <li className={`listGroupsItem`}>
+                <NavLink
+                  to="/textbook/hardwords"
+                  className="to-button"
+                  style={{
+                    background: 'black',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  7
+                </NavLink>
+              </li>
+            </>
+          ) : (
+            <></>
+          )}
         </ul>
       </div>
     </>

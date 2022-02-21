@@ -13,7 +13,7 @@ import { ResultsGame, ResultsQuestionGame } from '../../interfaces/sprint'
 import {
   setOrUpdateUserWord,
   setRandomNumber,
-  threeRandomPageWords,
+  RandomPageWords,
 } from '../../utils/utils'
 import '../sprint/sprint.styles.sass'
 
@@ -21,7 +21,7 @@ export const Sprint: FC = () => {
   const { level } = useTypeSelector((state) => state.words)
   const getWords = async (level: number) => {
     const words: Word[] = []
-    const pages = threeRandomPageWords()
+    const pages = RandomPageWords(3)
     pages.forEach(async (page) => {
       const wordsPage1 = await getChunkWords(level, page)
       words.push(...(wordsPage1 as Word[]))
@@ -189,6 +189,7 @@ export const Sprint: FC = () => {
               falseAnswer={result.false}
               score={score.total}
               restartGame={getGamesAgain}
+              isAudioGame={false}
             />
           )}
         </div>

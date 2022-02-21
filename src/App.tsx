@@ -7,10 +7,12 @@ import Header from './components/header/header'
 import Footer from './components/footer/footer'
 
 import { TextbookPage } from './components/textbook/textbook'
-import { Sprint } from './pages/sprint/sprint'
+import { HardWords } from './components/textbook/hardwords/hardwords'
 import { Games } from './pages/games/games'
 import MainPage from './pages/mainPage/mainPage'
 import About from './pages/about/about'
+import { Audiocall } from './components/audiocall/audiocall'
+import { Sprint } from './pages/sprint/sprint'
 
 export const App = () => {
   return (
@@ -24,8 +26,13 @@ export const App = () => {
               <Route path={'/textbook'} element={<TextbookPage />}></Route>
               <Route path={'/games'} element={<Games />}></Route>
               <Route path={'/games/sprint'} element={<Sprint />}></Route>
+              <Route path={'/games/audiocall'} element={<Audiocall />}></Route>
               <Route path={'/stats'}></Route>
               <Route path={'/about'} element={<About />}></Route>
+              <Route
+                path={'/textbook/hardwords'}
+                element={<HardWords />}
+              ></Route>
             </Routes>
           </main>
           <Footer />
