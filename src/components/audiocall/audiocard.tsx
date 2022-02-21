@@ -110,6 +110,11 @@ export const AudiocallCard: React.FC<IAudioCard> = ({
     setLives(5)
     generateQuestions()
   }
+
+  useEffect(() => {
+    const audio = document.querySelector('.audio-example') as HTMLElement
+    audio.click()
+  }, [])
   useEffect(() => {
     generateAnswers()
   }, [count])
