@@ -90,7 +90,7 @@ const LoginModal = () => {
   }
 
   return (
-    <div>
+    <div className="login-container">
       <MUIButton
         name={buttonName}
         sx={{ ...BUTTON_STYLES.light }}
