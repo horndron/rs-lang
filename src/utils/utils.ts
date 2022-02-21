@@ -91,9 +91,8 @@ export const setOrUpdateUserWord = async (
 
 const regExp = {
   password: /[0-9a-zA-Z!@#$%^&_*]{8,}/,
-  // TODO: replace regExp, improve password requirements
-  // password: /(?=.*[0-9])(?=.*[!@#$%^&+_*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&_*]{8,}/,
   email: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+  name: /[a-zA-Z\s]{5,20}$/,
 }
 
 export const validatePassword = (password: string): boolean => {
@@ -102,6 +101,10 @@ export const validatePassword = (password: string): boolean => {
 
 export const validateEmail = (email: string): boolean => {
   return regExp.email.test(email)
+}
+
+export const validateName = (name: string): boolean => {
+  return regExp.name.test(name)
 }
 
 export const currentDate = (): string => {
