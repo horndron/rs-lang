@@ -3,7 +3,7 @@ import { gsap } from 'gsap'
 import './about.scss'
 import GitHubIcon from '@mui/icons-material/GitHub'
 import { Box, Container, Link, Typography } from '@mui/material'
-import { AUTHORS, COLORS } from '../../constants/about'
+import { AUTHORS, COLORS, ABOUT_TEXT } from '../../constants/about'
 
 const About = () => {
   let screenWidth = window.innerWidth
@@ -30,16 +30,16 @@ const About = () => {
   const color2 = `${COLORS.brandedColor3}`
   const color3 = `${COLORS.brandedColor1}`
 
-  const tl = gsap.timeline({ default: { duration: 3 } })
-  const tl2 = gsap.timeline({ default: { duration: 3 } })
-  const tl3 = gsap.timeline({ default: { duration: 3 } })
+  const tl = gsap.timeline({ default: { duration: 1 } })
+  const tl2 = gsap.timeline({ default: { duration: 1 } })
+  const tl3 = gsap.timeline({ default: { duration: 1 } })
 
   function showWrapper(element: string, color: string) {
     return gsap.fromTo(
       `${element}`,
       { height: 0, backgroundColor: 'transparent' },
       {
-        delay: 1,
+        delay: 0,
         duration: 1,
         height: `${cardHeight}`,
         backgroundColor: `${color}`,
@@ -84,60 +84,62 @@ const About = () => {
     .add(showPhoto(`.${author3} .author-img`))
 
   return (
-    <Container
-      maxWidth="xl"
-      className="about"
-      sx={{
-        display: 'flex',
-        ml: 18,
-        mr: 20,
-      }}
-    >
-      {AUTHORS.map((author) => (
-        <Box key={author.github} className={`author-card ${author.github}`}>
-          <Box className="author-wrapper">
-            <Box className="author-overlay">
-              <Box className="author-img"></Box>
-            </Box>
+    <Container maxWidth="xl" className="about">
+      <Box className="about__wrapper">
+        <Typography variant="h2" component="h2" className="about__title">
+          Наша команда
+        </Typography>
+        <Typography variant="body1" className="about__text">
+          {ABOUT_TEXT}
+        </Typography>
+      </Box>
+      <Container className="about__authors">
+        {AUTHORS.map((author) => (
+          <Box key={author.github} className={`author-card ${author.github}`}>
+            <Box className="author-wrapper">
+              <Box className="author-overlay">
+                <Box className="author-img"></Box>
+              </Box>
 
-            <Box className="author-description">
-              <Typography variant="h4" component="h4" className="author-name">
-                {author.name}
-              </Typography>
-              <Link
-                href={author.link}
-                target="_blank"
-                rel="noopener"
-                underline="none"
-                variant="body2"
-                className="author-link"
-                sx={{
-                  ':hover': {
-                    color: 'secondary.main',
-                  },
-                }}
-              >
-                <GitHubIcon sx={{ width: '12px', mr: '5px' }} />
-                {author.github}
-              </Link>
-              <Box className="author-tasks">
-                {author.tasks.map((item, index) => (
-                  <Typography
-                    variant="body2"
-                    key={item.task + index}
-                    className="task"
-                    sx={{
-                      backgroundColor: `${item.color}`,
-                    }}
-                  >
-                    {item.task}
-                  </Typography>
-                ))}
+              <Box className="author-description">
+                <Typography variant="h4" component="h4" className="author-name">
+                  {author.name}
+                </Typography>
+                <Link
+                  href={author.link}
+                  target="_blank"
+                  rel="noopener"
+                  underline="none"
+                  variant="body2"
+                  className="author-link"
+                  sx={{
+                    ':hover': {
+                      color: 'secondary.main',
+                    },
+                  }}
+                >
+                  <GitHubIcon sx={{ width: '12px', mr: '5px' }} />
+                  {author.github}
+                </Link>
+                <Box className="author-tasks">
+                  {author.tasks.map((item, index) => (
+                    <Typography
+                      variant="body2"
+                      key={item.task + index}
+                      className="task"
+                      sx={{
+                        backgroundColor: `${item.color}`,
+                      }}
+                    >
+                      {item.task}
+                    </Typography>
+                  ))}
+                </Box>
               </Box>
             </Box>
           </Box>
-        </Box>
-      ))}
+        ))}
+      </Container>
     </Container>
   )
 }
