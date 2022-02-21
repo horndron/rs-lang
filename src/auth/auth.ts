@@ -26,7 +26,7 @@ export const CreateNewUser = async (email: string, password: string) => {
   }
 
   if (create.status === 422) {
-    alert('incorrect email or password') // TODO: fix alert
+    alert('Oops! Incorrect email or password!')
   }
 
   if (create.status === 417) {
@@ -44,6 +44,6 @@ export const LogIn = async (email: string, password: string) => {
   }
 
   if (response.status === 403) {
-    alert('incorrect email or password') // TODO: fix alert
+    alert('The user already exists. Incorrect email or password!')
   }
 }

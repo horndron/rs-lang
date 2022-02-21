@@ -26,6 +26,7 @@ const LoginModal = () => {
   const [signUpMode, setSignUpMode] = React.useState(false)
   const handleSignUpModeClose = () => setSignUpMode(false)
   const handleSignUpMode = () => {
+    clearEmptyInputError()
     setSignUpMode((prevMode) => !prevMode)
   }
 
@@ -67,8 +68,47 @@ const LoginModal = () => {
     handleLogOut()
   }
 
+  const clearEmptyInputError = () => {
+    if (emailError) {
+      const mailInput = document.querySelector('#email') as HTMLInputElement
+      if (mailInput.value === '') {
+        handleEmailError(false)
+      }
+    }
+    if (passwordError) {
+      const passwordInput = document.querySelector(
+        '#password'
+      ) as HTMLInputElement
+      if (passwordInput.value === '') {
+        handlePasswordError(false)
+      }
+    }
+  }
+
+  const checkAutoEmail = () => {
+    const emailInput = document.querySelector('#email') as HTMLInputElement
+    const value = emailInput.value as string
+    if (value) {
+      handleSetLogin({ target: { value } })
+    }
+  }
+
+  const checkAutoPassword = () => {
+    const passwordInput = document.querySelector(
+      '#password'
+    ) as HTMLInputElement
+
+    const value = passwordInput.value as string
+    if (value) {
+      handleSetPassword({ target: { value } })
+    }
+  }
+
   const handleUser = async () => {
-    if (!emailError && !passwordError) {
+    checkAutoPassword()
+    checkAutoEmail()
+
+    if (!emailError && !passwordError && login && password) {
       signUpMode
         ? await CreateNewUser(login, password)
         : await LogIn(login, password)
@@ -99,16 +139,21 @@ const LoginModal = () => {
       <Modal
         open={open}
         onClose={handleClose}
+        className="login-modal-wrapper"
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box className="login-modal" sx={{ boxShadow: 24, p: 4 }}>
+        <Box
+          className="login-modal"
+          id="login-modal"
+          sx={{ boxShadow: 24, p: 4, pl: 6, pr: 6, width: 430 }}
+        >
           <Typography
             variant="h5"
             noWrap
             component="div"
             sx={{
-              mb: 3,
+              mb: 1,
               justifyContent: 'center',
               display: signUpMode ? 'flex' : 'none',
               color: 'text.primary',
@@ -141,7 +186,9 @@ const LoginModal = () => {
               autoComplete="email"
               // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus
+              onFocus={() => handleEmailError(false)}
               onBlur={handleSetLogin}
+              style={{ marginBottom: '5px' }}
               InputLabelProps={{
                 style: { color: '#284968' },
               }}
@@ -156,6 +203,7 @@ const LoginModal = () => {
               label="Password"
               type="password"
               id="password"
+              onFocus={() => handlePasswordError(false)}
               onBlur={handleSetPassword}
               InputLabelProps={{
                 style: { color: '#284968' },
