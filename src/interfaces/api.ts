@@ -1,3 +1,5 @@
+import { UserStatistics } from './statistics'
+
 export interface Word {
   id: string
   group: number
@@ -62,15 +64,23 @@ export interface UserWord {
   status?: number
 }
 
-interface WordInDay {
-  date: string
-  newWords: number
+export interface UserStatisticsResponse {
+  id: string
+  statistics: UserStatistics
+  status?: number
 }
-export interface UserStatistics {
-  learnedWords: number
-  optional: {
-    wordInDay: WordInDay[]
-  }
+
+export interface AggregatedWords {
+  paginatedResults: Word[]
+  totalCount: [
+    {
+      count: number
+    }
+  ]
+}
+
+export interface UserAggregatedWords {
+  aggregatedWords: AggregatedWords[]
 }
 
 export default Word

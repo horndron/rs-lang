@@ -11,6 +11,7 @@ import { HardWords } from './components/textbook/hardwords/hardwords'
 import { Games } from './pages/games/games'
 import MainPage from './pages/mainPage/mainPage'
 import About from './pages/about/about'
+import { Statistics } from './pages/statistics/statistics'
 import { Audiocall } from './components/audiocall/audiocall'
 import { Sprint } from './pages/sprint/sprint'
 
@@ -27,7 +28,7 @@ export const App = () => {
               <Route path={'/games'} element={<Games />}></Route>
               <Route path={'/games/sprint'} element={<Sprint />}></Route>
               <Route path={'/games/audiocall'} element={<Audiocall />}></Route>
-              <Route path={'/stats'}></Route>
+              <Route path={'/stats'} element={<Statistics />}></Route>
               <Route path={'/about'} element={<About />}></Route>
               <Route
                 path={'/textbook/hardwords'}

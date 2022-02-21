@@ -34,6 +34,8 @@ export const Sprint: FC = () => {
   const [length, setLength] = useState(0)
   const [score, setScore] = useState({ total: 0, seriesTrueAnswers: 0 })
   let answer = ''
+  let bestSeriesAnswer = 0
+  // let newWordsInGame = 0
   const startGame = () => {
     setPreperaGame(false)
   }
@@ -42,7 +44,7 @@ export const Sprint: FC = () => {
     answer =
       answerVariant === 1
         ? words[length].wordTranslate
-        : words[setRandomNumber(59)].wordTranslate
+        : words[setRandomNumber(words.length - 1)].wordTranslate
     return answer
   }
 
@@ -58,6 +60,7 @@ export const Sprint: FC = () => {
     if (localStorage.getItem('token') && localStorage.getItem('userId')) {
       const userId = localStorage.getItem('userId') as string
       const token = localStorage.getItem('token') as string
+      bestSeriesAnswer = Math.max(bestSeriesAnswer, score.seriesTrueAnswers)
 
       if (answer) {
         setOrUpdateUserWord(userId, word.id, token, {
