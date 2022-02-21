@@ -1,12 +1,11 @@
-interface UserGameStatistic {
+export interface UserGameStatistic {
   newWordsInGame: number
   rightAnswerPercents: number
   longestSeries: number
 }
-interface WordInDay {
+export interface WordInDay {
   newWords: number
-  sprint: UserGameStatistic
-  audiocall: UserGameStatistic
+  [key: string]: UserGameStatistic | number
 }
 export interface UserStatistics {
   learnedWords: number

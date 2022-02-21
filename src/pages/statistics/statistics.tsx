@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material'
 import React from 'react'
 
-export const statistics = () => {
+export const Statistics = () => {
   return (
     <div className="statistics-page">
       <Typography component="div">
