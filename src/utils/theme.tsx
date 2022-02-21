@@ -24,7 +24,7 @@ export const theme = createTheme({
       fontSize: '1.2rem',
     },
     h5: {
-      fontSize: '1.2rem',
+      fontSize: '1.3rem',
     },
     button: {
       fontSize: '0.9rem',
