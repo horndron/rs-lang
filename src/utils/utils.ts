@@ -117,6 +117,7 @@ export const setUserGameStatistics = async (
   gameName = 'sprint' || 'audiocall'
 ): Promise<void> => {
   const oldStatistics = await getUserStatistics(userId, token)
+
   let newStatistics: UserStatistics
   const dateKey = currentDate()
   if (!oldStatistics.status) {
