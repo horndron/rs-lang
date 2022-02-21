@@ -64,9 +64,8 @@ export interface UserWord {
   status?: number
 }
 
-export interface UserStatisticsResponse {
+export interface UserStatisticsResponse extends UserStatistics {
   id: string
-  statistics: UserStatistics
   status?: number
 }
 

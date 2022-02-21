@@ -18,6 +18,10 @@
       background-color: #fff;
       border-radius: 10px;
       box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3);
+      .result-score {
+        padding: 0;
+        box-shadow: none;
+      }
       .word-card__top {
         @include flex-between;
         width: 100%;

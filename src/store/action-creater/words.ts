@@ -31,3 +31,18 @@ export const setWordsGroup = (group: number) => {
 export const setLevel = (level: number) => {
   return { type: WordsActionTypes.SET_LEVEL, payload: level }
 }
+
+export const SetBestSeriesAnswer = (bestSeriesAnswer: number) => {
+  return {
+    type: WordsActionTypes.SET_BESTSERIESANSWER,
+    payload: bestSeriesAnswer,
+  }
+}
+
+export const SetNewWordsInGame = (newWordsInGame: number) => {
+  return { type: WordsActionTypes.SET_NEWWORDSINGAME, payload: newWordsInGame }
+}
+
+export const SetGameName = (gameName: string) => {
+  return { type: WordsActionTypes.SET_GAMENAME, payload: gameName }
+}

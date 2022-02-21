@@ -1,3 +1,4 @@
+import { Dispatch } from 'redux'
 import {
   createUserWord,
   getUserStatistics,
@@ -12,6 +13,7 @@ import {
   UserWordParams,
 } from '../interfaces/api'
 import { UserStatistics, UserGameStatistic } from '../interfaces/statistics'
+import { SetNewWordsInGame } from '../store/action-creater/words'
 
 export const setRandomNumber = (length = 1): number => {
   return Math.round(Math.random() * length)
@@ -53,11 +55,14 @@ const updateWordParams = (
 export const setAudiocallStats = async () => {
   console.log(1)
 }
+
 export const setOrUpdateUserWord = async (
   userId: string,
   wordId: string,
   token: string,
-  word: Pick<Options, 'trueAnswers' | 'seriallyAnswer'>
+  word: Pick<Options, 'trueAnswers' | 'seriallyAnswer'>,
+  countNewWords: number,
+  callback: Dispatch
 ): Promise<void> => {
   const isUserWord = await getUserWord(userId, wordId, token)
   if (isUserWord.status === 200) {
@@ -72,6 +77,7 @@ export const setOrUpdateUserWord = async (
       })
     )
   } else {
+    callback(SetNewWordsInGame(countNewWords + 1))
     createUserWord(userId, wordId, token, {
       difficulty: 'false',
       optional: {
@@ -101,7 +107,7 @@ export const validateEmail = (email: string): boolean => {
 export const currentDate = (): string => {
   const date = new Date()
 
-  return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear}`
+  return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`
 }
 
 export const setUserGameStatistics = async (
@@ -111,12 +117,10 @@ export const setUserGameStatistics = async (
   gameName = 'sprint' || 'audiocall'
 ): Promise<void> => {
   const oldStatistics = await getUserStatistics(userId, token)
+
   let newStatistics: UserStatistics
   const dateKey = currentDate()
-  if (
-    !oldStatistics.status ||
-    !(oldStatistics as UserStatisticsResponse).statistics.optional[dateKey]
-  ) {
+  if (!oldStatistics.status) {
     newStatistics = {
       learnedWords: statistic.newWordsInGame,
       optional: {
@@ -130,13 +134,33 @@ export const setUserGameStatistics = async (
         },
       },
     }
+  } else if (!(oldStatistics as UserStatisticsResponse).optional[dateKey]) {
+    newStatistics = {
+      learnedWords:
+        (oldStatistics as UserStatisticsResponse).learnedWords +
+        statistic.newWordsInGame,
+      optional: (oldStatistics as UserStatisticsResponse).optional,
+    }
+    newStatistics.optional[dateKey] = {
+      newWords: statistic.newWordsInGame,
+      [gameName]: {
+        newWordsInGame: statistic.newWordsInGame,
+        rightAnswerPercents: statistic.rightAnswerPercents,
+        longestSeries: statistic.longestSeries,
+      },
+    }
   } else {
     if (
-      (oldStatistics as UserStatisticsResponse).statistics.optional[
+      (oldStatistics as UserStatisticsResponse).optional[
         dateKey
       ].hasOwnProperty(gameName)
     ) {
-      newStatistics = (oldStatistics as UserStatisticsResponse).statistics
+      newStatistics = {
+        learnedWords:
+          (oldStatistics as UserStatisticsResponse).learnedWords +
+          statistic.newWordsInGame,
+        optional: (oldStatistics as UserStatisticsResponse).optional,
+      }
       const gameOldStatistics = newStatistics.optional[dateKey][
         gameName
       ] as UserGameStatistic
@@ -145,17 +169,23 @@ export const setUserGameStatistics = async (
       newStatistics.optional[dateKey][gameName] = {
         newWordsInGame:
           gameOldStatistics.newWordsInGame + statistic.newWordsInGame,
-        rightAnswerPercents:
+        rightAnswerPercents: Math.round(
           (gameOldStatistics.rightAnswerPercents +
             statistic.rightAnswerPercents) /
-          2,
+            2
+        ),
         longestSeries: Math.max(
           gameOldStatistics.longestSeries,
           statistic.longestSeries
         ),
       }
     } else {
-      newStatistics = (oldStatistics as UserStatisticsResponse).statistics
+      newStatistics = newStatistics = {
+        learnedWords:
+          (oldStatistics as UserStatisticsResponse).learnedWords +
+          statistic.newWordsInGame,
+        optional: (oldStatistics as UserStatisticsResponse).optional,
+      }
       newStatistics.optional[dateKey].newWords =
         newStatistics.optional[dateKey].newWords + statistic.newWordsInGame
       newStatistics.optional[dateKey][gameName] = statistic

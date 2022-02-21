@@ -6,9 +6,13 @@ import { useTypeSelector } from '../../hooks/useTypeSelector'
 import { getChunkWords } from '../APIs/api'
 import { AudiocallCard } from './audiocard'
 import './audiocall.style.scss'
+import { useActions } from '../../hooks/useActions'
+import { useDispatch } from 'react-redux'
 
 export const Audiocall: React.FC = () => {
   const { level, page } = useTypeSelector((state) => state.words)
+  const { SetBestSeriesAnswer, SetNewWordsInGame, SetGameName } = useActions()
+  const dispatch = useDispatch()
   const [questions, setQuestions] = useState<Word[]>([])
   const [preperaGame, setPrepareGame] = useState<boolean>(true)
   const [lives, setLives] = useState<number>(5)
@@ -26,6 +30,9 @@ export const Audiocall: React.FC = () => {
 
   useEffect(() => {
     generateQuestions()
+    dispatch(SetBestSeriesAnswer(0))
+    dispatch(SetNewWordsInGame(0))
+    dispatch(SetGameName('audiocall'))
   }, [])
   return (
     <>

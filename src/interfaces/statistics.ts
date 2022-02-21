@@ -14,4 +14,11 @@ export interface UserStatistics {
   }
 }
 
+export interface IStatisticForDay {
+  wordForDay: number
+  percentForDay: number
+  sprint: UserGameStatistic
+  audiocall: UserGameStatistic
+}
+
 export default UserStatistics
