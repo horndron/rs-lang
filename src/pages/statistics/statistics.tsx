@@ -1,67 +1,64 @@
 import { Typography } from '@mui/material'
-import React, { FC, useEffect } from 'react'
+import React, { FC, useEffect, useState } from 'react'
+import { Grafics } from '../../components/grafics/grafics'
+import { StatisticForDay } from '../../components/statisticforday/statisticforday'
+import { UserStatisticsResponse } from '../../interfaces/api'
+import { UserGameStatistic } from '../../interfaces/statistics'
+import { currentDate } from '../../utils/utils'
 import { getUserStatistics } from './../../components/APIs/api'
+import './statistic.styles.sass'
 
 export const Statistics: FC = () => {
+  const [isLoading, setIsLoading] = useState(true)
+  const [statistic, setStatistic] = useState<UserStatisticsResponse>()
   const statisticData = async (): Promise<void> => {
     const userId = localStorage.getItem('userId') as string
     const token = localStorage.getItem('token') as string
-    const statistic = await getUserStatistics(userId, token)
+    const statisticResponce = await getUserStatistics(userId, token)
+    setStatistic(statisticResponce as UserStatisticsResponse)
+    setIsLoading(false)
+  }
 
-    console.log(statistic)
-
-    const canvas = document.querySelector('#canvas') as HTMLCanvasElement
-    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
-    const canvasWidth = canvas.clientWidth
-    const canvasHeight = canvas.clientHeight
-    const scaleX = 50
-    const scaleY = 50
-    ctx.beginPath()
-    ctx.strokeStyle = '#eee'
-
-    for (let i = 0; i < canvasWidth; i = i + scaleX) {
-      ctx.moveTo(i, 0)
-      ctx.lineTo(i, canvasHeight)
-    }
-
-    for (let i = 0; i < canvasHeight; i = i + scaleY) {
-      ctx.moveTo(0, i)
-      ctx.lineTo(canvasWidth, i)
-    }
-    ctx.stroke()
-    ctx.closePath()
-
-    const xAxis = canvasWidth
-    const yAxis = canvasHeight
-
-    ctx.beginPath()
-    ctx.strokeStyle = '#026aa7'
-    ctx.moveTo(0, yAxis)
-    ctx.lineTo(xAxis, yAxis)
-
-    ctx.moveTo(0, yAxis)
-    ctx.lineTo(0, 0)
-    ctx.stroke()
-    ctx.closePath()
+  const dateKey = currentDate()
+  const percentForDay = Math.round(
+    ((statistic?.optional[dateKey]?.sprint as UserGameStatistic)
+      .rightAnswerPercents +
+      (statistic?.optional[dateKey]?.audiocall as UserGameStatistic)
+        .rightAnswerPercents) /
+      2
+  )
+  const sprintForDay: UserGameStatistic = (statistic?.optional[dateKey]
+    ?.sprint as UserGameStatistic) || {
+    newWordsInGame: 0,
+    rightAnswerPercents: 0,
+    longestSeries: 0,
+  }
+  const audiocallForDay: UserGameStatistic = (statistic?.optional[dateKey]
+    ?.audiocall as UserGameStatistic) || {
+    newWordsInGame: 0,
+    rightAnswerPercents: 0,
+    longestSeries: 0,
   }
 
   useEffect(() => {
     statisticData()
-  }, [])
-
+  }, [isLoading])
+  if (isLoading) {
+    return <h2>Идет загрузка...</h2>
+  }
   return (
     <div className="statistics-page">
       <Typography component="div">
         <div>
           <h1>Статистика за сегодня</h1>
-          <div className="statistics">
-            <div className="statistics_all_time">
-              <h2>Статистика за всё время</h2>
-              <div className="canvas-container">
-                <canvas width="750" height="350" id="canvas" />
-              </div>
-            </div>
-          </div>
+          <StatisticForDay
+            wordForDay={statistic?.learnedWords || 0}
+            percentForDay={percentForDay}
+            sprint={sprintForDay}
+            audiocall={audiocallForDay}
+          />
+
+          <Grafics />
         </div>
       </Typography>
     </div>
