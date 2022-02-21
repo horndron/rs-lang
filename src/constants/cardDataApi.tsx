@@ -27,4 +27,8 @@ export const GROUP_COLOR = [
     color: { backgroundColor: '#7478ae' },
     gradient: { backgroundImage: `linear-gradient(rgba(0,0,0,0), #7478ae)` },
   },
+  {
+    color: { backgroundColor: '#000' },
+    gradient: { backgroundImage: `linear-gradient(rgba(0,0,0,0), #000)` },
+  },
 ]

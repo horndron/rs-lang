@@ -146,7 +146,7 @@ const GroupSwitcher = () => {
   )
 }
 
-const GameSwitcher = () => {
+export const GameSwitcher = () => {
   const [active, setActive] = useState(false)
   const gamesArr: string[] = ['audiocall', 'sprint']
   return (
