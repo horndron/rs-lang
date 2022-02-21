@@ -7,7 +7,10 @@ import { WordSettings } from './settings'
 import AudioImg from '../../assets/svg/auido.svg'
 import InfoImg from '../../assets/svg/info-solid.svg'
 import ExampleImg from '../../assets/svg/book-open-solid.svg'
+import BoltIcon from '../../assets/svg/bolt-solid.svg'
+import LearnIcon from '../../assets/svg/graduation-cap-solid.svg'
 import './textbook.style.scss'
+import { createUserWord, getUserWord, updateUserWord } from '../APIs/api'
 
 interface ICard {
   card: Word
@@ -46,8 +49,40 @@ export const WordCard: React.FC<ICard> = ({ card, group }) => {
   const audioPath = `${card.audio.split('/')[1]}`
   const meanPath = `${card.audioMeaning.split('/')[1]}`
   const examplePath = `${card.audioExample.split('/')[1]}`
-
   const color = GROUP_COLOR[group]
+
+  let userID: string
+  let token: string
+  let isAuth = false
+  if (localStorage.getItem('token') && localStorage.getItem('userId')) {
+    isAuth = true
+    userID = localStorage.getItem('userId') as string
+    token = localStorage.getItem('token') as string
+  }
+  const addHardWord = async () => {
+    try {
+      const word = await getUserWord(userID, card.id, token)
+      if (word.status === 200) {
+        console.log(word)
+        await updateUserWord(userID, card.id, token, {
+          difficulty: 'hard',
+          optional: { ...word.optional },
+        })
+      } else if (word.status === 404) {
+        console.log('create new word')
+        await createUserWord(userID, card.id, token, {
+          difficulty: 'hard',
+          optional: {
+            seriallyAnswer: 0,
+            trueAnswers: 0,
+            studied: false,
+          },
+        })
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
   return (
     <>
       <div className="wordCard">
@@ -55,6 +90,23 @@ export const WordCard: React.FC<ICard> = ({ card, group }) => {
           <img src={image} alt="cardImg" />
           <h2 className="cardTitle">{card.word}</h2>
           <div className="cardOverlay" style={color.gradient}></div>
+          {isAuth ? (
+            <>
+              <button
+                className="hard-icon"
+                onClick={() => {
+                  addHardWord()
+                }}
+              >
+                <img src={BoltIcon} alt="alt" />
+              </button>
+              <button className="learn-icon">
+                <img src={LearnIcon} alt="alt" />
+              </button>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
         <div className="cardMid" style={color.color}>
           <span className="cardMean">{card.wordTranslate}</span>

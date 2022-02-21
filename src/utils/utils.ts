@@ -17,11 +17,10 @@ export const setRandomNumber = (length = 1): number => {
   return Math.round(Math.random() * length)
 }
 
-export const threeRandomPageWords = (): number[] => {
-  const LENGTH = 3
+export const RandomPageWords = (num: number): number[] => {
   const result: number[] = []
 
-  while (result.length < LENGTH) {
+  while (result.length < num) {
     const pageNum = setRandomNumber(29)
 
     if (!result.includes(pageNum)) result.push(pageNum)
@@ -51,6 +50,9 @@ const updateWordParams = (
   }
 }
 
+export const setAudiocallStats = async () => {
+  console.log(1)
+}
 export const setOrUpdateUserWord = async (
   userId: string,
   wordId: string,

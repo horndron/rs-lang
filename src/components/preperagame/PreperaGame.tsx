@@ -6,7 +6,7 @@ export const PreperaGame: FC<PreperaGameProps> = ({ handler }) => {
   return (
     <div>
       <CircleTimer
-        duration={3}
+        duration={1}
         colors={['#004777', '#F7B801']}
         colorsTime={[3, 0]}
         onComplete={handler}

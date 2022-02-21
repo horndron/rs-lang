@@ -16,7 +16,7 @@ import { UserStatistics } from '../../interfaces/statistics'
 export const getChunkWords = async (
   group: number,
   page: number
-): Promise<Word[] | void> => {
+): Promise<Word[]> => {
   try {
     const response = await fetch(
       `${constApi.BACKEND_HOSTNAME}/${constApi.URL_WORDS}?group=${group}&page=${page}`
@@ -25,6 +25,7 @@ export const getChunkWords = async (
     return response.json()
   } catch (error) {
     console.warn(error as Error)
+    return []
   }
 }
 
@@ -163,7 +164,7 @@ export const getAllUserWords = async (
       },
     }
   ).then((data) => {
-    return data.status == 204
+    return data.status == 200
       ? data.json()
       : { status: data.status, message: data.text() }
   })

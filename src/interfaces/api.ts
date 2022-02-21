@@ -70,4 +70,17 @@ export interface UserStatisticsResponse {
   status?: number
 }
 
+export interface AggregatedWords {
+  paginatedResults: Word[]
+  totalCount: [
+    {
+      count: number
+    }
+  ]
+}
+
+export interface UserAggregatedWords {
+  aggregatedWords: AggregatedWords[]
+}
+
 export default Word
