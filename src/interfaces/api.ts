@@ -1,3 +1,5 @@
+import { UserStatistics } from './statistics'
+
 export interface Word {
   id: string
   group: number
@@ -60,6 +62,24 @@ export interface UserWord {
   id: string
   wordId: string
   status?: number
+}
+
+export interface UserStatisticsResponse extends UserStatistics {
+  id: string
+  status?: number
+}
+
+export interface AggregatedWords {
+  paginatedResults: Word[]
+  totalCount: [
+    {
+      count: number
+    }
+  ]
+}
+
+export interface UserAggregatedWords {
+  aggregatedWords: AggregatedWords[]
 }
 
 export default Word

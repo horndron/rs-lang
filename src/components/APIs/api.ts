@@ -8,12 +8,15 @@ import {
   RejectStatusText,
   CreateUser,
   AuthUser,
+  UserStatisticsResponse,
+  UserAggregatedWords,
 } from '../../interfaces/api'
+import { UserStatistics } from '../../interfaces/statistics'
 
 export const getChunkWords = async (
   group: number,
   page: number
-): Promise<Word[] | void> => {
+): Promise<Word[]> => {
   try {
     const response = await fetch(
       `${constApi.BACKEND_HOSTNAME}/${constApi.URL_WORDS}?group=${group}&page=${page}`
@@ -22,6 +25,7 @@ export const getChunkWords = async (
     return response.json()
   } catch (error) {
     console.warn(error as Error)
+    return []
   }
 }
 
@@ -149,7 +153,7 @@ export const getNewUserToken = async (
 export const getAllUserWords = async (
   userId: string,
   token: string
-): Promise<Word[]> => {
+): Promise<UserWord[]> => {
   const response = await fetch(
     `${constApi.BACKEND_HOSTNAME}/${constApi.URL_USERS}/${userId}/${constApi.URL_WORDS}`,
     {
@@ -160,7 +164,7 @@ export const getAllUserWords = async (
       },
     }
   ).then((data) => {
-    return data.status == 204
+    return data.status == 200
       ? data.json()
       : { status: data.status, message: data.text() }
   })
@@ -212,7 +216,7 @@ export const getUserWord = async (
       word.status = data.status
       return data.status == 200
         ? word
-        : { status: data.status, message: data.text() }
+        : { status: data.status, message: JSON.stringify(data) }
     })
     .catch((data) => {
       console.warn(data)
@@ -227,6 +231,7 @@ export const updateUserWord = async (
   token: string,
   worsParams: UserWordParams
 ): Promise<UserWord | RejectStatusText> => {
+  console.log(worsParams, userId, wordId, token)
   const response = await fetch(
     `${constApi.BACKEND_HOSTNAME}/${constApi.URL_USERS}/${userId}/${constApi.URL_WORDS}/${wordId}`,
     {
@@ -266,6 +271,132 @@ export const deleteUserWord = async (
       ? data.json()
       : { status: data.status, message: data.text() }
   })
+  return response
+}
+
+export const getUserStatistics = async (
+  userId: string,
+  token: string
+): Promise<UserStatisticsResponse | RejectStatusText> => {
+  const response = await fetch(
+    `${constApi.BACKEND_HOSTNAME}/${constApi.URL_USERS}/${userId}/${constApi.URL_STATISTICS}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }
+  )
+    .then(async (data) => {
+      const statistics = await data.json()
+      statistics.status = data.status
+      return data.status == 200
+        ? statistics
+        : { status: data.status, message: data.text() }
+    })
+    .catch((data) => {
+      console.warn(data)
+      return { status: 404, message: data }
+    })
+  return response
+}
+
+export const setUserStatistics = async (
+  userId: string,
+  token: string,
+  statistics: UserStatistics
+): Promise<UserStatisticsResponse | RejectStatusText> => {
+  const response = await fetch(
+    `${constApi.BACKEND_HOSTNAME}/${constApi.URL_USERS}/${userId}/${constApi.URL_STATISTICS}`,
+    {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(statistics),
+    }
+  )
+    .then(async (data) => {
+      const statistics = await data.json()
+      statistics.status = data.status
+      return data.status == 200
+        ? statistics
+        : { status: data.status, message: data.text() }
+    })
+    .catch((data) => {
+      console.warn(data)
+      return { status: 404, message: data }
+    })
+  return response
+}
+
+export const getUserAggregatedWords = async (
+  userId: string,
+  token: string,
+  page: number,
+  wordsPerPage: number,
+  filter: string
+): Promise<UserAggregatedWords | RejectStatusText> => {
+  // For difficulty words use this filter {"$and":[{"userWord.difficulty":"false"}]}
+  const response = await fetch(
+    `${constApi.BACKEND_HOSTNAME}/${constApi.URL_USERS}/${userId}/${
+      constApi.URL_AGREGATED
+    }?page=${page}&wordsPerPage=${wordsPerPage}&filter=${encodeURI(filter)}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }
+  )
+    .then(async (data) => {
+      const statistics = await data.json()
+      statistics.status = data.status
+      return data.status == 200
+        ? statistics
+        : { status: data.status, message: data.text() }
+    })
+    .catch((data) => {
+      console.warn(data)
+      return { status: 404, message: data }
+    })
+  return response
+}
+
+export const getUserHardWords = async (
+  userId: string,
+  token: string,
+  wordsPerPage: number,
+  filter: string
+): Promise<UserAggregatedWords | RejectStatusText> => {
+  // For difficulty words use this filter {"$and":[{"userWord.difficulty":"false"}]}
+  const response = await fetch(
+    `${constApi.BACKEND_HOSTNAME}/${constApi.URL_USERS}/${userId}/${
+      constApi.URL_AGREGATED
+    }?wordsPerPage=${wordsPerPage}&filter=${encodeURI(filter)}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }
+  )
+    .then(async (data) => {
+      const statistics = await data.json()
+      statistics.status = data.status
+      return data.status == 200
+        ? statistics
+        : { status: data.status, message: data.text() }
+    })
+    .catch((data) => {
+      console.warn(data)
+      return { status: 404, message: data }
+    })
   return response
 }
 

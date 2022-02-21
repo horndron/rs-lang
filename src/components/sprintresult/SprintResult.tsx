@@ -1,8 +1,10 @@
 import VolumeUpRoundedIcon from '@mui/icons-material/VolumeUpRounded'
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import BUTTON_STYLES from '../../constants/buttons'
 import { AUDIO_URL } from '../../constants/cardDataApi'
+import { useTypeSelector } from '../../hooks/useTypeSelector'
 import { SprintResultProps } from '../../interfaces/sprint'
+import { setUserGameStatistics } from '../../utils/utils'
 import MUIButton from '../UI/MUIButton/MUIButton'
 
 export const SprintResult: FC<SprintResultProps> = ({
@@ -10,17 +12,48 @@ export const SprintResult: FC<SprintResultProps> = ({
   falseAnswer,
   score,
   restartGame,
+  isAudioGame = false,
 }) => {
+  const { bestSeriesAnswer, newWordsInGame, gameName } = useTypeSelector(
+    (state) => state.words
+  )
   const getAudioWord = (audioName: string): void => {
     const audio = new Audio()
     audio.src = `${AUDIO_URL}/${audioName.split('/')[1]}`
     audio.play()
   }
+
+  useEffect(() => {
+    if (localStorage.getItem('token') && localStorage.getItem('userId')) {
+      const userId = localStorage.getItem('userId') as string
+      const token = localStorage.getItem('token') as string
+      const rightAnswerPercents = Math.round(
+        (trueAnswer.length / (trueAnswer.length + falseAnswer.length)) * 100
+      )
+      setUserGameStatistics(
+        userId,
+        token,
+        {
+          newWordsInGame: newWordsInGame,
+          rightAnswerPercents: rightAnswerPercents,
+          longestSeries: bestSeriesAnswer,
+        },
+        gameName
+      )
+    }
+  }, [])
+
   return (
     <div className="result-score">
       <div className="result-container">
         <h2 className="result-score__total">
-          Вы заработали <span>{score}</span> очков
+          {isAudioGame ? (
+            <>Игра окончена</>
+          ) : (
+            <>
+              Вы заработали <span>{score}</span> очков
+            </>
+          )}
         </h2>
         <div className="true-answer">
           <h3>
