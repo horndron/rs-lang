@@ -216,7 +216,7 @@ export const getUserWord = async (
       word.status = data.status
       return data.status == 200
         ? word
-        : { status: data.status, message: data.text() }
+        : { status: data.status, message: JSON.stringify(data) }
     })
     .catch((data) => {
       console.warn(data)
@@ -231,6 +231,7 @@ export const updateUserWord = async (
   token: string,
   worsParams: UserWordParams
 ): Promise<UserWord | RejectStatusText> => {
+  console.log(worsParams, userId, wordId, token)
   const response = await fetch(
     `${constApi.BACKEND_HOSTNAME}/${constApi.URL_USERS}/${userId}/${constApi.URL_WORDS}/${wordId}`,
     {
@@ -344,6 +345,39 @@ export const getUserAggregatedWords = async (
     `${constApi.BACKEND_HOSTNAME}/${constApi.URL_USERS}/${userId}/${
       constApi.URL_AGREGATED
     }?page=${page}&wordsPerPage=${wordsPerPage}&filter=${encodeURI(filter)}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }
+  )
+    .then(async (data) => {
+      const statistics = await data.json()
+      statistics.status = data.status
+      return data.status == 200
+        ? statistics
+        : { status: data.status, message: data.text() }
+    })
+    .catch((data) => {
+      console.warn(data)
+      return { status: 404, message: data }
+    })
+  return response
+}
+
+export const getUserHardWords = async (
+  userId: string,
+  token: string,
+  wordsPerPage: number,
+  filter: string
+): Promise<UserAggregatedWords | RejectStatusText> => {
+  // For difficulty words use this filter {"$and":[{"userWord.difficulty":"false"}]}
+  const response = await fetch(
+    `${constApi.BACKEND_HOSTNAME}/${constApi.URL_USERS}/${userId}/${
+      constApi.URL_AGREGATED
+    }?wordsPerPage=${wordsPerPage}&filter=${encodeURI(filter)}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

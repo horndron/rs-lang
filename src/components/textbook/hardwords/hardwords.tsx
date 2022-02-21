@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
-import { getAllUserWords } from '../../APIs/api'
+import { getUserHardWords } from '../../APIs/api'
+import { WordCard } from '../textbook'
+import { HardWordSettings } from './settingsHard'
 
 export const HardWords: React.FC = () => {
   const [words, setWords] = useState([])
@@ -11,9 +13,15 @@ export const HardWords: React.FC = () => {
     token = localStorage.getItem('token') as string
   }
   const getHardWords = async () => {
-    const data = await getAllUserWords(userID, token)
-    const arr = await data.filter((el) => el.difficulty === 'hard')
-    setWords(arr)
+    console.log(1)
+    const data = await getUserHardWords(
+      userID,
+      token,
+      100,
+      '{"$and":[{"userWord.difficulty":"hard"}]}'
+    )
+    console.log(data, 'data-hard')
+    setWords(data[0].paginatedResults)
   }
 
   useEffect(() => {
@@ -22,7 +30,20 @@ export const HardWords: React.FC = () => {
   return (
     <>
       <div className="container words-container">
-        {words.map((card) => console.log(1, card))}
+        {words.map((card, ind) => (
+          <WordCard
+            key={`hardword-${ind}-card`}
+            card={card}
+            group={6}
+            isHardGroup={true}
+            getHardWords={getHardWords}
+          />
+        ))}
+        {words.length > 0 ? (
+          <HardWordSettings position={'sticky'} pos={0} />
+        ) : (
+          <HardWordSettings position={'absolute'} pos={40} />
+        )}
       </div>
     </>
   )
