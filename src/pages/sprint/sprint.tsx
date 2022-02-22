@@ -51,7 +51,7 @@ export const Sprint: FC = () => {
   const startGame = () => {
     setPreperaGame(false)
   }
-  const wordTranslate = (): string => {
+  const wordTranslateVariant = (): string => {
     const answerVariant = setRandomNumber()
     answer =
       answerVariant === 1
@@ -177,7 +177,7 @@ export const Sprint: FC = () => {
 
   useEffect(() => {
     getWords(level)
-  }, [level, isLoading])
+  }, [level])
   if (isLoading) {
     return <h2>Идет загрузка...</h2>
   }
@@ -211,7 +211,10 @@ export const Sprint: FC = () => {
                   <span className="item item-3"></span>
                 </div>
               </div>
-              <SprintWord word={words[length].word} answer={wordTranslate()} />
+              <SprintWord
+                word={words[length].word}
+                answer={wordTranslateVariant()}
+              />
 
               <div className="answers-btn">
                 <MUIButton
