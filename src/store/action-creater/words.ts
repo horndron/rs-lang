@@ -46,3 +46,7 @@ export const SetNewWordsInGame = (newWordsInGame: number) => {
 export const SetGameName = (gameName: string) => {
   return { type: WordsActionTypes.SET_GAMENAME, payload: gameName }
 }
+
+export const SetFromTextbook = (fromTextbook: boolean) => {
+  return { type: WordsActionTypes.SET_FROMTEXTBOOK, payload: fromTextbook }
+}
