@@ -10,7 +10,7 @@ import { useActions } from '../../hooks/useActions'
 import { useDispatch } from 'react-redux'
 
 export const Audiocall: React.FC = () => {
-  const { level, page } = useTypeSelector((state) => state.words)
+  const { level, page, fromTextbook } = useTypeSelector((state) => state.words)
   const { SetBestSeriesAnswer, SetNewWordsInGame, SetGameName } = useActions()
   const dispatch = useDispatch()
   const [questions, setQuestions] = useState<Word[]>([])
@@ -22,7 +22,8 @@ export const Audiocall: React.FC = () => {
   }
 
   async function generateQuestions() {
-    await getChunkWords(level, page).then((res: Word[]) => {
+    const numPage = fromTextbook ? page : Math.floor(Math.random() * 30)
+    await getChunkWords(level, numPage).then((res: Word[]) => {
       const arr: Word[] | void = res
       setQuestions(shuffleArr(arr))
     })

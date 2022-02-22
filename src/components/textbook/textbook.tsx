@@ -25,10 +25,15 @@ export const TextbookPage: React.FC = () => {
   const { words, loading, error, page, group } = useTypeSelector(
     (state) => state.words
   )
-  const { fetchWords } = useActions()
+
+  const { fetchWords, SetFromTextbook } = useActions()
   useEffect(() => {
     fetchWords(group, page)
   }, [page, group])
+
+  useEffect(() => {
+    SetFromTextbook(true)
+  }, [])
 
   if (loading) {
     return <h2>Идет загрузка...</h2>
@@ -74,6 +79,9 @@ export const WordCard: React.FC<ICard> = ({
     token = localStorage.getItem('token') as string
   }
   const removeHardWord = async () => {
+    if (!isAuth()) {
+      window.location.href = '/'
+    }
     try {
       const word = await getUserWord(userID, card._id, token)
       await updateUserWord(userID, card._id, token, {
@@ -87,6 +95,9 @@ export const WordCard: React.FC<ICard> = ({
   }
 
   const addHardWord = async () => {
+    if (!isAuth()) {
+      window.location.reload()
+    }
     try {
       const word = await getUserWord(userID, card.id, token)
       if (word.status === 200) {
@@ -108,7 +119,6 @@ export const WordCard: React.FC<ICard> = ({
       console.log(e)
     }
   }
-
   return (
     <>
       <div className="wordCard">

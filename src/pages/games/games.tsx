@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { GameCard } from '../../components/gamecard/GameCard'
 import MUISelect from '../../components/UI/MUISelect/MUISelect'
@@ -18,12 +18,14 @@ const CATEGORIES_FOR_SELECT: SelectItemProps[] = [
 
 export const Games: FC = () => {
   const { level } = useTypeSelector((state) => state.words)
-  const { setLevel } = useActions()
+  const { setLevel, SetFromTextbook } = useActions()
   const dispatch = useDispatch()
   const getSelectValue = (value: number): void => {
     dispatch(setLevel(value))
   }
-
+  useEffect(() => {
+    SetFromTextbook(false)
+  }, [])
   return (
     <div className="games-page">
       <div className="games">
