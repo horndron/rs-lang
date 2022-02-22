@@ -46,7 +46,7 @@ export const Sprint: FC = () => {
   const [preperaGame, setPreperaGame] = useState(true)
   const [words, setWords] = useState<Word[]>([])
   const [length, setLength] = useState(0)
-  const [score, setScore] = useState({ total: 0, seriesTrueAnswers: 0 })
+  const [score, setScore] = useState({ total: 0, seriesTrueAnswers: 1 })
   let answer = ''
   const startGame = () => {
     setPreperaGame(false)
@@ -112,11 +112,11 @@ export const Sprint: FC = () => {
 
   const getScoreMultiply = (): number => {
     let multiply = 1
-    if (score.seriesTrueAnswers > 9) {
+    if (score.seriesTrueAnswers > 10) {
       multiply = 8
-    } else if (score.seriesTrueAnswers > 6) {
+    } else if (score.seriesTrueAnswers > 7) {
       multiply = 4
-    } else if (score.seriesTrueAnswers > 3) {
+    } else if (score.seriesTrueAnswers > 4) {
       multiply = 2
     }
 
