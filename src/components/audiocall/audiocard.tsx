@@ -143,7 +143,19 @@ export const AudiocallCard: React.FC<IAudioCard> = ({
     setLives(5)
     generateQuestions()
   }
+  document.onkeydown = checkKey
 
+  function checkKey(e: KeyboardEvent): void {
+    if (e.key == '1' && !end) {
+      checkAnswer(answers[0].id)
+    } else if (e.key == '2' && !end) {
+      checkAnswer(answers[1].id)
+    } else if (e.key == '3' && !end) {
+      checkAnswer(answers[2].id)
+    } else if (e.key == '4' && !end) {
+      checkAnswer(answers[3].id)
+    }
+  }
   useEffect(() => {
     const audio = document.querySelector('.audio-example') as HTMLElement
     audio.click()
@@ -177,11 +189,15 @@ export const AudiocallCard: React.FC<IAudioCard> = ({
                 {answers.map((el: Word, ind) => (
                   <MUIButton
                     key={`ans-${ind}-btn`}
-                    name={`${el.wordTranslate}`}
+                    name={`${ind + 1}. ${el.wordTranslate}`}
                     handler={() => {
                       checkAnswer(el.id)
                     }}
-                    sx={{ ...BUTTON_STYLES.colorBorder, height: 70 }}
+                    sx={{
+                      ...BUTTON_STYLES.colorBorder,
+                      height: 80,
+                      width: 200,
+                    }}
                   />
                 ))}
               </div>
@@ -190,7 +206,7 @@ export const AudiocallCard: React.FC<IAudioCard> = ({
                 handler={() => {
                   checkAnswer('fail')
                 }}
-                sx={{ ...BUTTON_STYLES.darkBorder }}
+                sx={{ ...BUTTON_STYLES.falseAnswer }}
               />
             </div>
           </>

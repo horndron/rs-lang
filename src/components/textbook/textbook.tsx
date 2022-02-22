@@ -96,7 +96,6 @@ export const WordCard: React.FC<ICard> = ({
       console.log(e)
     }
   }
-
   const addHardWord = async () => {
     if (!isAuth()) {
       window.location.reload()
@@ -123,7 +122,6 @@ export const WordCard: React.FC<ICard> = ({
       console.log(e)
     }
   }
-
   const addLearnWord = async () => {
     try {
       const word = await getUserWord(userID, card.id, token)
