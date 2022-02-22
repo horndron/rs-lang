@@ -1,11 +1,8 @@
 import * as React from 'react'
 import { MAIN_CARDS, ADVANTAGES } from '../../constants/mainPage'
 import { PROJECT_NAME } from '../../constants/header'
-
 import './mainPage.scss'
-
 import { AppBar, Box, Container, Link, Typography } from '@mui/material'
-
 import LoginModal from '../../components/login/login'
 import MenuSmall from '../../components/header/MenuSmall'
 
