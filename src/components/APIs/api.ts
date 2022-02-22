@@ -232,7 +232,6 @@ export const updateUserWord = async (
   token: string,
   worsParams: UserWordParams
 ): Promise<UserWord | RejectStatusText> => {
-  console.log(worsParams, userId, wordId, token)
   const response = await fetch(
     `${constApi.BACKEND_HOSTNAME}/${constApi.URL_USERS}/${userId}/${constApi.URL_WORDS}/${wordId}`,
     {
