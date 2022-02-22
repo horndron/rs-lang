@@ -21,7 +21,7 @@ main .main-page {
   overflow: hidden;
   cursor: pointer;
   @include cards-shadow;
-  @include trans-slow;
+  @include trans-medium;
 
   &_active {
     width: $mainCardWidth;
@@ -115,6 +115,14 @@ header.header_card .login-container button {
   background-color: $white;
   text-shadow: -1px -1px 1px #ccc;
   @include trans-fast;
+}
+
+.main-card .user-info {
+  display: none;
+}
+
+.accordion .main-card_active .user-info {
+  display: flex;
 }
 
 .main-card_advantages .main-card__inner {
