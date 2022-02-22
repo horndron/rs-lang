@@ -29,32 +29,51 @@ export const Statistics: FC = () => {
     setStatistic(statisticResponce as UserStatisticsResponse)
     setIsLoading(false)
   }
-
   const dateKey = currentDate()
-  const wordPerDay =
-    (statistic?.optional[dateKey]?.sprint as UserGameStatistic)
-      ?.newWordsInGame +
-      (statistic?.optional[dateKey]?.audiocall as UserGameStatistic)
-        ?.newWordsInGame || 0
-  const percentForDay =
-    Math.round(
-      ((statistic?.optional[dateKey]?.sprint as UserGameStatistic)
-        ?.rightAnswerPercents +
+  let wordPerDay: number
+  let percentForDay: number
+  let sprintForDay: UserGameStatistic
+  let audiocallForDay: UserGameStatistic
+
+  if (!statistic?.status) {
+    wordPerDay =
+      (statistic?.optional[dateKey]?.sprint as UserGameStatistic)
+        ?.newWordsInGame +
         (statistic?.optional[dateKey]?.audiocall as UserGameStatistic)
-          ?.rightAnswerPercents) /
-        2
-    ) || 0
-  const sprintForDay: UserGameStatistic = (statistic?.optional[dateKey]
-    ?.sprint as UserGameStatistic) || {
-    newWordsInGame: 0,
-    rightAnswerPercents: 0,
-    longestSeries: 0,
-  }
-  const audiocallForDay: UserGameStatistic = (statistic?.optional[dateKey]
-    ?.audiocall as UserGameStatistic) || {
-    newWordsInGame: 0,
-    rightAnswerPercents: 0,
-    longestSeries: 0,
+          ?.newWordsInGame || 0
+    percentForDay =
+      Math.round(
+        ((statistic?.optional[dateKey]?.sprint as UserGameStatistic)
+          ?.rightAnswerPercents +
+          (statistic?.optional[dateKey]?.audiocall as UserGameStatistic)
+            ?.rightAnswerPercents) /
+          2
+      ) || 0
+    sprintForDay = (statistic?.optional[dateKey]
+      ?.sprint as UserGameStatistic) || {
+      newWordsInGame: 0,
+      rightAnswerPercents: 0,
+      longestSeries: 0,
+    }
+    audiocallForDay = (statistic?.optional[dateKey]
+      ?.audiocall as UserGameStatistic) || {
+      newWordsInGame: 0,
+      rightAnswerPercents: 0,
+      longestSeries: 0,
+    }
+  } else {
+    wordPerDay = 0
+    percentForDay = 0
+    sprintForDay = {
+      newWordsInGame: 0,
+      rightAnswerPercents: 0,
+      longestSeries: 0,
+    }
+    audiocallForDay = {
+      newWordsInGame: 0,
+      rightAnswerPercents: 0,
+      longestSeries: 0,
+    }
   }
 
   const wordsOnDays: WordsOnDay[] = []
