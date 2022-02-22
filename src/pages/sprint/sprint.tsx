@@ -46,17 +46,21 @@ export const Sprint: FC = () => {
   const [preperaGame, setPreperaGame] = useState(true)
   const [words, setWords] = useState<Word[]>([])
   const [length, setLength] = useState(0)
-  const [score, setScore] = useState({ total: 0, seriesTrueAnswers: 0 })
+  const [score, setScore] = useState({ total: 0, seriesTrueAnswers: 1 })
   let answer = ''
   const startGame = () => {
     setPreperaGame(false)
   }
-  const wordTranslate = (): string => {
+  const wordTranslateVariant = (): string => {
     const answerVariant = setRandomNumber()
+    const num =
+      length > words.length / 2
+        ? length - words.length / 4
+        : length + words.length / 4
     answer =
       answerVariant === 1
         ? words[length].wordTranslate
-        : words[setRandomNumber(words.length - 1)].wordTranslate
+        : words[num].wordTranslate
     return answer
   }
 
@@ -88,7 +92,6 @@ export const Sprint: FC = () => {
           newWordsInGame,
           dispatch
         )
-        setResult({ ...result, true: [...result.true, resultAnswer] })
       } else {
         setOrUpdateUserWord(
           userId,
@@ -101,18 +104,23 @@ export const Sprint: FC = () => {
           newWordsInGame,
           dispatch
         )
-        setResult({ ...result, false: [...result.false, resultAnswer] })
       }
+    }
+
+    if (answer) {
+      setResult({ ...result, true: [...result.true, resultAnswer] })
+    } else {
+      setResult({ ...result, false: [...result.false, resultAnswer] })
     }
   }
 
   const getScoreMultiply = (): number => {
     let multiply = 1
-    if (score.seriesTrueAnswers > 9) {
+    if (score.seriesTrueAnswers > 10) {
       multiply = 8
-    } else if (score.seriesTrueAnswers > 6) {
+    } else if (score.seriesTrueAnswers > 7) {
       multiply = 4
-    } else if (score.seriesTrueAnswers > 3) {
+    } else if (score.seriesTrueAnswers > 4) {
       multiply = 2
     }
 
@@ -173,7 +181,7 @@ export const Sprint: FC = () => {
 
   useEffect(() => {
     getWords(level)
-  }, [level, isLoading])
+  }, [level])
   if (isLoading) {
     return <h2>Идет загрузка...</h2>
   }
@@ -207,7 +215,10 @@ export const Sprint: FC = () => {
                   <span className="item item-3"></span>
                 </div>
               </div>
-              <SprintWord word={words[length].word} answer={wordTranslate()} />
+              <SprintWord
+                word={words[length].word}
+                answer={wordTranslateVariant()}
+              />
 
               <div className="answers-btn">
                 <MUIButton
