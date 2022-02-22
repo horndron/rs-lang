@@ -84,6 +84,7 @@ export const WordCard: React.FC<ICard> = ({
     }
     try {
       const word = await getUserWord(userID, card._id as string, token)
+      console.log(word, 'remove hard word')
       await updateUserWord(userID, card._id as string, token, {
         difficulty: 'easy',
         optional: { ...(word as UserWord).optional },
@@ -100,6 +101,7 @@ export const WordCard: React.FC<ICard> = ({
     }
     try {
       const word = await getUserWord(userID, card.id, token)
+      console.log(word, 'add hard word')
       if (word.status === 200) {
         await updateUserWord(userID, card.id, token, {
           difficulty: 'hard',
@@ -112,6 +114,30 @@ export const WordCard: React.FC<ICard> = ({
             seriallyAnswer: 0,
             trueAnswers: 0,
             studied: false,
+          },
+        })
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const addLearnWord = async () => {
+    try {
+      const word = await getUserWord(userID, card.id, token)
+      if (word.status === 200) {
+        const a = await updateUserWord(userID, card.id, token, {
+          difficulty: (word as UserWord).difficulty,
+          optional: { ...(word as UserWord).optional, studied: true },
+        })
+        console.log(a)
+      } else if (word.status === 404) {
+        await createUserWord(userID, card.id, token, {
+          difficulty: 'easy',
+          optional: {
+            seriallyAnswer: 0,
+            trueAnswers: 0,
+            studied: true,
           },
         })
       }
@@ -138,19 +164,25 @@ export const WordCard: React.FC<ICard> = ({
                   <img src={TrashIcon} alt="alt" />
                 </button>
               ) : (
-                <button
-                  className="hard-icon"
-                  onClick={() => {
-                    addHardWord()
-                  }}
-                >
-                  <img src={BoltIcon} alt="alt" />
-                </button>
+                <>
+                  <button
+                    className="hard-icon"
+                    onClick={() => {
+                      addHardWord()
+                    }}
+                  >
+                    <img src={BoltIcon} alt="alt" />
+                  </button>
+                  <button
+                    className="learn-icon"
+                    onClick={() => {
+                      addLearnWord()
+                    }}
+                  >
+                    <img src={LearnIcon} alt="alt" />
+                  </button>
+                </>
               )}
-
-              <button className="learn-icon">
-                <img src={LearnIcon} alt="alt" />
-              </button>
             </>
           ) : (
             <></>
