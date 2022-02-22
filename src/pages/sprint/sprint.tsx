@@ -88,7 +88,6 @@ export const Sprint: FC = () => {
           newWordsInGame,
           dispatch
         )
-        setResult({ ...result, true: [...result.true, resultAnswer] })
       } else {
         setOrUpdateUserWord(
           userId,
@@ -101,8 +100,13 @@ export const Sprint: FC = () => {
           newWordsInGame,
           dispatch
         )
-        setResult({ ...result, false: [...result.false, resultAnswer] })
       }
+    }
+
+    if (answer) {
+      setResult({ ...result, true: [...result.true, resultAnswer] })
+    } else {
+      setResult({ ...result, false: [...result.false, resultAnswer] })
     }
   }
 
