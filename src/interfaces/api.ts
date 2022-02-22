@@ -32,6 +32,12 @@ export interface CreateUser {
   status?: number
 }
 
+export interface UpdateToken {
+  token: string
+  refreshToken: string
+  status?: number
+}
+
 export interface AuthUser {
   message: string
   token: string
