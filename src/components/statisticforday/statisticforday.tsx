@@ -20,7 +20,7 @@ export const StatisticForDay: React.FC<IStatisticForDay> = ({
       </div>
       <div className="statistics_games">
         <div className="game game_audiocall">
-          <h3>Аудиовызов</h3>
+          <h3>Спринт</h3>
           <div className="words">
             Изучено слов <span>{sprint.newWordsInGame}</span>
           </div>
@@ -32,7 +32,7 @@ export const StatisticForDay: React.FC<IStatisticForDay> = ({
           </div>
         </div>
         <div className="game game_sprint">
-          <h3>Спринт</h3>
+          <h3>Аудиовызов</h3>
           <div className="words">
             Изучено слов <span>{audiocall.newWordsInGame}</span>
           </div>
