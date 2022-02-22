@@ -28,7 +28,6 @@ export const Sprint: FC = () => {
     newWordsInGame,
     fromTextbook,
   } = useTypeSelector((state) => state.words)
-  console.log(fromTextbook)
   const { SetBestSeriesAnswer, SetNewWordsInGame, SetGameName } = useActions()
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(true)
