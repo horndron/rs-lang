@@ -15,6 +15,7 @@ export interface Word {
   textExampleTranslate: string
   textMeaningTranslate: string
   wordTranslate: string
+  _id?: string
 }
 
 export interface User {
