@@ -25,7 +25,6 @@ export const Statistics: FC = () => {
     const userId = localStorage.getItem('userId') as string
     const token = localStorage.getItem('token') as string
     const statisticResponce = await getUserStatistics(userId, token)
-    console.log(statisticResponce)
     setStatistic(statisticResponce as UserStatisticsResponse)
     setIsLoading(false)
   }
@@ -35,20 +34,36 @@ export const Statistics: FC = () => {
   let sprintForDay: UserGameStatistic
   let audiocallForDay: UserGameStatistic
 
-  if (!statistic?.status) {
+  if (statistic?.status === 200) {
     wordPerDay =
+      ((statistic?.optional[dateKey]?.sprint as UserGameStatistic)
+        ?.newWordsInGame || 0) +
+      ((statistic?.optional[dateKey]?.audiocall as UserGameStatistic)
+        ?.newWordsInGame || 0)
+
+    if (
       (statistic?.optional[dateKey]?.sprint as UserGameStatistic)
-        ?.newWordsInGame +
-        (statistic?.optional[dateKey]?.audiocall as UserGameStatistic)
-          ?.newWordsInGame || 0
-    percentForDay =
-      Math.round(
-        ((statistic?.optional[dateKey]?.sprint as UserGameStatistic)
-          ?.rightAnswerPercents +
-          (statistic?.optional[dateKey]?.audiocall as UserGameStatistic)
-            ?.rightAnswerPercents) /
-          2
-      ) || 0
+        ?.rightAnswerPercents &&
+      (statistic?.optional[dateKey]?.audiocall as UserGameStatistic)
+        ?.rightAnswerPercents
+    ) {
+      percentForDay =
+        Math.round(
+          (((statistic?.optional[dateKey]?.sprint as UserGameStatistic)
+            ?.rightAnswerPercents || 0) +
+            ((statistic?.optional[dateKey]?.audiocall as UserGameStatistic)
+              ?.rightAnswerPercents || 0)) /
+            2
+        ) || 0
+    } else {
+      percentForDay =
+        Math.round(
+          ((statistic?.optional[dateKey]?.sprint as UserGameStatistic)
+            ?.rightAnswerPercents || 0) +
+            ((statistic?.optional[dateKey]?.audiocall as UserGameStatistic)
+              ?.rightAnswerPercents || 0)
+        ) || 0
+    }
     sprintForDay = (statistic?.optional[dateKey]
       ?.sprint as UserGameStatistic) || {
       newWordsInGame: 0,

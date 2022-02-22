@@ -123,7 +123,7 @@ export const setUserGameStatistics = async (
 
   let newStatistics: UserStatistics
   const dateKey = currentDate()
-  if (!oldStatistics.status) {
+  if (oldStatistics.status !== 200) {
     newStatistics = {
       learnedWords: statistic.newWordsInGame,
       optional: {
@@ -137,7 +137,7 @@ export const setUserGameStatistics = async (
         },
       },
     }
-  } else if (!(oldStatistics as UserStatisticsResponse).optional[dateKey]) {
+  } else if (!(oldStatistics as UserStatisticsResponse)?.optional[dateKey]) {
     newStatistics = {
       learnedWords:
         (oldStatistics as UserStatisticsResponse).learnedWords +
