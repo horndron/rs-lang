@@ -35,6 +35,21 @@
         width: 100%;
         height: 100%;
       }
+      .ribbon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 400px;
+        height: 40px;
+        left: -40%;
+        position: absolute;
+        border: 2px solid white;
+        color: white;
+        text-align: center;
+        top: 20%;
+        background-color: black;
+        transform: rotate(-45deg);
+      }
       .cardOverlay {
         z-index: 2;
         position: absolute;
