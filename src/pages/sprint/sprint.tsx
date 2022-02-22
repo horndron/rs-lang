@@ -2,6 +2,7 @@ import { Typography } from '@mui/material'
 import React, { FC, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { getChunkWords } from '../../components/APIs/api'
+import { shuffleArr } from '../../components/audiocall/audiocall'
 import { CircleTimer } from '../../components/circletimer/CircleTimer'
 import { PreperaGame } from '../../components/preperagame/PreperaGame'
 import { SprintResult } from '../../components/sprintresult/SprintResult'
@@ -20,20 +21,26 @@ import {
 import '../sprint/sprint.styles.sass'
 
 export const Sprint: FC = () => {
-  const { level, bestSeriesAnswer, newWordsInGame } = useTypeSelector(
-    (state) => state.words
-  )
+  const {
+    page,
+    level,
+    bestSeriesAnswer,
+    newWordsInGame,
+    fromTextbook,
+  } = useTypeSelector((state) => state.words)
   const { SetBestSeriesAnswer, SetNewWordsInGame, SetGameName } = useActions()
   const dispatch = useDispatch()
-
+  const [isLoading, setIsLoading] = useState(true)
   const getWords = async (level: number) => {
     const words: Word[] = []
-    const pages = RandomPageWords(3)
+    const pages = fromTextbook ? [page] : RandomPageWords(3)
+    console.log(pages)
     pages.forEach(async (page) => {
       const wordsPage1 = await getChunkWords(level, page)
       words.push(...(wordsPage1 as Word[]))
-      setWords(words)
+      setWords(shuffleArr(words))
     })
+    setIsLoading(false)
   }
   const [result, setResult] = useState<ResultsGame>({ true: [], false: [] })
   const [preperaGame, setPreperaGame] = useState(true)
@@ -166,8 +173,10 @@ export const Sprint: FC = () => {
 
   useEffect(() => {
     getWords(level)
-  }, [level])
-
+  }, [level, isLoading])
+  if (isLoading) {
+    return <h2>Идет загрузка...</h2>
+  }
   return (
     <div className="sprint-game">
       <Typography component="div">

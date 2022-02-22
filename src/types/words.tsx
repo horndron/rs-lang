@@ -7,6 +7,7 @@ export interface WordsState {
   page: number
   group: number
   level: number
+  fromTextbook: boolean
   newWordsInGame: number
   bestSeriesAnswer: number
   gameName: string
@@ -19,6 +20,7 @@ export enum WordsActionTypes {
   SET_WORDS_PAGE = 'SET_WORDS_PAGE',
   SET_WORDS_GROUP = 'SET_WORDS_GROUP',
   SET_LEVEL = 'SET_LEVEL',
+  SET_FROMTEXTBOOK = 'SET_FROMTEXTBOOK',
   SET_NEWWORDSINGAME = 'SET_NEWWORDSINGAME',
   SET_BESTSERIESANSWER = 'SET_BESTSERIESANSWER',
   SET_GAMENAME = 'SET_GAMENAME',
@@ -67,6 +69,11 @@ export interface SetGamename {
   payload: string
 }
 
+export interface SetFromTextbook {
+  type: WordsActionTypes.SET_FROMTEXTBOOK
+  payload: boolean
+}
+
 export type WordsAction =
   | FetchWordsAction
   | FetchWordsSuccessAction
@@ -77,3 +84,4 @@ export type WordsAction =
   | SetNewWordsInGame
   | SetBestSeriesAnswer
   | SetGamename
+  | SetFromTextbook

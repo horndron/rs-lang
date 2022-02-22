@@ -13,14 +13,12 @@ export const HardWords: React.FC = () => {
     token = localStorage.getItem('token') as string
   }
   const getHardWords = async () => {
-    console.log(1)
     const data = await getUserHardWords(
       userID,
       token,
       100,
       '{"$and":[{"userWord.difficulty":"hard"}]}'
     )
-    console.log(data, 'data-hard')
     setWords(data[0].paginatedResults)
   }
 

@@ -21,4 +21,14 @@ export interface IStatisticForDay {
   audiocall: UserGameStatistic
 }
 
+export interface StatisticGraficProps {
+  wordsPerDay: number[]
+  days: string[]
+}
+
+export interface WordsOnDay {
+  name: string
+  words: number
+}
+
 export default UserStatistics

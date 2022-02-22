@@ -1,69 +1,194 @@
 import { Typography } from '@mui/material'
-import React, { FC, useEffect } from 'react'
+import React, { FC, useEffect, useState } from 'react'
+import { StatisticForDay } from '../../components/statisticforday/statisticforday'
+import { UserStatisticsResponse } from '../../interfaces/api'
+import { UserGameStatistic, WordsOnDay } from '../../interfaces/statistics'
+import { currentDate } from '../../utils/utils'
 import { getUserStatistics } from './../../components/APIs/api'
+import {
+  BarChart,
+  Bar,
+  LineChart,
+  Line,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+} from 'recharts'
+import './statistic.styles.sass'
 
 export const Statistics: FC = () => {
+  const [isLoading, setIsLoading] = useState(true)
+  const [statistic, setStatistic] = useState<UserStatisticsResponse>()
   const statisticData = async (): Promise<void> => {
     const userId = localStorage.getItem('userId') as string
     const token = localStorage.getItem('token') as string
-    const statistic = await getUserStatistics(userId, token)
+    const statisticResponce = await getUserStatistics(userId, token)
+    setStatistic(statisticResponce as UserStatisticsResponse)
+    setIsLoading(false)
+  }
+  const dateKey = currentDate()
+  let wordPerDay: number
+  let percentForDay: number
+  let sprintForDay: UserGameStatistic
+  let audiocallForDay: UserGameStatistic
 
-    console.log(statistic)
+  if (statistic?.status === 200) {
+    wordPerDay =
+      ((statistic?.optional[dateKey]?.sprint as UserGameStatistic)
+        ?.newWordsInGame || 0) +
+      ((statistic?.optional[dateKey]?.audiocall as UserGameStatistic)
+        ?.newWordsInGame || 0)
 
-    const canvas = document.querySelector('#canvas') as HTMLCanvasElement
-    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
-    const canvasWidth = canvas.clientWidth
-    const canvasHeight = canvas.clientHeight
-    const scaleX = 50
-    const scaleY = 50
-    ctx.beginPath()
-    ctx.strokeStyle = '#eee'
-
-    for (let i = 0; i < canvasWidth; i = i + scaleX) {
-      ctx.moveTo(i, 0)
-      ctx.lineTo(i, canvasHeight)
+    if (
+      (statistic?.optional[dateKey]?.sprint as UserGameStatistic)
+        ?.rightAnswerPercents &&
+      (statistic?.optional[dateKey]?.audiocall as UserGameStatistic)
+        ?.rightAnswerPercents
+    ) {
+      percentForDay =
+        Math.round(
+          (((statistic?.optional[dateKey]?.sprint as UserGameStatistic)
+            ?.rightAnswerPercents || 0) +
+            ((statistic?.optional[dateKey]?.audiocall as UserGameStatistic)
+              ?.rightAnswerPercents || 0)) /
+            2
+        ) || 0
+    } else {
+      percentForDay =
+        Math.round(
+          ((statistic?.optional[dateKey]?.sprint as UserGameStatistic)
+            ?.rightAnswerPercents || 0) +
+            ((statistic?.optional[dateKey]?.audiocall as UserGameStatistic)
+              ?.rightAnswerPercents || 0)
+        ) || 0
     }
-
-    for (let i = 0; i < canvasHeight; i = i + scaleY) {
-      ctx.moveTo(0, i)
-      ctx.lineTo(canvasWidth, i)
+    sprintForDay = (statistic?.optional[dateKey]
+      ?.sprint as UserGameStatistic) || {
+      newWordsInGame: 0,
+      rightAnswerPercents: 0,
+      longestSeries: 0,
     }
-    ctx.stroke()
-    ctx.closePath()
+    audiocallForDay = (statistic?.optional[dateKey]
+      ?.audiocall as UserGameStatistic) || {
+      newWordsInGame: 0,
+      rightAnswerPercents: 0,
+      longestSeries: 0,
+    }
+  } else {
+    wordPerDay = 0
+    percentForDay = 0
+    sprintForDay = {
+      newWordsInGame: 0,
+      rightAnswerPercents: 0,
+      longestSeries: 0,
+    }
+    audiocallForDay = {
+      newWordsInGame: 0,
+      rightAnswerPercents: 0,
+      longestSeries: 0,
+    }
+  }
 
-    const xAxis = canvasWidth
-    const yAxis = canvasHeight
+  const wordsOnDays: WordsOnDay[] = []
+  const wordsAllDays: WordsOnDay[] = []
+  let tmpWordsPerDay = 0
 
-    ctx.beginPath()
-    ctx.strokeStyle = '#026aa7'
-    ctx.moveTo(0, yAxis)
-    ctx.lineTo(xAxis, yAxis)
-
-    ctx.moveTo(0, yAxis)
-    ctx.lineTo(0, 0)
-    ctx.stroke()
-    ctx.closePath()
+  if (statistic?.optional) {
+    for (const key in statistic?.optional) {
+      const wordItem: WordsOnDay = {
+        name: key,
+        words: statistic?.optional[key].newWords,
+      }
+      const wordItemAll: WordsOnDay = {
+        name: key,
+        words: statistic?.optional[key].newWords + tmpWordsPerDay,
+      }
+      tmpWordsPerDay = statistic?.optional[key].newWords + tmpWordsPerDay
+      wordsOnDays.push(wordItem)
+      wordsAllDays.push(wordItemAll)
+    }
   }
 
   useEffect(() => {
     statisticData()
-  }, [])
-
+  }, [isLoading])
+  if (isLoading) {
+    return <h2>Идет загрузка...</h2>
+  }
   return (
     <div className="statistics-page">
-      <Typography component="div">
-        <div>
-          <h1>Статистика за сегодня</h1>
-          <div className="statistics">
-            <div className="statistics_all_time">
-              <h2>Статистика за всё время</h2>
-              <div className="canvas-container">
-                <canvas width="750" height="350" id="canvas" />
+      <div className="statistics-container">
+        <Typography component="div">
+          <div>
+            <h1>Статистика за сегодня</h1>
+            <StatisticForDay
+              wordForDay={wordPerDay}
+              percentForDay={percentForDay}
+              sprint={sprintForDay}
+              audiocall={audiocallForDay}
+            />
+
+            <div className="statistics">
+              <div className="statistics_all_time">
+                <h2>Статистика за всё время</h2>
+                <div className="chart-container">
+                  <span className="description">
+                    График, отображающий количество новых слов за каждый день
+                    изучения
+                  </span>
+                  <div className="overflow">
+                    <BarChart width={650} height={300} data={wordsOnDays}>
+                      <XAxis dataKey="name" stroke="#8884d8" />
+                      <YAxis />
+                      <Tooltip
+                        wrapperStyle={{
+                          width: 100,
+                          backgroundColor: '#95bdd4',
+                        }}
+                      />
+                      <Legend
+                        width={100}
+                        wrapperStyle={{
+                          top: 40,
+                          right: 20,
+                          backgroundColor: '#f5f5f5',
+                          border: '1px solid #d5d5d5',
+                          borderRadius: 3,
+                          lineHeight: '40px',
+                        }}
+                      />
+                      <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                      <Bar dataKey="words" fill="#026aa7" barSize={30} />
+                    </BarChart>
+                  </div>
+                  <span className="description">
+                    График, отображающий увеличение общего количества изученных
+                    слов
+                    <br />
+                    за весь период обучения по дням
+                  </span>
+                  <div className="overflow">
+                    <LineChart
+                      width={650}
+                      height={300}
+                      data={wordsAllDays}
+                      margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
+                    >
+                      <Line type="monotone" dataKey="words" stroke="#f8d23c" />
+                      <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                      <XAxis dataKey="name" />
+                      <YAxis />
+                      <Tooltip />
+                    </LineChart>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </Typography>
+        </Typography>
+      </div>
     </div>
   )
 }
