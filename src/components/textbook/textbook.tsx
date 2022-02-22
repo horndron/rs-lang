@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { AUDIO_URL, GROUP_COLOR, IMAGE_URL } from '../../constants/cardDataApi'
 import { useActions } from '../../hooks/useActions'
 import { useTypeSelector } from '../../hooks/useTypeSelector'
-import { Word } from '../../interfaces/api'
+import { UserWord, Word } from '../../interfaces/api'
 import { WordSettings } from './settings'
 import AudioImg from '../../assets/svg/auido.svg'
 import InfoImg from '../../assets/svg/info-solid.svg'
@@ -75,10 +75,10 @@ export const WordCard: React.FC<ICard> = ({
   }
   const removeHardWord = async () => {
     try {
-      const word = await getUserWord(userID, card._id, token)
-      await updateUserWord(userID, card._id, token, {
+      const word = await getUserWord(userID, card._id as string, token)
+      await updateUserWord(userID, card._id as string, token, {
         difficulty: 'easy',
-        optional: { ...word.optional },
+        optional: { ...(word as UserWord).optional },
       })
       getHardWords()
     } catch (e) {
@@ -92,7 +92,7 @@ export const WordCard: React.FC<ICard> = ({
       if (word.status === 200) {
         await updateUserWord(userID, card.id, token, {
           difficulty: 'hard',
-          optional: { ...word.optional },
+          optional: { ...(word as UserWord).optional },
         })
       } else if (word.status === 404) {
         await createUserWord(userID, card.id, token, {
