@@ -159,15 +159,22 @@ header.header_card .login-container button {
 .accordion .main-card .main-card__description {
   position: absolute;
   width: 100%;
-  min-height: 250px;
+  min-height: 320px;
   bottom: 0px;
   left: 0px;
+  padding: 20px 30px 50px;
   opacity: 0;
   background: rgba(255, 255, 255, 0.8);
   @include trans-medium;
 }
 
+.accordion .main-card .main-card__description:hover {
+  background: rgba(255, 255, 255, 0.9);
+  @include trans-medium;
+}
+
 .accordion .main-card .main-card__description h2 {
+  margin-bottom: 10px;
   text-transform: uppercase;
   font-style: normal;
   font-weight: bold;
@@ -175,20 +182,24 @@ header.header_card .login-container button {
   font-size: 45px;
   color: #444;
   text-align: left;
-  margin: 11px 0px 15px 20px;
   text-shadow: -1px -1px 1px #ccc;
 }
 
-.accordion .main-card .main-card__description p {
-  line-height: 14px;
-  margin: 10px 22px;
-  font-family: 'Trebuchet MS', sans-serif;
-  font-size: 12px;
-  font-style: italic;
-  font-weight: normal;
-  text-transform: none;
-  letter-spacing: normal;
-  line-height: 1.6em;
+.main-card__description .description__item {
+  @include flex-start;
+}
+
+.main-card__description .description__icon {
+  width: 18px;
+  margin-right: 10px;
+}
+
+.main-card__description .description__text {
+  text-align: end;
+}
+
+.description__list {
+  margin-top: 15px;
 }
 
 .main-card__title span {
@@ -240,7 +251,7 @@ header.header_card .login-container button {
   font-size: 1.2rem;
   position: relative;
   margin-bottom: 10px;
-  margin-top: 20px;
+  margin-top: 24px;
 }
 
 .accordion .main-card .advantage__text,

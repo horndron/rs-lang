@@ -5,6 +5,7 @@ import './mainPage.scss'
 import { AppBar, Box, Container, Link, Typography } from '@mui/material'
 import LoginModal from '../../components/login/login'
 import MenuSmall from '../../components/header/MenuSmall'
+import StarIcon from '@mui/icons-material/Star'
 
 const MainPage = () => {
   const cardClassName = 'main-card'
@@ -85,7 +86,7 @@ const MainPage = () => {
                       component="h4"
                       className="advantages__title"
                     >
-                      Наши преимущества:
+                      Преимущества:
                     </Typography>
 
                     {ADVANTAGES.map((advantage, index) => (
@@ -129,7 +130,22 @@ const MainPage = () => {
                   <Typography variant="h2" component="h2">
                     {card.title}
                   </Typography>
-                  <Typography variant="body1">{card.text}</Typography>
+                  <Typography variant="body1" className="description__text">
+                    {card.text}
+                  </Typography>
+                  <Box className="description__list">
+                    {card.advantages.map((advantage) => (
+                      <Box key={advantage} className="description__item">
+                        <StarIcon className="description__icon" />
+                        <Typography
+                          variant="body2"
+                          className="description__advantage"
+                        >
+                          {advantage}
+                        </Typography>
+                      </Box>
+                    ))}
+                  </Box>
                 </Box>
               </Link>
             </Box>
