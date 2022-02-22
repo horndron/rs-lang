@@ -53,10 +53,14 @@ export const Sprint: FC = () => {
   }
   const wordTranslateVariant = (): string => {
     const answerVariant = setRandomNumber()
+    const num =
+      length > words.length / 2
+        ? length - words.length / 4
+        : length + words.length / 4
     answer =
       answerVariant === 1
         ? words[length].wordTranslate
-        : words[setRandomNumber(words.length - 1)].wordTranslate
+        : words[num].wordTranslate
     return answer
   }
 
