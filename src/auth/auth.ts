@@ -49,6 +49,10 @@ export const LogIn = async (email: string, password: string) => {
     localStorage.setItem(USER_NAME, response.name)
   }
 
+  if (response.status === 404) {
+    alert('Oops! User does not exist!')
+  }
+
   if (response.status === 403) {
     alert('Oops! Incorrect email or password!')
   }
