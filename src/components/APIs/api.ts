@@ -8,6 +8,7 @@ import {
   RejectStatusText,
   CreateUser,
   AuthUser,
+  UpdateToken,
   UserStatisticsResponse,
   UserAggregatedWords,
 } from '../../interfaces/api'
@@ -132,7 +133,7 @@ export const deleteUser = async (
 export const getNewUserToken = async (
   userId: string,
   refreshToken: string
-): Promise<string> => {
+): Promise<UpdateToken | RejectStatusText> => {
   const response = await fetch(
     `${constApi.BACKEND_HOSTNAME}/${constApi.URL_USERS}/${userId}/${constApi.URL_TOKENS}`,
     {
@@ -143,7 +144,7 @@ export const getNewUserToken = async (
       },
     }
   ).then((data) => {
-    return data.status == 204
+    return data.status == 200
       ? data.json()
       : { status: data.status, message: data.text() }
   })
