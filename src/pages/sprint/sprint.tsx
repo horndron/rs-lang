@@ -31,7 +31,7 @@ export const Sprint: FC = () => {
   console.log(fromTextbook)
   const { SetBestSeriesAnswer, SetNewWordsInGame, SetGameName } = useActions()
   const dispatch = useDispatch()
-
+  const [isLoading, setIsLoading] = useState(true)
   const getWords = async (level: number) => {
     const words: Word[] = []
     const pages = fromTextbook ? [page] : RandomPageWords(3)
@@ -41,6 +41,7 @@ export const Sprint: FC = () => {
       words.push(...(wordsPage1 as Word[]))
       setWords(shuffleArr(words))
     })
+    setIsLoading(false)
   }
   const [result, setResult] = useState<ResultsGame>({ true: [], false: [] })
   const [preperaGame, setPreperaGame] = useState(true)
@@ -173,8 +174,10 @@ export const Sprint: FC = () => {
 
   useEffect(() => {
     getWords(level)
-  }, [level])
-
+  }, [level, isLoading])
+  if (isLoading) {
+    return <h2>Идет загрузка...</h2>
+  }
   return (
     <div className="sprint-game">
       <Typography component="div">
