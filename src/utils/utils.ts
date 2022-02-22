@@ -38,14 +38,14 @@ const updateWordParams = (
   return {
     difficulty: oldParams.difficulty,
     optional: {
-      trueAnswers: oldParams.optional.trueAnswers + newParams.trueAnswers,
+      trueAnswers: oldParams?.optional?.trueAnswers + newParams?.trueAnswers,
       seriallyAnswer:
-        newParams.seriallyAnswer === 0
+        newParams?.seriallyAnswer === 0
           ? 0
-          : newParams.seriallyAnswer + oldParams.optional.seriallyAnswer,
+          : newParams?.seriallyAnswer + oldParams?.optional?.seriallyAnswer,
       studied:
-        newParams.seriallyAnswer === 0 ||
-        newParams.seriallyAnswer + oldParams.optional.seriallyAnswer < 3
+        newParams?.seriallyAnswer === 0 ||
+        newParams?.seriallyAnswer + oldParams?.optional?.seriallyAnswer < 3
           ? false
           : true,
     },
@@ -65,6 +65,7 @@ export const setOrUpdateUserWord = async (
   callback: Dispatch
 ): Promise<void> => {
   const isUserWord = await getUserWord(userId, wordId, token)
+  console.log(isUserWord, 'qweqweqwe')
   if (isUserWord.status === 200) {
     updateUserWord(
       userId,
@@ -73,7 +74,7 @@ export const setOrUpdateUserWord = async (
       updateWordParams(isUserWord as UserWord, {
         trueAnswers: word.trueAnswers,
         seriallyAnswer: word.seriallyAnswer,
-        studied: (isUserWord as UserWord).optional.studied,
+        studied: (isUserWord as UserWord)?.optional?.studied,
       })
     )
   } else {

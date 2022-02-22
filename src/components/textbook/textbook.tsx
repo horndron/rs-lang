@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AUDIO_URL, GROUP_COLOR, IMAGE_URL } from '../../constants/cardDataApi'
 import { useActions } from '../../hooks/useActions'
 import { useTypeSelector } from '../../hooks/useTypeSelector'
@@ -72,6 +72,8 @@ export const WordCard: React.FC<ICard> = ({
   const meanPath = `${card.audioMeaning.split('/')[1]}`
   const examplePath = `${card.audioExample.split('/')[1]}`
   const color = GROUP_COLOR[group]
+  const [studied, setStudied] = useState(false)
+
   let userID: string
   let token: string
   if (localStorage.getItem('token') && localStorage.getItem('userId')) {
@@ -126,11 +128,11 @@ export const WordCard: React.FC<ICard> = ({
     try {
       const word = await getUserWord(userID, card.id, token)
       if (word.status === 200) {
-        const a = await updateUserWord(userID, card.id, token, {
+        await updateUserWord(userID, card.id, token, {
           difficulty: (word as UserWord).difficulty,
           optional: { ...(word as UserWord).optional, studied: true },
         })
-        console.log(a)
+        setStudied(true)
       } else if (word.status === 404) {
         await createUserWord(userID, card.id, token, {
           difficulty: 'easy',
@@ -140,11 +142,28 @@ export const WordCard: React.FC<ICard> = ({
             studied: true,
           },
         })
+        setStudied(true)
       }
     } catch (e) {
       console.log(e)
     }
   }
+  const isStudied = async () => {
+    try {
+      const word = await getUserWord(userID, card.id, token)
+      if (word.status === 200) {
+        const state = (word as UserWord).optional.studied
+        setStudied(state)
+      } else {
+        setStudied(false)
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  useEffect(() => {
+    isStudied()
+  })
   return (
     <>
       <div className="wordCard">
@@ -154,6 +173,8 @@ export const WordCard: React.FC<ICard> = ({
           <div className="cardOverlay" style={color.gradient}></div>
           {isAuth() ? (
             <>
+              {studied ? <div className="ribbon">studied</div> : <></>}
+
               {isHardGroup ? (
                 <button
                   className="hard-icon"
