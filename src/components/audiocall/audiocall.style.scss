@@ -45,9 +45,9 @@
           margin: 60px 0 25px;
           width: 100%;
           @include flex-evenly;
-
+          gap: 20px;
           button {
-            width: 23%;
+            width: 35%;
           }
         }
       }
