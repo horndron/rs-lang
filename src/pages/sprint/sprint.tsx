@@ -34,7 +34,6 @@ export const Sprint: FC = () => {
   const getWords = async (level: number) => {
     const words: Word[] = []
     const pages = fromTextbook ? [page] : RandomPageWords(3)
-    console.log(pages)
     pages.forEach(async (page) => {
       const wordsPage1 = await getChunkWords(level, page)
       words.push(...(wordsPage1 as Word[]))

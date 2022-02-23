@@ -52,10 +52,6 @@ const updateWordParams = (
   }
 }
 
-export const setAudiocallStats = async () => {
-  console.log(1)
-}
-
 export const setOrUpdateUserWord = async (
   userId: string,
   wordId: string,
@@ -65,7 +61,6 @@ export const setOrUpdateUserWord = async (
   callback: Dispatch
 ): Promise<void> => {
   const isUserWord = await getUserWord(userId, wordId, token)
-  console.log(isUserWord, 'qweqweqwe')
   if (isUserWord.status === 200) {
     updateUserWord(
       userId,
