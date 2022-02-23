@@ -3,10 +3,16 @@ $secondaryColor: #026aa7;
 $darkColor: #284968;
 $lightColor: #95bdd4;
 $backgroundColor: #f7f9ff;
+$backgroundDark: #111f2e;
 $textColor: #ecf7ff;
 $textDark: #000c18;
+$textLight: #8ad4ff;
 $white: #fff;
 $greyColor: #a2a6ad;
+$blackOpacity: rgba(0, 0, 0, 0.7);
+$blackOpacityHover: rgba(0, 0, 0, 0.8);
+$whiteOpacity: rgba(255, 255, 255, 0.8);
+$whiteOpacityHover: rgba(255, 255, 255, 0.9);
 
 $brandedColor1: #8b0061;
 $brandedColor2: #1b73ba;
@@ -15,5 +21,21 @@ $brandedColor4: #ff534d;
 $brandedColor5: #de8a00;
 $brandedColor6: #7478ae;
 $brandedColor7: #8cdd3f;
+
+$brandedColor1dark: #4b0034;
+$brandedColor2dark: #0d395e;
+$brandedColor3dark: #a38a27;
+$brandedColor4dark: #812a27;
+$brandedColor5dark: #9b6001;
+$brandedColor6dark: #4b4d70;
+$brandedColor7dark: #578b25;
+
+$brandedColor1light: #b90082;
+$brandedColor2light: #2189df;
+$brandedColor3light: #e6c337;
+$brandedColor4light: #ff534d;
+$brandedColor5light: #ff9d00;
+$brandedColor6light: #7478ae;
+$brandedColor7light: #8cdd3f;
 
 $mainCardWidth: 45%;

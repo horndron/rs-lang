@@ -29,6 +29,10 @@ main .main-page {
   }
 }
 
+.theme_dark .accordion .main-card {
+  @include cards-shadow-dark;
+}
+
 #accordion > .main-card_active .main-card__description,
 #accordion > .main-card_active .main-card__inner {
   opacity: 0.9;
@@ -53,23 +57,46 @@ main .main-page {
   display: none;
 }
 
-.accordion .main-card_0 {
-  background-color: $brandedColor6;
+.accordion {
+  & .main-card_0 {
+    background-color: $brandedColor6;
+  }
+  & .main-card_1 {
+    background-color: $brandedColor3;
+  }
+  & .main-card_2 {
+    background-color: $brandedColor2;
+  }
+  & .main-card_3 {
+    background-color: $brandedColor1;
+  }
+  & .main-card_4 {
+    background-color: $brandedColor5;
+  }
+  & .main-card_5 {
+    background-color: $brandedColor7;
+  }
 }
-.accordion .main-card_1 {
-  background-color: $brandedColor3;
-}
-.accordion .main-card_2 {
-  background-color: $brandedColor2;
-}
-.accordion .main-card_3 {
-  background-color: $brandedColor1;
-}
-.accordion .main-card_4 {
-  background-color: $brandedColor5;
-}
-.accordion .main-card_5 {
-  background-color: $brandedColor7;
+
+.theme_dark .accordion {
+  & .main-card_0 {
+    background-color: $brandedColor6dark;
+  }
+  & .main-card_1 {
+    background-color: $brandedColor3dark;
+  }
+  & .main-card_2 {
+    background-color: $brandedColor2dark;
+  }
+  & .main-card_3 {
+    background-color: $brandedColor1dark;
+  }
+  & .main-card_4 {
+    background-color: $brandedColor5dark;
+  }
+  & .main-card_5 {
+    background-color: $brandedColor7dark;
+  }
 }
 
 header.header_card {
@@ -101,6 +128,28 @@ header.header_card .login-container button {
   padding: 0;
 }
 
+.main-card .theme-button__wrapper {
+  position: relative;
+}
+
+.main-card .theme-button__wrapper::before,
+.main-card .theme-button__wrapper::after {
+  content: '';
+  width: 1px;
+  height: 20px;
+  position: absolute;
+  top: 3px;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.main-card .theme-button__wrapper::before {
+  left: 0;
+}
+
+.main-card .theme-button__wrapper::after {
+  right: 0;
+}
+
 .accordion .main-card .main-card__heading {
   margin-top: 80px;
   padding: 10px;
@@ -117,12 +166,23 @@ header.header_card .login-container button {
   @include trans-fast;
 }
 
+.theme_dark .accordion .main-card .main-card__heading {
+  background-color: $blackOpacity;
+  color: $textColor;
+  text-shadow: -1px -1px 1px #333;
+}
+
 .main-card .user-info {
   display: none;
 }
 
 .accordion .main-card_active .user-info {
   display: flex;
+}
+
+.theme_dark .about-project,
+.theme_dark .advantages {
+  color: $whiteOpacity;
 }
 
 .main-card_advantages .main-card__inner {
@@ -134,6 +194,10 @@ header.header_card .login-container button {
   width: 100%;
   height: 400px;
   @include icon-background;
+}
+
+.theme_dark .main-card__img {
+  opacity: 0.8;
 }
 
 .main-card_advantages .main-card__img {
@@ -164,13 +228,22 @@ header.header_card .login-container button {
   left: 0px;
   padding: 20px 30px 50px;
   opacity: 0;
-  background: rgba(255, 255, 255, 0.8);
+  background-color: $whiteOpacity;
   @include trans-medium;
 }
 
+.theme_dark .accordion .main-card .main-card__description {
+  color: $textLight;
+  background-color: $blackOpacity;
+}
+
 .accordion .main-card .main-card__description:hover {
-  background: rgba(255, 255, 255, 0.9);
+  background-color: $whiteOpacityHover;
   @include trans-medium;
+}
+
+.theme_dark .accordion .main-card .main-card__description:hover {
+  background-color: $blackOpacityHover;
 }
 
 .accordion .main-card .main-card__description h2 {
@@ -183,6 +256,11 @@ header.header_card .login-container button {
   color: #444;
   text-align: left;
   text-shadow: -1px -1px 1px #ccc;
+}
+
+.theme_dark .accordion .main-card .main-card__description h2 {
+  color: $textColor;
+  text-shadow: -1px -1px 1px #333;
 }
 
 .main-card__description .description__item {
@@ -214,7 +292,7 @@ header.header_card .login-container button {
 
 .main-card__inner .main-card__title {
   & .letter0 {
-    color: $brandedColor5;
+    color: $brandedColor5light;
   }
   & .letter1 {
     color: $brandedColor7;
@@ -226,10 +304,19 @@ header.header_card .login-container button {
     color: $brandedColor4;
   }
   & .letter4 {
-    color: $brandedColor1;
+    color: $brandedColor1light;
   }
   & .letter5 {
     color: $brandedColor3;
+  }
+}
+
+.theme_dark .main-card__inner .main-card__title {
+  & .letter2 {
+    color: $brandedColor2light;
+  }
+  & .letter5 {
+    color: $brandedColor3light;
   }
 }
 

@@ -1,4 +1,4 @@
-@import '../../utils/variables';
+@import '../../utils/_variables';
 @import '../../utils/_mixins.scss';
 
 footer {
@@ -6,6 +6,10 @@ footer {
   position: absolute;
   background-color: $secondaryColor;
   @include flex-between;
+}
+
+.theme_dark footer {
+  background-color: $textDark;
 }
 
 .footer-container {

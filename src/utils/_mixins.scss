@@ -4,6 +4,12 @@
   box-shadow: 1px 5px 15px #555;
 }
 
+@mixin cards-shadow-dark {
+  -moz-box-shadow: 1px 5px 15px #222;
+  -webkit-box-shadow: 1px 5px 15px #222;
+  box-shadow: 1px 5px 15px #222;
+}
+
 @mixin trans-fast {
   -webkit-transition: 0.3s ease-out;
   -moz-transition: 0.3s ease-out;

@@ -29,7 +29,7 @@ export const AUTHORS = [
     link: 'https://github.com/ButerBrot359',
     tasks: [
       { task: 'navigation', color: `${COLORS.brandedColor5}` },
-      { task: 'words list', color: `${COLORS.brandedColor2}` }, // ? words list or dictionary ?
+      { task: 'words list', color: `${COLORS.brandedColor2}` },
       { task: 'e-book', color: `${COLORS.brandedColor3}` },
       { task: 'audiocall', color: `${COLORS.brandedColor4}` },
     ],
@@ -46,9 +46,3 @@ export const AUTHORS = [
     ],
   },
 ]
-
-// more:
-// Прогресс изучения
-// Изученные слова
-// долгосрочная статистика
-// «404»

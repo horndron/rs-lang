@@ -14,6 +14,10 @@
   margin-bottom: 20px;
 }
 
+.theme_dark .about .about__title {
+  color: $darkColor;
+}
+
 .about .about__text {
   font-size: 0.9rem;
   max-width: 60%;
@@ -108,13 +112,17 @@
   padding-left: 20px;
   padding-right: 20px;
   @include flex-column-center;
-  background: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.7);
   transform: skewX(10deg);
   @include trans-slow;
 
   @include for-laptop {
     padding-top: 12px;
   }
+}
+
+.theme_dark .author-description {
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .author-description .author-name {
@@ -124,6 +132,10 @@
   @include for-laptop {
     font-size: 20px;
   }
+}
+
+.theme_dark .author-description .author-name {
+  color: $textColor;
 }
 
 .author-description .author-link {

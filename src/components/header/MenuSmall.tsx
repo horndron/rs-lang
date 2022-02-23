@@ -69,7 +69,11 @@ const MenuSmall = () => {
         }}
       >
         {ConstHeader.PAGES.map((page, index) => (
-          <MenuItem key={page} onClick={handleCloseNavMenu}>
+          <MenuItem
+            key={page}
+            onClick={handleCloseNavMenu}
+            className="menu-item"
+          >
             <NavLink to={route(index)}>
               <Typography textAlign="center" sx={{ color: 'primary.main' }}>
                 {page}

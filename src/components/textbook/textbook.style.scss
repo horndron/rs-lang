@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Graduate&family=Lato:wght@300&family=Neucha&family=Oswald:wght@200;300;400;500;600;700&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&family=Rubik:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap');
+@import '../../utils/_variables';
+
 .words-container {
   position: relative;
   display: flex;
@@ -170,6 +172,17 @@
           margin-top: 5px;
         }
       }
+    }
+  }
+}
+
+.theme_dark .words-container {
+  .wordCard {
+    .cardTop img {
+      opacity: 0.9;
+    }
+    .cardBottom {
+      background-color: $darkColor;
     }
   }
 }
