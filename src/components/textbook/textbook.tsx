@@ -51,7 +51,7 @@ export const TextbookPage: React.FC = () => {
             group={group}
             isHardGroup={false}
             getHardWords={() => {
-              console.log('Заглушка')
+              // console.log('Заглушка')
             }}
           />
         ))}

@@ -1,10 +1,14 @@
 import * as React from 'react'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Modal from '@mui/material/Modal'
 import './login.scss'
 import BUTTON_STYLES from '../../constants/buttons'
 import MUIButton from '../UI/MUIButton/MUIButton'
-import UserName from './UserName'
-import { Box, Modal, TextField, Typography } from '@mui/material'
+import { TextField } from '@mui/material'
+
 import { isAuth, CreateNewUser, LogIn, LogOut } from '../../auth/auth'
+
 import { ButtonNames, ButtonNameTypes, TextInput } from '../../types/auth'
 
 import {
@@ -15,16 +19,14 @@ import {
 
 const LoginModal = () => {
   const [open, setOpen] = React.useState(false)
-  const handleOpen = () => {
-    setOpen(true)
-  }
+  const handleOpen = () => setOpen(true)
   const handleClose = () => {
     setOpen(false)
     handleSignUpModeClose()
     handleEmailError(false)
     handlePasswordError(false)
     handleNameError(false)
-    setNoWarning()
+    handleWarning()
   }
 
   const [signUpMode, setSignUpMode] = React.useState(false)
@@ -41,29 +43,17 @@ const LoginModal = () => {
   )
   const handleButtonName = (name: ButtonNameTypes) => setButtonName(name)
 
-  const [showUserName, setShowUserName] = React.useState(isAuth())
-  const handleShowUserName = () => setShowUserName(isAuth())
-
   const [login, setLogin] = React.useState('')
   const [password, setPassword] = React.useState('')
   const [name, setName] = React.useState('')
 
   const handleSetLogin = ({ target: { value } }: TextInput) => {
-    imitPasswordFocus()
     if (validateEmail(value)) {
       setLogin(value)
       handleEmailError(false)
     } else {
       handleEmailError(true)
     }
-  }
-
-  const imitPasswordFocus = () => {
-    const passwordInput = document.querySelector(
-      '#password'
-    ) as HTMLInputElement
-    passwordInput.focus()
-    passwordInput.blur()
   }
 
   const handleSetPassword = ({ target: { value } }: TextInput) => {
@@ -147,7 +137,11 @@ const LoginModal = () => {
     ) as HTMLInputElement
 
     const value = passwordInput.value as string
-    handleSetPassword({ target: { value } })
+    if (value) {
+      handleSetPassword({ target: { value } })
+    } else {
+      handlePasswordError(true)
+    }
   }
 
   const checkAutoName = () => {
@@ -166,43 +160,31 @@ const LoginModal = () => {
     checkAutoEmail()
     checkAutoName()
 
-    if (signUpMode && nameError) {
+    if (nameError) {
       handleWarning()
     }
 
     if (!emailError && !passwordError && login && password) {
-      if (signUpMode) {
-        if (!nameError && name) {
-          await CreateNewUser(login, password, name)
-        } else {
-          handleWarning()
-        }
-      } else {
+      if (signUpMode && !nameError && name) {
+        await CreateNewUser(login, password, name)
+      } else if (!signUpMode) {
         await LogIn(login, password)
       }
-    }
 
-    if (isAuth()) {
-      handleClose()
-      handleButtonName(ButtonNames.LOGOUT)
-      handleShowUserName()
+      if (isAuth()) {
+        handleClose()
+        handleButtonName(ButtonNames.LOGOUT)
+      }
     }
   }
 
   const handleLogOut = () => {
     handleButtonName(ButtonNames.LOGIN)
     LogOut()
-    handleShowUserName()
-    setLogin('')
-    setPassword('')
-    setName('')
   }
 
   return (
-    <div className="login-container" style={{ display: 'flex' }}>
-      <Box sx={{ display: showUserName ? 'flex' : 'none' }}>
-        <UserName />
-      </Box>
+    <div className="login-container">
       <MUIButton
         name={buttonName}
         sx={{ ...BUTTON_STYLES.light }}

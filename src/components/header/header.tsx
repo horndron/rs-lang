@@ -14,6 +14,7 @@ import {
 
 import LoginModal from '../login/login'
 import MenuSmall from './MenuSmall'
+import ToggleTheme from '../toggletheme/ToggleTheme'
 
 const Header = () => {
   const route = (index: number) => {
@@ -37,7 +38,7 @@ const Header = () => {
       {renderHeader() === true ? (
         <div></div>
       ) : (
-        <AppBar position="static" sx={{ backgroundColor: 'primary.main' }}>
+        <AppBar position="static">
           <Container maxWidth="xl">
             <Toolbar disableGutters>
               <Typography
@@ -84,6 +85,7 @@ const Header = () => {
                   </NavLink>
                 ))}
               </Box>
+              <ToggleTheme />
               <LoginModal />
             </Toolbar>
           </Container>

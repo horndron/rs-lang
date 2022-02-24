@@ -7,7 +7,6 @@ export const Grafics: React.FC<StatisticGraficProps> = ({
 }) => {
   useEffect(() => {
     const canvas = document.querySelector('#canvas') as HTMLCanvasElement
-    console.log(canvas)
     const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
     const canvasWidth = canvas.clientWidth
     const canvasHeight = canvas.clientHeight

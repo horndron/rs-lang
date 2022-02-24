@@ -14,6 +14,7 @@ const About = () => {
   }
   React.useEffect(() => {
     handleCardHeight()
+    handleThemeColors()
   })
 
   const updateDimensions = () => {
@@ -29,6 +30,11 @@ const About = () => {
   const color1 = `${COLORS.brandedColor6}`
   const color2 = `${COLORS.brandedColor3}`
   const color3 = `${COLORS.brandedColor1}`
+
+  const handleThemeColors = () => {
+    const themeButton = document.querySelector('#theme-button')
+    themeButton?.addEventListener('click', () => location.reload())
+  }
 
   const tl = gsap.timeline({ default: { duration: 1 } })
   const tl2 = gsap.timeline({ default: { duration: 1 } })
@@ -59,21 +65,21 @@ const About = () => {
     )
   }
 
-  tl.to(`.${author1}`, { borderTopColor: color1, delay: 0.3 })
+  tl.to(`.${author1}`, { borderTopColor: color1, delay: 0.1 })
     .to(`.${author1}`, { borderRightColor: color1 }, '-=0.2')
     .to(`.${author1}`, { borderBottomColor: color1 }, '-=0.2')
     .to(`.${author1}`, { borderLeftColor: color1 }, '-=0.2')
     .add(showWrapper(`.${author1} .author-wrapper`, color1))
 
   tl2
-    .to(`.${author2}`, { borderTopColor: color2, delay: 0.3 })
+    .to(`.${author2}`, { borderTopColor: color2, delay: 0.1 })
     .to(`.${author2}`, { borderRightColor: color2 }, '-=0.2')
     .to(`.${author2}`, { borderBottomColor: color2 }, '-=0.2')
     .to(`.${author2}`, { borderLeftColor: color2 }, '-=0.2')
     .add(showWrapper(`.${author2} .author-wrapper`, color2))
 
   tl3
-    .to(`.${author3}`, { borderTopColor: color3, delay: 0.3 })
+    .to(`.${author3}`, { borderTopColor: color3, delay: 0.1 })
     .to(`.${author3}`, { borderRightColor: color3 }, '-=0.2')
     .to(`.${author3}`, { borderBottomColor: color3 }, '-=0.2')
     .to(`.${author3}`, { borderLeftColor: color3 }, '-=0.2')

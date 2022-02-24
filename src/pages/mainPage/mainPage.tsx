@@ -6,6 +6,7 @@ import { AppBar, Box, Container, Link, Typography } from '@mui/material'
 import LoginModal from '../../components/login/login'
 import MenuSmall from '../../components/header/MenuSmall'
 import StarIcon from '@mui/icons-material/Star'
+import ToggleTheme from '../../components/toggletheme/ToggleTheme'
 
 const MainPage = () => {
   const cardClassName = 'main-card'
@@ -48,6 +49,7 @@ const MainPage = () => {
                 <AppBar position="static" className="header_card">
                   <Container className="header__inner">
                     <MenuSmall />
+                    <ToggleTheme />
                     <LoginModal />
                   </Container>
                 </AppBar>
