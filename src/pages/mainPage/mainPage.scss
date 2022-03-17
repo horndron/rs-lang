@@ -6,12 +6,20 @@ main .main-page {
   min-height: calc(100vh);
   padding-left: 0;
   padding-right: 0;
+
+  @include for-tablet {
+    padding-bottom: 30px;
+  }
 }
 
 .accordion {
   width: 100%;
   height: 100%;
   display: flex;
+
+  @include for-tablet {
+    flex-direction: column;
+  }
 }
 
 .accordion .main-card {
@@ -23,9 +31,28 @@ main .main-page {
   @include cards-shadow;
   @include trans-medium;
 
+  @include for-tablet {
+    width: 100%;
+    height: 76px;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+
   &_active {
     width: $mainCardWidth;
     cursor: inherit;
+
+    @include for-tablet {
+      width: 100%;
+      height: 100%;
+    }
+
+    & .main-card__img {
+      @include for-tablet {
+        display: flex;
+      }
+    }
   }
 }
 
@@ -110,6 +137,12 @@ header.header_card {
 header.header_card .header__inner {
   margin-top: 10px;
   @include flex-start;
+
+  @include for-tablet {
+    margin-top: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }
 
 header.header_card .menu_small {
@@ -164,12 +197,24 @@ header.header_card .login-container button {
   background-color: $white;
   text-shadow: -1px -1px 1px #ccc;
   @include trans-fast;
+
+  @include for-tablet {
+    margin-top: 10px;
+    background-color: rgba(255, 255, 255, 0.4);
+    text-shadow: -1px -1px 1px rgb(163, 163, 163);
+  }
 }
 
 .theme_dark .accordion .main-card .main-card__heading {
   background-color: $blackOpacity;
   color: $textColor;
   text-shadow: -1px -1px 1px #333;
+}
+
+#accordion .main-card_0 .main-card__heading {
+  @include for-tablet {
+    display: none;
+  }
 }
 
 .main-card .user-info {
@@ -185,15 +230,31 @@ header.header_card .login-container button {
   color: $whiteOpacity;
 }
 
+#accordion .main-card_advantages.main-card_active {
+  @include for-tablet {
+    height: auto;
+  }
+}
+
 .main-card_advantages .main-card__inner {
   padding: 0 6%;
   display: none;
+
+  @include for-tablet {
+    padding: 15px 20px 25px;
+  }
 }
 
 .main-card__img {
   width: 100%;
   height: 400px;
   @include icon-background;
+
+  @include for-tablet {
+    margin-top: -70px;
+    height: 300px;
+    display: none;
+  }
 }
 
 .theme_dark .main-card__img {
@@ -202,6 +263,10 @@ header.header_card .login-container button {
 
 .main-card_advantages .main-card__img {
   background-image: url(../../assets/svg/advantages.svg);
+
+  @include for-tablet {
+    display: none;
+  }
 }
 .main-card_textbook .main-card__img {
   background-image: url(../../assets/svg/textbook.svg);
@@ -230,6 +295,11 @@ header.header_card .login-container button {
   opacity: 0;
   background-color: $whiteOpacity;
   @include trans-medium;
+
+  @include for-tablet {
+    min-height: 100px;
+    padding: 15px 20px 15px;
+  }
 }
 
 .theme_dark .accordion .main-card .main-card__description {
@@ -256,6 +326,10 @@ header.header_card .login-container button {
   color: #444;
   text-align: left;
   text-shadow: -1px -1px 1px #ccc;
+
+  @include for-tablet {
+    font-size: 35px;
+  }
 }
 
 .theme_dark .accordion .main-card .main-card__description h2 {
@@ -284,10 +358,19 @@ header.header_card .login-container button {
   font-family: Ribeye, Arial;
   font-size: 4rem;
   color: $white;
+
+  @include for-tablet {
+    font-size: 3.2rem;
+  }
 }
 .accordion .main-card .main-card__title {
   margin-top: -35px;
   margin-bottom: 20px;
+
+  @include for-tablet {
+    margin-top: 34px;
+    margin-bottom: 8px;
+  }
 }
 
 .main-card__inner .main-card__title {
@@ -331,6 +414,11 @@ header.header_card .login-container button {
   font-size: 1.4rem;
   margin-bottom: 20px;
   color: $brandedColor3;
+
+  @include for-tablet {
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+  }
 }
 
 .accordion .main-card .advantage__title {
@@ -348,6 +436,10 @@ header.header_card .login-container button {
 
 .accordion .main-card .about-project {
   max-width: 80%;
+
+  @include for-tablet {
+    max-width: 100%;
+  }
 }
 
 .advantage .advantage__title::before {

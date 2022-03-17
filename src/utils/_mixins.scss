@@ -82,6 +82,18 @@
   }
 }
 
+@mixin for-laptop-down {
+  @media (max-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin for-tablet {
+  @media (max-width: 720px) {
+    @content;
+  }
+}
+
 @mixin for-mobile {
   @media (max-width: 600px) {
     @content;
