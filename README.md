@@ -1,6 +1,6 @@
 # rs-lang
 
-## Technologшуы
+## Technologies
 1. JavaScript
 2. TypeScript
 3. SCSS
