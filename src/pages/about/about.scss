@@ -37,6 +37,12 @@
   padding-left: 9%;
   padding-right: 11%;
   margin-top: 80px;
+
+  @include for-laptop-down {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 2%;
+  }
 }
 
 .author-card {
@@ -49,6 +55,13 @@
     height: 400px;
     width: 280px;
   }
+
+  @include for-laptop-down {
+    width: 200px;
+    height: 280px;
+    margin-bottom: 40px;
+    margin-right: 60px;
+  }
 }
 
 .author-wrapper {
@@ -56,9 +69,14 @@
   @include flex-center;
   overflow: hidden;
   transform: translate(50px, -70px);
+  margin-bottom: 10px;
 
   @include for-laptop {
     transform: translate(40px, -56px);
+  }
+
+  @include for-laptop-down {
+    transform: translate(24px, -38px);
   }
 }
 
@@ -90,6 +108,12 @@
     height: 208px;
     width: 240px;
   }
+
+  @include for-laptop-down {
+    left: -20px;
+    height: 120px;
+    width: 240px;
+  }
 }
 
 .horndron .author-img {
@@ -119,6 +143,10 @@
   @include for-laptop {
     padding-top: 12px;
   }
+
+  @include for-laptop-down {
+    padding-top: 5px;
+  }
 }
 
 .theme_dark .author-description {
@@ -131,6 +159,9 @@
 
   @include for-laptop {
     font-size: 20px;
+  }
+  @include for-laptop-down {
+    font-size: 16px;
   }
 }
 
@@ -163,6 +194,10 @@
     margin-top: 5px;
     padding-bottom: 14px;
   }
+  @include for-laptop-down {
+    width: 96%;
+    margin-top: 0px;
+  }
 }
 
 .author-tasks .task {
@@ -180,5 +215,12 @@
     margin-right: 5px;
     margin-left: 5px;
     font-size: 10px;
+  }
+
+  @include for-laptop {
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-left: 5px;
+    font-size: 9px;
   }
 }
