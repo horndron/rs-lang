@@ -1,0 +1,89 @@
+@mixin cards-shadow {
+  -moz-box-shadow: 1px 5px 15px #555;
+  -webkit-box-shadow: 1px 5px 15px #555;
+  box-shadow: 1px 5px 15px #555;
+}
+
+@mixin cards-shadow-dark {
+  -moz-box-shadow: 1px 5px 15px #222;
+  -webkit-box-shadow: 1px 5px 15px #222;
+  box-shadow: 1px 5px 15px #222;
+}
+
+@mixin trans-fast {
+  -webkit-transition: 0.3s ease-out;
+  -moz-transition: 0.3s ease-out;
+  -o-transition: 0.3s ease-out;
+  transition: 0.3s ease-out;
+}
+
+@mixin trans-medium {
+  -webkit-transition: 0.5s ease-out;
+  -moz-transition: 0.5s ease-out;
+  -o-transition: 0.5s ease-out;
+  transition: 0.5s ease-out;
+}
+
+@mixin trans-slow {
+  -webkit-transition: 1s ease-out;
+  -moz-transition: 1s ease-out;
+  -o-transition: 1s ease-out;
+  transition: 1s ease-out;
+}
+
+@mixin icon-background {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@mixin flex-start {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+@mixin flex-center {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-column-start {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+@mixin flex-column-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin flex-evenly {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+@mixin for-laptop {
+  @media (max-width: 1600px) {
+    @content;
+  }
+}
+
+@mixin for-mobile {
+  @media (max-width: 600px) {
+    @content;
+  }
+}

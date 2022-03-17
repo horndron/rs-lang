@@ -1,0 +1,42 @@
+@import './utils/_variables.scss';
+@import './utils/_mixins.scss';
+
+* {
+  // font-family: 'Titillium Web, Arial';
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  font-family: Titillium Web, Arial;
+}
+
+.container {
+  width: 1440px;
+  position: relative;
+}
+
+.main-container {
+  min-height: calc(100vh - 64px);
+  display: flex;
+  justify-content: center;
+  background-color: $backgroundColor;
+}
+
+.theme_dark .main-container {
+  background-color: $backgroundDark;
+}
+
+.container {
+  width: 1440px;
+}

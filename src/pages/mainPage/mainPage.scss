@@ -1,0 +1,373 @@
+@import '../../utils/variables';
+@import '../../utils/_mixins.scss';
+
+main .main-page {
+  width: 100%;
+  min-height: calc(100vh);
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.accordion {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.accordion .main-card {
+  width: calc((100% - $mainCardWidth) / 4);
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  @include cards-shadow;
+  @include trans-medium;
+
+  &_active {
+    width: $mainCardWidth;
+    cursor: inherit;
+  }
+}
+
+.theme_dark .accordion .main-card {
+  @include cards-shadow-dark;
+}
+
+#accordion > .main-card_active .main-card__description,
+#accordion > .main-card_active .main-card__inner {
+  opacity: 0.9;
+  @include trans-medium;
+}
+
+#accordion > .main-card_active .main-card__inner {
+  @include flex-column-start;
+  color: $textColor;
+}
+
+#accordion > .main-card_active .main-card__link {
+  display: flex;
+}
+
+#accordion > .main-card_active .main-card__heading {
+  @include trans-fast;
+  opacity: 0;
+}
+
+#accordion > .main-card_active .advantages__wrapper {
+  display: none;
+}
+
+.accordion {
+  & .main-card_0 {
+    background-color: $brandedColor6;
+  }
+  & .main-card_1 {
+    background-color: $brandedColor3;
+  }
+  & .main-card_2 {
+    background-color: $brandedColor2;
+  }
+  & .main-card_3 {
+    background-color: $brandedColor1;
+  }
+  & .main-card_4 {
+    background-color: $brandedColor5;
+  }
+  & .main-card_5 {
+    background-color: $brandedColor7;
+  }
+}
+
+.theme_dark .accordion {
+  & .main-card_0 {
+    background-color: $brandedColor6dark;
+  }
+  & .main-card_1 {
+    background-color: $brandedColor3dark;
+  }
+  & .main-card_2 {
+    background-color: $brandedColor2dark;
+  }
+  & .main-card_3 {
+    background-color: $brandedColor1dark;
+  }
+  & .main-card_4 {
+    background-color: $brandedColor5dark;
+  }
+  & .main-card_5 {
+    background-color: $brandedColor7dark;
+  }
+}
+
+header.header_card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+header.header_card .header__inner {
+  margin-top: 10px;
+  @include flex-start;
+}
+
+header.header_card .menu_small {
+  flex-grow: 0;
+  width: 48px;
+  height: 48px;
+  margin-right: 20px;
+}
+
+header.header_card .menu_small button svg {
+  width: 24px;
+  height: 24px;
+}
+
+header.header_card .login-container button {
+  padding: 0;
+}
+
+.main-card .theme-button__wrapper {
+  position: relative;
+}
+
+.main-card .theme-button__wrapper::before,
+.main-card .theme-button__wrapper::after {
+  content: '';
+  width: 1px;
+  height: 20px;
+  position: absolute;
+  top: 3px;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.main-card .theme-button__wrapper::before {
+  left: 0;
+}
+
+.main-card .theme-button__wrapper::after {
+  right: 0;
+}
+
+.accordion .main-card .main-card__heading {
+  margin-top: 80px;
+  padding: 10px;
+  opacity: 0.9;
+  text-transform: uppercase;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 14px;
+  color: #444;
+  text-align: center;
+  background-color: $white;
+  text-shadow: -1px -1px 1px #ccc;
+  @include trans-fast;
+}
+
+.theme_dark .accordion .main-card .main-card__heading {
+  background-color: $blackOpacity;
+  color: $textColor;
+  text-shadow: -1px -1px 1px #333;
+}
+
+.main-card .user-info {
+  display: none;
+}
+
+.accordion .main-card_active .user-info {
+  display: flex;
+}
+
+.theme_dark .about-project,
+.theme_dark .advantages {
+  color: $whiteOpacity;
+}
+
+.main-card_advantages .main-card__inner {
+  padding: 0 6%;
+  display: none;
+}
+
+.main-card__img {
+  width: 100%;
+  height: 400px;
+  @include icon-background;
+}
+
+.theme_dark .main-card__img {
+  opacity: 0.8;
+}
+
+.main-card_advantages .main-card__img {
+  background-image: url(../../assets/svg/advantages.svg);
+}
+.main-card_textbook .main-card__img {
+  background-image: url(../../assets/svg/textbook.svg);
+}
+.main-card_games .main-card__img {
+  background-image: url(../../assets/svg/games.svg);
+}
+.main-card_stats .main-card__img {
+  background-image: url(../../assets/svg/stats.svg);
+}
+.main-card_about .main-card__img {
+  background-image: url(../../assets/svg/about.svg);
+}
+
+.accordion .main-card .main-card__link {
+  display: none;
+}
+
+.accordion .main-card .main-card__description {
+  position: absolute;
+  width: 100%;
+  min-height: 320px;
+  bottom: 0px;
+  left: 0px;
+  padding: 20px 30px 50px;
+  opacity: 0;
+  background-color: $whiteOpacity;
+  @include trans-medium;
+}
+
+.theme_dark .accordion .main-card .main-card__description {
+  color: $textLight;
+  background-color: $blackOpacity;
+}
+
+.accordion .main-card .main-card__description:hover {
+  background-color: $whiteOpacityHover;
+  @include trans-medium;
+}
+
+.theme_dark .accordion .main-card .main-card__description:hover {
+  background-color: $blackOpacityHover;
+}
+
+.accordion .main-card .main-card__description h2 {
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 45px;
+  color: #444;
+  text-align: left;
+  text-shadow: -1px -1px 1px #ccc;
+}
+
+.theme_dark .accordion .main-card .main-card__description h2 {
+  color: $textColor;
+  text-shadow: -1px -1px 1px #333;
+}
+
+.main-card__description .description__item {
+  @include flex-start;
+}
+
+.main-card__description .description__icon {
+  width: 18px;
+  margin-right: 10px;
+}
+
+.main-card__description .description__text {
+  text-align: end;
+}
+
+.description__list {
+  margin-top: 15px;
+}
+
+.main-card__title span {
+  font-family: Ribeye, Arial;
+  font-size: 4rem;
+  color: $white;
+}
+.accordion .main-card .main-card__title {
+  margin-top: -35px;
+  margin-bottom: 20px;
+}
+
+.main-card__inner .main-card__title {
+  & .letter0 {
+    color: $brandedColor5light;
+  }
+  & .letter1 {
+    color: $brandedColor7;
+  }
+  & .letter2 {
+    color: $brandedColor2;
+  }
+  & .letter3 {
+    color: $brandedColor4;
+  }
+  & .letter4 {
+    color: $brandedColor1light;
+  }
+  & .letter5 {
+    color: $brandedColor3;
+  }
+}
+
+.theme_dark .main-card__inner .main-card__title {
+  & .letter2 {
+    color: $brandedColor2light;
+  }
+  & .letter5 {
+    color: $brandedColor3light;
+  }
+}
+
+.accordion .main-card .advantages__title {
+  font-size: 1.2rem;
+}
+
+.advantages {
+  margin-top: 34px;
+}
+.accordion .main-card .advantages__title {
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  color: $brandedColor3;
+}
+
+.accordion .main-card .advantage__title {
+  padding-left: 40px;
+  font-size: 1.2rem;
+  position: relative;
+  margin-bottom: 10px;
+  margin-top: 24px;
+}
+
+.accordion .main-card .advantage__text,
+.accordion .main-card .about-project {
+  font-size: 1rem;
+}
+
+.accordion .main-card .about-project {
+  max-width: 80%;
+}
+
+.advantage .advantage__title::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '';
+  width: 30px;
+  height: 30px;
+  @include icon-background;
+}
+
+.advantage__words .advantage__title::before {
+  background-image: url(../../assets/svg/adv-words.svg);
+}
+
+.advantage__games .advantage__title::before {
+  background-image: url(../../assets/svg/adv-games.svg);
+}
+
+.advantage__stats .advantage__title::before {
+  background-image: url(../../assets/svg/adv-stats.svg);
+}

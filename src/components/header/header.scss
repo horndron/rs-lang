@@ -1,0 +1,44 @@
+@import '../../utils/variables';
+@import '../../utils/_mixins.scss';
+
+header {
+  background-color: $primaryColor;
+}
+
+.theme_dark header {
+  background-color: $textDark;
+}
+
+.theme_dark #menu-appbar ul {
+  background-color: $backgroundDark;
+}
+
+.nav-item {
+  &:hover {
+    color: $darkColor;
+    @include trans-medium;
+  }
+}
+
+header .active .nav-item {
+  color: $darkColor;
+}
+
+header .user-info {
+  margin-right: 20px;
+}
+
+header .theme-button__wrapper {
+  margin-right: 28px;
+  position: relative;
+}
+
+header .theme-button__wrapper::after {
+  content: '';
+  width: 1px;
+  height: 20px;
+  position: absolute;
+  top: 3px;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.6);
+}
