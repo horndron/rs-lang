@@ -10,14 +10,8 @@ const About = () => {
 
   const [cardHeight, setCardHeight] = React.useState('')
   const handleCardHeight = () => {
-    const currentHeight = () => {
-      if (screenWidth > 1600) return '500px'
-      else if (screenWidth > 1200) return '400px'
-      else return '280px'
-    }
-    setCardHeight(currentHeight())
+    setCardHeight(screenWidth > 1600 ? '500px' : '400px')
   }
-
   React.useEffect(() => {
     handleCardHeight()
     handleThemeColors()

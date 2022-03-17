@@ -20,12 +20,6 @@ footer {
   }
 }
 
-.footer-container .nav-item {
-  @include for-laptop {
-    margin-right: 0;
-  }
-}
-
 .footer-item {
   &:hover {
     color: $textColor;
